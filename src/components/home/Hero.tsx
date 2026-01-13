@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 const Hero = () => {
     return (
-        <section className="relative min-h-[90vh] flex items-end justify-center overflow-hidden bg-[#2D241E] pb-24">
+        <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-[#2D241E] pt-32 pb-20">
             {/* Background Texture/Image Overlay */}
             <div className="absolute inset-0 z-0">
                 <img
