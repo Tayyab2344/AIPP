@@ -1,93 +1,112 @@
-import { Target, Lightbulb, Zap, Users, Globe, BookOpen } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
-import { SITE_CONFIG } from '@/lib/constants';
+import React from 'react';
+import { CheckCircle2 } from 'lucide-react';
 
 const AboutPage = () => {
     const principles = [
-        { title: 'Intellectual Rigor', icon: <Lightbulb />, desc: 'Upholding analytical depth and evidence-based insight.' },
-        { title: 'Leadership in Praxis', icon: <Zap />, desc: 'Translating ideas into transformative action.' },
-        { title: 'Strategic Wisdom', icon: <Target />, desc: 'Guiding governance through reflection and foresight.' },
-        { title: 'Collaborative Impact', icon: <Users />, desc: 'Bridging research, advocacy, and policy.' },
-        { title: 'Equitable Representation', icon: <Globe />, desc: 'Advancing fairness in political participation.' },
-        { title: 'Empowerment', icon: <BookOpen />, desc: 'Enabling women to lead with intellect, courage, and integrity.' }
+        {
+            title: "Intellectual Rigor",
+            description: "Commitment to non-partisan, evidence-based, and methodologically sound inquiry."
+        },
+        {
+            title: "Leadership Grounded in Praxis",
+            description: "Fostering leadership that is reflective, strategic, and ethically grounded."
+        },
+        {
+            title: "Strategic Wisdom",
+            description: "Cultivating long-term vision over short-term political expediency."
+        },
+        {
+            title: "Collaborative Engagement",
+            description: "Building partnerships across academic, policy, and civil society sectors."
+        },
+        {
+            title: "Equitable Participation",
+            description: "Ensuring diverse voices and experiences inform our research and programs."
+        },
+        {
+            title: "Empowerment Through Knowledge",
+            description: "Providing the intellectual tools for effective political agency."
+        }
     ];
 
     return (
-        <article className="bg-white">
-            {/* Page Header */}
-            <section className="pt-32 pb-24 bg-slate-50 border-b border-slate-100">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="max-w-4xl">
-                        <h1 className="text-5xl md:text-7xl font-serif text-slate-900 mb-10 tracking-tight leading-tight">
-                            Athena Institute for <br /> Political Praxis (AIPP)
-                        </h1>
-                        <div className="space-y-8 text-xl text-slate-600 leading-relaxed font-medium max-w-3xl">
-                            <p>
-                                The Athena Institute for Political Praxis (AIPP) has been founded on the understanding that the future of politics depends on the intellect and leadership we cultivate today. For too long, governance has operated within frameworks that exclude women's strategic wisdom from shaping its principles, priorities, and possibilities.
-                            </p>
-                            <p>
-                                AIPP exists to challenge and change that paradigm. It aims to function as a space for research, leadership development, and advocacy that reimagines politics as an inclusive and intellectually grounded pursuit.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+        <div className="bg-white min-h-screen">
+            {/* Main Content */}
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 space-y-16 sm:space-y-20">
 
-            {/* Vision & Mission */}
-            <section className="py-24">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-                        <div className="p-12 md:p-16 bg-[#2D241E] text-white rounded-sm shadow-2xl relative overflow-hidden group">
-                            <h2 className="text-4xl font-serif mb-8 tracking-tight">Vision</h2>
-                            <p className="text-xl text-stone-300 leading-relaxed font-medium">
-                                To advance an inclusive and gender-responsive political order by generating knowledge, fostering leadership, and shaping discourse that recognizes women's strategic intellect and capacity for governance.
-                            </p>
-                        </div>
-                        <div className="p-12 md:p-16 border-l-4 border-[#1A5261] bg-slate-50 rounded-sm relative group">
-                            <h2 className="text-4xl font-serif text-slate-900 mb-8 tracking-tight">Mission</h2>
-                            <p className="text-xl text-slate-600 leading-relaxed font-medium">
-                                Championing interdisciplinary research, cultivating women's political leadership, driving evidence-based policy innovation, shaping public discourse, and advocating for institutional reform.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                {/* Header Title */}
+                <header className="border-b border-slate-100 pb-8 sm:pb-12">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif text-slate-900 leading-tight">
+                        About the Athena Institute for <br className="hidden sm:block" /> Political Praxis
+                    </h1>
+                </header>
 
-            {/* Core Belief */}
-            <section className="py-32 bg-stone-900 text-white text-center relative overflow-hidden">
-                <div className="absolute inset-0 opacity-10">
-                    <img src="/images/hero_pakistan.png" alt="Overlay" className="w-full h-full object-cover" />
-                </div>
-                <div className="max-w-4xl mx-auto px-4 relative z-10">
-                    <span className="text-xs font-bold uppercase tracking-[0.4em] mb-12 block text-[var(--primary)]">Our Core Belief</span>
-                    <blockquote className="text-3xl md:text-5xl font-serif leading-tight italic tracking-tight mb-8">
-                        "No nation can rise to the heights of glory unless women stand side by side with men."
-                    </blockquote>
-                    <p className="text-sm font-bold uppercase tracking-widest text-stone-500">— Quaid-e-Azam Muhammad Ali Jinnah</p>
-                </div>
-            </section>
+                {/* About the Institute */}
+                <section>
+                    <h2 className="text-lg sm:text-xl font-bold text-[var(--primary)] uppercase tracking-wider mb-4 sm:mb-6">About the Institute</h2>
+                    <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-medium">
+                        The Athena Institute for Political Praxis (AIPP) is a non-partisan institution dedicated to addressing the systemic exclusion of women's strategic intellect from the core of political thought and governance. We contend that this exclusion is not merely a matter of representation, but a critical deficit in the quality, resilience, and ethical foundation of democratic systems. AIPP serves as a dedicated space for rigorous research, transformative leadership development, and the fundamental reimagination of political structures to be more inclusive, equitable, and effective.
+                    </p>
+                </section>
 
-            {/* Principles */}
-            <section className="py-24 bg-white">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="mb-20">
-                        <h2 className="text-4xl md:text-5xl font-serif text-slate-900 mb-4 tracking-tight">Our Principles</h2>
-                        <div className="w-20 h-1 bg-[var(--primary)]" />
+                {/* Why Political Praxis */}
+                <section>
+                    <h2 className="text-lg sm:text-xl font-bold text-[var(--primary)] uppercase tracking-wider mb-4 sm:mb-6">Why Political Praxis</h2>
+                    <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-medium">
+                        Our name reflects a core commitment to 'praxis'—the dialectical integration of theory and action. We reject the notion of political engagement as a purely reactive or performative exercise. Instead, AIPP champions a model of strategic participation grounded in deep reflection, critical foresight, and applied learning. Our work bridges the gap between academic inquiry and tangible political strategy, equipping leaders with the intellectual frameworks necessary to navigate complex challenges and drive meaningful, sustainable change.
+                    </p>
+                </section>
+
+                {/* Vision & Mission Side-by-Side */}
+                <section className="grid grid-cols-1 md:grid-cols-2 gap-12 sm:gap-16 border-y border-slate-100 py-12 sm:py-16">
+                    <div>
+                        <h2 className="text-lg sm:text-xl font-bold text-[var(--primary)] uppercase tracking-wider mb-4 sm:mb-6">Vision</h2>
+                        <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-medium">
+                            To foster an inclusive and gender-responsive political order where women's strategic intellect is recognized as integral to effective governance and the advancement of just, resilient societies.
+                        </p>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-                        {principles.map((p, i) => (
-                            <div key={i} className="group">
-                                <div className="text-[var(--primary)] mb-6 transform group-hover:scale-110 transition-transform inline-block">
-                                    {React.cloneElement(p.icon as React.ReactElement, { size: 40, strokeWidth: 1.5 })}
+                    <div>
+                        <h2 className="text-lg sm:text-xl font-bold text-[var(--primary)] uppercase tracking-wider mb-4 sm:mb-6">Mission</h2>
+                        <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-medium">
+                            AIPP's mission is to conduct interdisciplinary research, cultivate women's strategic leadership, promote evidence-based policy innovation, and shape public and political discourse on gender, power, and governance.
+                        </p>
+                    </div>
+                </section>
+
+                {/* Core Belief (Centered) */}
+                <section className="text-center max-w-2xl mx-auto py-8 sm:py-12">
+                    <h2 className="text-lg sm:text-xl font-serif text-[var(--primary)] italic mb-4 sm:mb-6">Core Belief</h2>
+                    <p className="text-xl sm:text-2xl md:text-3xl font-serif text-slate-900 leading-tight px-4">
+                        "We hold the core belief that women's strategic intellect is an indispensable, yet profoundly underutilized, asset for democratic development and global problem-solving."
+                    </p>
+                </section>
+
+                {/* Guiding Principles Grid */}
+                <section className="bg-slate-50 p-8 sm:p-12 md:p-16 rounded-sm border border-slate-100">
+                    <h2 className="text-lg sm:text-xl font-bold text-[var(--primary)] uppercase tracking-wider mb-8 sm:mb-12">Guiding Principles</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10">
+                        {principles.map((item, idx) => (
+                            <div key={idx} className="flex items-start space-x-4">
+                                <CheckCircle2 className="text-[var(--primary)] mt-1 flex-shrink-0" size={20} />
+                                <div>
+                                    <h3 className="font-bold text-slate-900 mb-1 sm:mb-2">{item.title}:</h3>
+                                    <p className="text-slate-600 text-sm leading-relaxed">{item.description}</p>
                                 </div>
-                                <h3 className="text-2xl font-serif text-slate-900 mb-4 tracking-tight leading-tight">{p.title}</h3>
-                                <p className="text-slate-600 leading-relaxed font-medium">{p.desc}</p>
                             </div>
                         ))}
                     </div>
-                </div>
-            </section>
-        </article>
+                </section>
+
+                {/* Long-Term Impact */}
+                <section className="pb-16 sm:pb-24">
+                    <h2 className="text-lg sm:text-xl font-bold text-[var(--primary)] uppercase tracking-wider mb-4 sm:mb-6">Long-Term Impact</h2>
+                    <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-medium">
+                        The long-term objective of AIPP is to fundamentally reshape the paradigms of political education, leadership, and governance. We aim to create a political ecosystem where gender analysis is not a supplementary topic but a central component of strategic decision-making. By influencing policy, cultivating a new generation of leaders, and shifting public discourse, we seek to foster institutional reforms that enhance democratic resilience, promote equitable power structures, and build more just and sustainable societies for all.
+                    </p>
+                </section>
+
+            </div>
+        </div>
     );
 };
 

@@ -25,27 +25,27 @@ const Newsletter = () => {
     return (
         <section className="py-24 bg-white border-t border-slate-100">
             <div className="max-w-4xl mx-auto px-4 text-center">
-                <h2 className="text-4xl md:text-5xl font-serif text-slate-900 mb-6 tracking-tight">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-slate-900 mb-6 tracking-tight">
                     Receive Updates from AIPP
                 </h2>
-                <p className="text-lg text-slate-500 mb-10 font-medium">
+                <p className="text-base sm:text-lg text-slate-500 mb-10 font-medium">
                     Join our mailing list for updates on our research, events, and publications. We respect your privacy and are committed to ethical communication.
                 </p>
 
                 <form onSubmit={handleSubmit} className="max-w-2xl mx-auto">
-                    <div className="flex flex-col sm:flex-row gap-0 border border-slate-200 rounded-sm overflow-hidden">
+                    <div className="flex flex-col sm:flex-row gap-4 sm:gap-0 border-none sm:border sm:border-slate-200 rounded-sm overflow-hidden">
                         <input
                             type="email"
                             required
                             placeholder="Enter your email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="flex-grow px-6 py-4 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:outline-none text-lg"
+                            className="flex-grow px-6 py-4 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:outline-none text-base sm:text-lg border border-slate-200 sm:border-none rounded-sm sm:rounded-none"
                             suppressHydrationWarning
                         />
                         <button
                             disabled={status === 'loading'}
-                            className="px-10 py-4 bg-[#1A5261] text-white font-bold hover:bg-[#14414d] transition-all disabled:opacity-50 text-lg uppercase tracking-widest"
+                            className="px-10 py-4 bg-[#1A5261] text-white font-bold hover:bg-[#14414d] transition-all disabled:opacity-50 text-sm sm:text-lg uppercase tracking-widest rounded-sm sm:rounded-none"
                             suppressHydrationWarning
                         >
                             {status === 'loading' ? 'Subscribing...' : 'Subscribe'}

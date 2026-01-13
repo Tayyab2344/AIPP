@@ -15,13 +15,13 @@ const StrategicLearning = () => {
                     </div>
 
                     <div className="max-w-xl">
-                        <h2 className="text-4xl md:text-5xl font-serif text-slate-900 mb-8 tracking-tight">
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-slate-900 mb-6 sm:mb-8 tracking-tight">
                             Labs & Strategic Learning
                         </h2>
-                        <p className="text-lg text-slate-600 mb-10 leading-relaxed font-medium">
+                        <p className="text-base sm:text-lg text-slate-600 mb-8 sm:mb-10 leading-relaxed font-medium">
                             Our online labs and strategic sessions enhance praxis, simulations, policy analysis, leadership development, and foresight training, providing a dynamic environment for intellectual growth and practical application.
                         </p>
-                        <Link href="/framework" className="inline-flex items-center text-[var(--primary)] font-bold text-lg hover:underline gap-2">
+                        <Link href="/framework" className="inline-flex items-center text-[var(--primary)] font-bold text-base sm:text-lg hover:underline gap-2">
                             Learn More About Labs <ArrowRight size={20} />
                         </Link>
                     </div>

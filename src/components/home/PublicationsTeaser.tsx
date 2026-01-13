@@ -22,11 +22,15 @@ const PublicationsTeaser = () => {
     return (
         <section className="py-24 bg-slate-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center max-w-3xl mx-auto mb-16">
-                    <h2 className="text-4xl md:text-5xl font-serif text-slate-900 mb-6 tracking-tight">Knowledge & Publications</h2>
-                    <p className="text-slate-600 text-lg font-medium">
-                        Explore our latest research, policy insights, and thought leadership designed to advance political discourse and practice.
-                    </p>
+                <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-6">
+                    <div className="max-w-2xl">
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-slate-900 mb-6 tracking-tight leading-tight">
+                            Knowledge & Publications
+                        </h2>
+                        <p className="text-base sm:text-lg text-slate-600 font-medium leading-relaxed">
+                            Access our latest research papers, policy briefs, and strategic insights designed to inform and transform political discourse.
+                        </p>
+                    </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

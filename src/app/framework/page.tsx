@@ -1,97 +1,207 @@
-import { Search, Activity, Share2 } from 'lucide-react';
+import { ArrowRight, FileText, Database, Users, TrendingUp, Globe, BookOpen } from 'lucide-react';
+import Link from 'next/link';
 
 const FrameworkPage = () => {
-    const streams = [
-        {
-            id: '01',
-            title: 'Research & Policy Innovation (RPI)',
-            icon: <Search className="w-8 h-8" />,
-            desc: 'Dedicated to cultivating emerging voices in politics and governance, this stream focuses on building strategic intellect, ethical leadership, and policy literacy among women positioned to shape the future of public decision-making.'
-        },
-        {
-            id: '02',
-            title: 'Strategic Action & Simulation (SAS)',
-            icon: <Activity className="w-8 h-8" />,
-            desc: 'This stream operationalizes the philosophy of praxis—transforming abstract ideas into strategic engagement and applied learning. It develops the capacity for systems thinking, negotiation, and decision foresight within political contexts.'
-        },
-        {
-            id: '03',
-            title: 'Communications & Public Advocacy (CPA)',
-            icon: <Share2 className="w-8 h-8" />,
-            desc: 'Through this stream, AIPP amplifies knowledge and narrative influence. It advances public discourse that values women\'s intellect and agency as central to the evolution of political thought and institutional reform.'
-        }
-    ];
-
     return (
-        <article className="bg-white">
-            <section className="pt-24 pb-20 bg-slate-900 text-white border-b border-white/10">
+        <div className="bg-white min-h-screen">
+            {/* Hero Section */}
+            <section className="pt-24 pb-16 sm:pt-32 sm:pb-24 border-b border-slate-100 bg-[#FBFBFA]">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="max-w-3xl">
-                        <div className="inline-flex items-center space-x-2 text-[var(--primary)] font-black text-xs uppercase tracking-[0.3em] mb-6">
-                            <span className="w-12 h-[2px] bg-[var(--primary)]" />
-                            <span>Programmatic Framework</span>
-                        </div>
-                        <h1 className="text-5xl md:text-7xl font-black mb-8 uppercase tracking-tighter">
-                            Our Framework <br /> for Change
+                    <div className="max-w-4xl">
+                        <p className="text-[10px] sm:text-xs font-bold text-[var(--primary)] uppercase tracking-[0.3em] mb-6">Institute Overview</p>
+                        <h1 className="text-4xl sm:text-6xl md:text-7xl font-serif text-slate-900 leading-tight mb-8">
+                            Research & Policy at the <br /> Athena Institute
                         </h1>
-                        <p className="text-xl text-slate-400 leading-relaxed font-medium">
-                            AIPP seeks to establish itself as a center of thought and action advancing women's leadership and intellect in political transformation.
+                        <p className="text-lg sm:text-xl text-slate-600 font-medium leading-relaxed max-w-2xl mb-10">
+                            Advancing women's strategic intellect to transform global political praxis through rigorous, interdisciplinary, and evidence-based inquiry.
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-4">
+                            <button className="bg-[#1A5261] text-white px-8 py-4 font-bold uppercase tracking-widest text-xs hover:bg-[#14414d] transition-all">
+                                Explore Our Areas
+                            </button>
+                            <button className="bg-white text-slate-900 border border-slate-200 px-8 py-4 font-bold uppercase tracking-widest text-xs hover:bg-slate-50 transition-all">
+                                Download 2024 Agenda
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Framework Section */}
+            <section className="py-24 bg-white">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+                        <div className="lg:col-span-4">
+                            <h2 className="text-3xl sm:text-4xl font-serif text-slate-900 mb-8 leading-tight">
+                                The AIPP Framework: Analytical Depth meets Strategic Foresight
+                            </h2>
+                            <p className="text-base sm:text-lg text-slate-500 font-medium leading-relaxed">
+                                Our approach is not merely reactive; we synthesize insights from political science, economics, and sociology to identify emerging trends and provide proactive solutions for future governance models.
+                            </p>
+                        </div>
+                        <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-px bg-slate-100 border border-slate-100">
+                            <div className="bg-white p-10 space-y-4">
+                                <Database className="text-[var(--primary)] w-6 h-6" />
+                                <h3 className="text-xl font-serif text-slate-900">Evidence-Based</h3>
+                                <p className="text-sm text-slate-500 leading-relaxed">Rigorous data collections and quantitative analysis form the basis of our policy recommendations.</p>
+                            </div>
+                            <div className="bg-white p-10 space-y-4">
+                                <Globe className="text-[var(--primary)] w-6 h-6" />
+                                <h3 className="text-xl font-serif text-slate-900">Interdisciplinary</h3>
+                                <p className="text-sm text-slate-500 leading-relaxed">Crossing traditional academic silos to understand the interconnected causality of power dynamics.</p>
+                            </div>
+                            <div className="bg-white p-10 space-y-4">
+                                <TrendingUp className="text-[var(--primary)] w-6 h-6" />
+                                <h3 className="text-xl font-serif text-slate-900">Forward-Looking</h3>
+                                <p className="text-sm text-slate-500 leading-relaxed">Identifying tomorrow's institutional challenges through predictive modeling and strategic foresight.</p>
+                            </div>
+                            <div className="bg-[#1A5261] p-10 space-y-4 text-white">
+                                <Users className="text-white/60 w-6 h-6" />
+                                <h3 className="text-xl font-serif">Institutional Discourse</h3>
+                                <p className="text-sm text-white/80 leading-relaxed">Translating complex research into the language of statesmanship and actionable legislative frameworks.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Research Areas */}
+            <section className="py-24 bg-[#FBFBFA]">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex flex-col sm:flex-row justify-between items-baseline mb-16 gap-4">
+                        <div>
+                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">Thematic Domains</p>
+                            <h2 className="text-4xl font-serif text-slate-900 italic leading-tight">Key Research Areas</h2>
+                        </div>
+                        <Link href="/publications" className="text-xs font-bold uppercase tracking-widest flex items-center gap-2 hover:text-[var(--primary)] transition-colors">
+                            View All Clusters <ArrowRight size={14} />
+                        </Link>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {[
+                            {
+                                title: "Women and Political Leadership",
+                                desc: "Analyzing barriers and strategies for women's transition to executive political roles globally.",
+                                img: "/images/pillar_rpi_hijab.png"
+                            },
+                            {
+                                title: "Gender-Responsive Governance",
+                                desc: "Frameworks for auditing institutional transparency through a lens of gender equity and impact.",
+                                img: "/images/pillar_sas_niqab.png"
+                            },
+                            {
+                                title: "Public Policy Innovation",
+                                desc: "Reimagining technology and strategic intelligence to bridge public service delivery gaps.",
+                                img: "/images/pillar_cpa_niqab.png"
+                            }
+                        ].map((area, idx) => (
+                            <div key={idx} className="group cursor-pointer">
+                                <div className="aspect-[16/10] overflow-hidden rounded-sm mb-6 bg-slate-200">
+                                    <img src={area.img} alt={area.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                </div>
+                                <h3 className="text-xl font-serif text-slate-900 mb-3 group-hover:text-[var(--primary)] transition-colors italic">{area.title}</h3>
+                                <p className="text-sm text-slate-500 leading-relaxed leading-relaxed">{area.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Latest Outputs */}
+            <section className="py-24 bg-white">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 className="text-2xl font-serif text-slate-900 mb-16 relative inline-block">
+                        Latest Outputs
+                        <span className="absolute -left-12 top-1/2 w-8 h-px bg-slate-300" />
+                    </h2>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                        {[
+                            {
+                                type: "Policy Brief",
+                                title: "The Strategic Calculus of Women in Multilateral Diplomacy",
+                                desc: "An investigation into the negotiation tactics and institutional leverage of female leaders in...",
+                                date: "Oct 2023"
+                            },
+                            {
+                                type: "Research Paper",
+                                title: "Algorithmic Bias in Gender-Responsive Policy Audits",
+                                desc: "Exploring the unintended consequences of automated governance on marginalized...",
+                                date: "Sep 2023"
+                            }
+                        ].map((report, idx) => (
+                            <div key={idx} className="flex gap-8 p-8 border border-slate-100 hover:shadow-lg transition-all items-start bg-[#FBFBFA]">
+                                <div className="w-24 h-32 bg-slate-100 flex-shrink-0 flex flex-col items-center justify-center p-4 text-center">
+                                    <FileText className="text-slate-300 mb-2" size={32} />
+                                    <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">{report.type}</span>
+                                </div>
+                                <div>
+                                    <p className="text-[10px] font-bold text-[var(--primary)] uppercase tracking-widest mb-2">{report.date} • {report.type}</p>
+                                    <h3 className="text-xl font-serif text-slate-900 mb-4 leading-tight">{report.title}</h3>
+                                    <p className="text-sm text-slate-500 mb-6 leading-relaxed">{report.desc}</p>
+                                    <Link href="#" className="text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 hover:gap-3 transition-all">
+                                        Access Report <ArrowRight size={12} className="text-[var(--primary)]" />
+                                    </Link>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="mt-16 text-center">
+                        <Link href="/publications" className="inline-block border border-slate-900 px-10 py-4 text-[10px] font-bold uppercase tracking-widest hover:bg-slate-900 hover:text-white transition-all">
+                            Full Publications Archive
+                        </Link>
+                    </div>
+                </div>
+            </section>
+
+            {/* Impact Section */}
+            <section className="py-24 bg-[#1A1F2B] text-white overflow-hidden">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="max-w-3xl mb-20">
+                        <h2 className="text-3xl sm:text-4xl font-serif mb-8 leading-tight">Collaborative Inquiry</h2>
+                        <p className="text-lg text-white/70 font-medium leading-relaxed">
+                            The Athena Institute actively partners with leading universities, global think tanks, and independent scholars to co-create knowledge that challenges the status quo. Our Fellowship programs support the next generation of strategic thinkers.
                         </p>
                     </div>
-                </div>
-            </section>
 
-            <section className="py-24">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="space-y-12">
-                        {streams.map((stream) => (
-                            <div key={stream.id} className="group relative grid grid-cols-1 lg:grid-cols-12 gap-12 items-center p-12 rounded-[3rem] border-2 border-slate-100 hover:border-[var(--primary)] transition-all bg-slate-50/50">
-                                <div className="lg:col-span-1">
-                                    <span className="text-6xl font-black text-slate-200 group-hover:text-[var(--primary)]/20 transition-colors uppercase">
-                                        {stream.id}
-                                    </span>
-                                </div>
-                                <div className="lg:col-span-3 flex justify-center lg:justify-start">
-                                    <div className="w-24 h-24 bg-slate-900 text-[var(--primary)] rounded-3xl flex items-center justify-center shadow-2xl transform group-hover:rotate-6 transition-transform">
-                                        {stream.icon}
-                                    </div>
-                                </div>
-                                <div className="lg:col-span-8">
-                                    <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-6 uppercase tracking-tight">
-                                        {stream.title}
-                                    </h2>
-                                    <p className="text-xl text-slate-600 leading-relaxed font-medium">
-                                        {stream.desc}
-                                    </p>
-                                </div>
-                            </div>
-                        ))}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 sm:gap-24 relative">
+                        <div className="border-t border-white/10 pt-8">
+                            <p className="text-4xl font-serif mb-2">12+</p>
+                            <p className="text-[10px] uppercase font-bold text-white/40 tracking-widest">Academic Partners</p>
+                        </div>
+                        <div className="border-t border-white/10 pt-8">
+                            <p className="text-4xl font-serif mb-2">45</p>
+                            <p className="text-[10px] uppercase font-bold text-white/40 tracking-widest">Visiting Scholars</p>
+                        </div>
+                        <div className="border-t border-white/10 pt-8">
+                            <p className="text-4xl font-serif mb-2">18</p>
+                            <p className="text-[10px] uppercase font-bold text-white/40 tracking-widest">Patents & Registered</p>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <section className="py-24 bg-slate-50">
-                <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h2 className="text-4xl font-black text-slate-900 mb-8 uppercase tracking-tighter">Partnerships & Engagement</h2>
-                    <p className="text-xl text-slate-600 mb-12 leading-relaxed font-medium">
-                        AIPP welcomes collaboration with institutions and associations that share its commitment to rethinking politics through inclusivity and gendered insight. The Institute views partnerships as spaces for shared learning, co-created research, and collective innovation.
+            {/* Shape the Discourse */}
+            <section className="py-24 bg-[#FBFBFA]">
+                <div className="max-w-3xl mx-auto px-4 text-center">
+                    <BookOpen size={48} className="mx-auto text-[var(--primary)] mb-8 opacity-50" />
+                    <h2 className="text-4xl font-serif text-slate-900 mb-8 italic">Shape the Discourse</h2>
+                    <p className="text-lg text-slate-500 font-medium leading-relaxed mb-12">
+                        Join our network of scholars and policy experts. We invite formal dialogue, partnership inquiries, and strategic consultations.
                     </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
-                        {[
-                            'Joint research & knowledge exchange',
-                            'Leadership development initiatives',
-                            'Public engagement & advocacy',
-                            'Institutional & policy reform'
-                        ].map((item, i) => (
-                            <div key={i} className="flex items-center space-x-4 p-6 bg-white rounded-2xl border border-slate-200">
-                                <div className="w-3 h-3 bg-[var(--primary)] rounded-full" />
-                                <span className="font-bold text-slate-700">{item}</span>
-                            </div>
-                        ))}
+                    <div className="flex flex-col sm:flex-row justify-center gap-6">
+                        <Link href="/contact" className="bg-[#1A5261] text-white px-10 py-5 font-bold uppercase tracking-widest text-[10px] hover:bg-[#14414d] transition-all">
+                            Contact Our Office
+                        </Link>
+                        <button className="text-slate-900 border-b-2 border-slate-900 pb-2 font-bold uppercase tracking-widest text-[10px] hover:text-[var(--primary)] hover:border-[var(--primary)] transition-all">
+                            Sign up for Briefings
+                        </button>
                     </div>
                 </div>
             </section>
-        </article>
+        </div>
     );
 };
 

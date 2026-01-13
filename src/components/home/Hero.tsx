@@ -15,20 +15,20 @@ const Hero = () => {
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full text-center">
                 <div className="max-w-5xl mx-auto">
-                    <h1 className="text-5xl md:text-8xl font-serif text-white leading-tight mb-8 tracking-tight max-w-4xl mx-auto">
-                        Advancing Women's Strategic <br /> Intellect in Political Praxis
+                    <h1 className="text-3xl sm:text-5xl md:text-8xl font-serif text-white leading-tight mb-6 sm:mb-8 tracking-tight max-w-4xl mx-auto">
+                        Advancing Women's Strategic <br className="hidden sm:block" /> Intellect in Political Praxis
                     </h1>
-                    <p className="text-xl md:text-2xl text-stone-300 mb-12 leading-relaxed max-w-3xl mx-auto font-medium">
+                    <p className="text-base sm:text-xl md:text-2xl text-stone-300 mb-8 sm:mb-12 leading-relaxed max-w-3xl mx-auto font-medium">
                         AIPP is a think tank focused on women's strategic intellect and political transformation, addressing the gaps in political thought caused by excluding women's strategic wisdom.
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                        <Link href="/framework" className="bg-[var(--primary)] text-white px-10 py-4 rounded-md font-bold text-lg hover:opacity-90 transition-all min-w-[200px]">
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center items-stretch sm:items-center px-4 sm:px-0">
+                        <Link href="/framework" className="bg-[var(--primary)] text-white px-6 sm:px-10 py-3 sm:py-4 rounded-md font-bold text-base sm:text-lg hover:opacity-90 transition-all text-center">
                             Explore Our Work
                         </Link>
-                        <Link href="/framework" className="bg-[#413933] text-white border border-stone-600 px-10 py-4 rounded-md font-bold text-lg hover:bg-stone-800 transition-all min-w-[200px]">
+                        <Link href="/framework" className="bg-[#413933] text-white border border-stone-600 px-6 sm:px-10 py-3 sm:py-4 rounded-md font-bold text-base sm:text-lg hover:bg-stone-800 transition-all text-center">
                             Research & Policy
                         </Link>
-                        <Link href="/framework" className="bg-[#413933] text-white border border-stone-600 px-10 py-4 rounded-md font-bold text-lg hover:bg-stone-800 transition-all min-w-[200px]">
+                        <Link href="/framework" className="bg-[#413933] text-white border border-stone-600 px-6 sm:px-10 py-3 sm:py-4 rounded-md font-bold text-base sm:text-lg hover:bg-stone-800 transition-all text-center">
                             Join Our Labs
                         </Link>
                     </div>

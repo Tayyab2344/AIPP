@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import ScrollToTop from "@/components/ui/ScrollToTop";
 
 import { SITE_CONFIG } from "@/lib/constants";
 
@@ -27,12 +28,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${playfair.variable} font-sans min-h-screen flex flex-col`}>
+      <body className={`${inter.variable} ${playfair.variable} font-sans min-h-screen flex flex-col overflow-x-hidden`}>
         <Navbar />
-        <main className="flex-grow pt-20">
+        <main className="flex-grow pt-20 overflow-x-hidden">
           {children}
         </main>
         <Footer />
+        <ScrollToTop />
       </body>
     </html>
   );
