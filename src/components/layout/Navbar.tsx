@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 const Navbar = () => {
     return (
-        <nav className="fixed top-0 w-full z-50 glass">
+        <nav className="fixed top-0 w-full z-50 bg-white border-b border-slate-100">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-20">
                     <div className="flex items-center">
@@ -11,13 +11,14 @@ const Navbar = () => {
                         </Link>
                     </div>
 
-                    <div className="hidden md:flex space-x-8 items-center">
-                        <Link href="/about" className="text-sm font-bold text-slate-700 hover:text-[var(--primary)] transition-colors">About</Link>
-                        <Link href="/framework" className="text-sm font-bold text-slate-700 hover:text-[var(--primary)] transition-colors">Framework</Link>
-                        <Link href="/publications" className="text-sm font-bold text-slate-700 hover:text-[var(--primary)] transition-colors">Publications</Link>
-                        <Link href="/contact" className="text-sm font-bold text-slate-700 hover:text-[var(--primary)] transition-colors">Contact</Link>
+                    <div className="hidden md:flex space-x-10 items-center">
+                        <Link href="/framework" className="text-xs font-bold text-slate-900 hover:text-[var(--primary)] transition-colors uppercase tracking-widest">Research & Policy</Link>
+                        <Link href="/framework" className="text-xs font-bold text-slate-900 hover:text-[var(--primary)] transition-colors uppercase tracking-widest">Labs & Strategic Learning</Link>
+                        <Link href="/publications" className="text-xs font-bold text-slate-900 hover:text-[var(--primary)] transition-colors uppercase tracking-widest">Publications</Link>
+                        <Link href="/about" className="text-xs font-bold text-slate-900 hover:text-[var(--primary)] transition-colors uppercase tracking-widest">About</Link>
+                        <Link href="/contact" className="text-xs font-bold text-slate-900 hover:text-[var(--primary)] transition-colors uppercase tracking-widest">Contact</Link>
 
-                        <Link href="/join" className="btn-primary py-2 px-5 text-sm uppercase tracking-widest font-black">
+                        <Link href="/join" className="bg-[#1A5261] text-white py-2 px-6 text-[10px] uppercase tracking-widest font-bold rounded-sm hover:bg-[#14414d] transition-all">
                             Join AIPP
                         </Link>
                     </div>

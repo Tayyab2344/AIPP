@@ -3,19 +3,19 @@ const focusAreas = [
         title: 'Research & Policy Innovation',
         subtitle: 'RPI',
         description: 'Engaging in serious intellectual inquiry to produce actionable policy insights.',
-        image: '/images/pillar_rpi.png',
+        image: '/images/pillar_rpi_hijab.png',
     },
     {
         title: 'Strategic Action & Simulation',
         subtitle: 'SAS',
         description: 'Utilizing praxis, simulations, and foresight training to develop leadership.',
-        image: '/images/pillar_sas.png',
+        image: '/images/pillar_sas_niqab.png',
     },
     {
         title: 'Communications & Public Advocacy',
         subtitle: 'CPA',
         description: 'Shaping public discourse through rigorous analysis and thought leadership.',
-        image: '/images/pillar_cpa.png',
+        image: '/images/pillar_cpa_niqab.png',
     },
 ];
 

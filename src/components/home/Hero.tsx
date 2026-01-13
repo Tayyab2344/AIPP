@@ -2,11 +2,11 @@ import Link from 'next/link';
 
 const Hero = () => {
     return (
-        <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#2D241E]">
+        <section className="relative min-h-[90vh] flex items-end justify-center overflow-hidden bg-[#2D241E] pb-24">
             {/* Background Texture/Image Overlay */}
             <div className="absolute inset-0 z-0">
                 <img
-                    src="/images/hero_pakistan.png"
+                    src="/images/hero_hijab_niqab.png"
                     alt="Strategic Leadership"
                     className="w-full h-full object-cover opacity-20"
                 />
