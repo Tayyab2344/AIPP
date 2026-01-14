@@ -20,3 +20,27 @@ export const SITE_CONFIG = {
         wix: 'https://connectaipp.wixsite.com/athena-institute-for',
     },
 };
+
+export const NAV_LINKS = [
+    { href: "/about", label: "About" },
+    {
+        label: "What We Offer",
+        dropdown: [
+            {
+                label: "Research & Policy Innovation (RPI)",
+                href: "/research-policy-innovation",
+            },
+            {
+                label: "Strategic Action & Simulation (SAS)",
+                href: "/strategic-action-simulation",
+            },
+            {
+                label: "Communications & Public Advocacy (CPA)",
+                href: "/communications-public-advocacy",
+            },
+        ]
+    },
+    { href: "/publications", label: "Publications" },
+    { href: "/insights", label: "Insights" },
+    { href: "/contact", label: "Contact" },
+];

@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ScrollToTop from "@/components/ui/ScrollToTop";
+import { headers } from "next/headers";
 
 import { SITE_CONFIG } from "@/lib/constants";
 
@@ -14,6 +15,11 @@ export const metadata: Metadata = {
   title: `${SITE_CONFIG.name} | ${SITE_CONFIG.tagline}`,
   description: SITE_CONFIG.description,
   keywords: ["Political Praxis", "Women Leadership", "Research", "Advocacy", "Political Strategy"],
+  icons: {
+    icon: '/icon.png',
+    shortcut: '/icon.png',
+    apple: '/icon.png',
+  },
   openGraph: {
     title: SITE_CONFIG.name,
     description: SITE_CONFIG.description,
@@ -21,20 +27,26 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headersList = await headers();
+  const pathname = headersList.get("x-pathname") || "";
+
+  // Hide navbar and footer on admin login page
+  const isAdminLogin = pathname.includes("/admin/login");
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${playfair.variable} font-sans min-h-screen flex flex-col overflow-x-hidden`}>
-        <Navbar />
-        <main className="flex-grow pt-20 overflow-x-hidden">
+        {!isAdminLogin && <Navbar />}
+        <main className={`flex-grow overflow-x-hidden ${!isAdminLogin ? 'pt-20' : ''}`}>
           {children}
         </main>
-        <Footer />
-        <ScrollToTop />
+        {!isAdminLogin && <Footer />}
+        {!isAdminLogin && <ScrollToTop />}
       </body>
     </html>
   );

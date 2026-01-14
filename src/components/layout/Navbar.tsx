@@ -1,77 +1,170 @@
 "use client";
 
 import Link from 'next/link';
-import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react';
+import { NAV_LINKS, BRAND_COLORS } from '@/lib/constants';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+    const [activeSubDropdown, setActiveSubDropdown] = useState<string | null>(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
-    const navLinks = [
-        { href: "/about", label: "About" },
-        { href: "/contact", label: "Contact" },
-        { href: "/insights", label: "Insights" },
-        { href: "/framework", label: "Research & Policy" },
-        { href: "/labs", label: "Labs & Strategic Learning" },
-        { href: "/publications", label: "Publications" },
-    ];
+    // Close dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setActiveDropdown(null);
+                setActiveSubDropdown(null);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
+    const toggleDropdown = (label: string) => {
+        setActiveDropdown(activeDropdown === label ? null : label);
+        setActiveSubDropdown(null);
+    };
+
+    const toggleSubDropdown = (e: React.MouseEvent, label: string) => {
+        e.stopPropagation();
+        setActiveSubDropdown(activeSubDropdown === label ? null : label);
+    };
 
     return (
-        <nav className="fixed top-0 w-full z-50 bg-white border-b border-slate-100">
+        <nav className="fixed top-0 w-full z-50 bg-white border-b border-slate-100 shadow-sm" ref={dropdownRef}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between md:justify-start h-20 relative">
-                    <div className="flex items-center">
-                        <Link href="/" className="text-2xl font-black text-[var(--primary)] tracking-tighter">
-                            AIPP
+                <div className="flex items-center justify-between h-20 relative">
+                    {/* Logo */}
+                    <div className="flex-shrink-0">
+                        <Link href="/" className="flex items-center gap-3">
+                            <img
+                                src="/روشنِ_نسواں__2_-removebg-preview (1).png"
+                                alt="AIPP Logo"
+                                className="h-14 w-auto object-contain"
+                            />
+                            <span className="text-xl font-bold text-slate-900 tracking-wide">AIPP</span>
                         </Link>
                     </div>
 
                     {/* Desktop Navigation */}
-                    <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 space-x-8 items-center">
-                        {navLinks.map((link) => (
-                            <Link key={link.label} href={link.href} className="text-xs font-bold text-slate-900 hover:text-[var(--primary)] transition-colors uppercase tracking-widest whitespace-nowrap">
-                                {link.label}
-                            </Link>
+                    <div className="hidden lg:flex items-center space-x-1 lg:space-x-4 flex-grow justify-center px-4">
+                        {NAV_LINKS.map((link) => (
+                            <div
+                                key={link.label}
+                                className="relative group"
+                                onMouseEnter={() => link.dropdown && setActiveDropdown(link.label)}
+                                onMouseLeave={() => {
+                                    setActiveDropdown(null);
+                                    setActiveSubDropdown(null);
+                                }}
+                            >
+                                {link.dropdown ? (
+                                    <>
+                                        <button
+                                            className={`flex items-center space-x-1 text-xs font-bold uppercase tracking-widest px-3 py-2 transition-colors ${activeDropdown === link.label ? 'text-[var(--primary)]' : 'text-slate-900 hover:text-[var(--primary)]'
+                                                }`}
+                                        >
+                                            <span>{link.label}</span>
+                                            <ChevronDown size={14} className={`transition-transform duration-200 ${activeDropdown === link.label ? 'rotate-180' : ''}`} />
+                                        </button>
+
+                                        {/* Main Dropdown */}
+                                        {activeDropdown === link.label && (
+                                            <div className="absolute top-full left-0 w-72 bg-white border border-slate-100 shadow-xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                                                {link.dropdown.map((item) => (
+                                                    <Link
+                                                        key={item.label}
+                                                        href={item.href}
+                                                        className="block px-6 py-3 text-[11px] font-bold text-slate-900 uppercase tracking-wider hover:bg-slate-50"
+                                                        onClick={() => setActiveDropdown(null)}
+                                                    >
+                                                        {item.label}
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </>
+                                ) : (
+                                    <Link
+                                        href={link.href}
+                                        className="text-xs font-bold text-slate-900 hover:text-[var(--primary)] transition-colors uppercase tracking-widest px-3 py-2 whitespace-nowrap"
+                                    >
+                                        {link.label}
+                                    </Link>
+                                )}
+                            </div>
                         ))}
                     </div>
 
-                    <div className="hidden md:flex ml-auto items-center">
-                        <Link href="/join" className="bg-[#1A5261] text-white py-2 px-6 text-[10px] uppercase tracking-widest font-bold rounded-sm hover:bg-[#14414d] transition-all">
+                    {/* Join Button */}
+                    <div className="hidden lg:flex flex-shrink-0">
+                        <Link href="/join" className="bg-[#1A5261] text-white py-2.5 px-8 text-[11px] uppercase tracking-widest font-bold rounded-sm hover:bg-[#14414d] transition-all shadow-md">
                             Join AIPP
                         </Link>
                     </div>
 
                     {/* Mobile menu button */}
-                    <div className="md:hidden">
+                    <div className="lg:hidden flex items-center">
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="text-slate-600 p-2"
+                            className="text-slate-900 p-2"
                             aria-label="Toggle menu"
                         >
-                            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
                         </button>
                     </div>
                 </div>
             </div>
 
             {/* Mobile Navigation Menu */}
-            <div className={`md:hidden absolute top-20 left-0 w-full bg-white border-b border-slate-100 transition-all duration-300 ease-in-out transform ${isMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0 pointer-events-none'}`}>
-                <div className="px-4 pt-2 pb-6 space-y-1">
-                    {navLinks.map((link) => (
-                        <Link
-                            key={link.label}
-                            href={link.href}
-                            onClick={() => setIsMenuOpen(false)}
-                            className="block px-3 py-4 text-sm font-bold text-slate-900 hover:text-[var(--primary)] transition-colors uppercase tracking-widest"
-                        >
-                            {link.label}
-                        </Link>
+            <div className={`lg:hidden fixed inset-0 top-20 bg-white z-40 transition-all duration-300 ease-in-out transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0 pointer-events-none'}`}>
+                <div className="px-6 py-8 space-y-4 overflow-y-auto max-h-[calc(100vh-80px)]">
+                    {NAV_LINKS.map((link) => (
+                        <div key={link.label} className="border-b border-slate-50 pb-2">
+                            {link.dropdown ? (
+                                <div>
+                                    <button
+                                        onClick={() => toggleDropdown(link.label)}
+                                        className="flex items-center justify-between w-full py-3 text-sm font-bold text-slate-900 uppercase tracking-widest"
+                                    >
+                                        <span>{link.label}</span>
+                                        <ChevronDown size={18} className={`transition-transform duration-200 ${activeDropdown === link.label ? 'rotate-180' : ''}`} />
+                                    </button>
+
+                                    {activeDropdown === link.label && (
+                                        <div className="pl-4 py-2 space-y-4 animate-in slide-in-from-top-2 duration-200">
+                                            {link.dropdown.map((item) => (
+                                                <Link
+                                                    key={item.label}
+                                                    href={item.href}
+                                                    onClick={() => setIsMenuOpen(false)}
+                                                    className="block text-[12px] font-bold text-slate-700 uppercase tracking-wider py-2"
+                                                >
+                                                    {item.label}
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            ) : (
+                                <Link
+                                    href={link.href}
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className="block py-3 text-sm font-bold text-slate-900 uppercase tracking-widest"
+                                >
+                                    {link.label}
+                                </Link>
+                            )}
+                        </div>
                     ))}
-                    <div className="pt-4 px-3">
+                    <div className="pt-6">
                         <Link
                             href="/join"
                             onClick={() => setIsMenuOpen(false)}
-                            className="block w-full text-center bg-[#1A5261] text-white py-4 text-[10px] uppercase tracking-widest font-bold rounded-sm"
+                            className="block w-full text-center bg-[#1A5261] text-white py-5 text-[12px] uppercase tracking-widest font-bold rounded-sm shadow-lg"
                         >
                             Join AIPP
                         </Link>

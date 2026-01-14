@@ -1,5 +1,11 @@
 import React from 'react';
 import { CheckCircle2 } from 'lucide-react';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'About | Athena Institute for Political Praxis',
+    description: 'Learn about AIPP, a non-partisan institution dedicated to addressing the systemic exclusion of women\'s strategic intellect from political thought and governance.',
+};
 
 const AboutPage = () => {
     const principles = [

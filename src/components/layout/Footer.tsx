@@ -26,9 +26,9 @@ const Footer = () => {
                     <div>
                         <h4 className="text-[var(--primary)] font-bold uppercase tracking-widest text-[11px] mb-8">Our Work</h4>
                         <ul className="space-y-4 text-sm text-stone-300 font-medium">
-                            <li><Link href="/framework" className="hover:text-white transition-colors">Research & Policy (RPI)</Link></li>
-                            <li><Link href="/framework" className="hover:text-white transition-colors">Strategic Action (SAS)</Link></li>
-                            <li><Link href="/framework" className="hover:text-white transition-colors">Public Advocacy (CPA)</Link></li>
+                            <li><Link href="/research-policy-innovation" className="hover:text-white transition-colors">Research & Policy (RPI)</Link></li>
+                            <li><Link href="/strategic-action-simulation" className="hover:text-white transition-colors">Strategic Action (SAS)</Link></li>
+                            <li><Link href="/communications-public-advocacy" className="hover:text-white transition-colors">Public Advocacy (CPA)</Link></li>
                         </ul>
                     </div>
 

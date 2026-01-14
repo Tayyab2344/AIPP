@@ -4,12 +4,13 @@ import { useState } from 'react';
 import { auth } from '@/lib/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/Button';
-import { Mail, Lock, ShieldAlert } from 'lucide-react';
+import { Eye, EyeOff, ShieldAlert, Building2 } from 'lucide-react';
+import Link from 'next/link';
 
 export default function AdminLogin() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const router = useRouter();
@@ -29,68 +30,143 @@ export default function AdminLogin() {
     };
 
     return (
-        <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-            <div className="max-w-md w-full">
-                <div className="text-center mb-10">
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-violet-600 text-white rounded-3xl shadow-xl mb-6">
-                        <Lock size={32} />
-                    </div>
-                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Admin Portal</h1>
-                    <p className="text-slate-500 mt-2">Sign in to manage organizational content</p>
-                </div>
+        <div className="fixed inset-0 z-[9999] flex bg-white">
+            {/* Left Side - Image */}
+            <div className="hidden lg:flex lg:w-1/2 bg-slate-900 relative overflow-hidden">
+                <img
+                    src="/images/strategic_learning_hijab.png"
+                    alt="Athena Institute"
+                    className="absolute inset-0 w-full h-full object-cover opacity-60"
+                />
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-900/80 via-slate-900/60 to-transparent"></div>
 
-                <div className="bg-white p-8 md:p-10 rounded-[2.5rem] border border-slate-100 shadow-2xl shadow-slate-200/50">
-                    <form onSubmit={handleLogin} className="space-y-6">
-                        <div className="space-y-2">
-                            <label className="text-xs font-bold text-slate-400 uppercase ml-1">Email Address</label>
-                            <div className="relative">
-                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                {/* Overlay Content */}
+                <div className="relative z-10 flex flex-col justify-between p-12 h-full">
+                    <div>
+                        <Link href="/" className="flex items-center gap-3">
+                            <img
+                                src="/روشنِ_نسواں__2_-removebg-preview (1).png"
+                                alt="AIPP Logo"
+                                className="h-12 w-12 object-contain"
+                            />
+                            <span className="text-white font-bold text-lg">AIPP</span>
+                        </Link>
+                    </div>
+
+                    <div className="space-y-6">
+                        <h2 className="text-4xl font-serif text-white leading-tight">
+                            Strategic Intellect.<br />
+                            Political Praxis.
+                        </h2>
+                        <p className="text-slate-300 text-lg max-w-md leading-relaxed">
+                            The administrative gateway to advancing women's leadership in global governance.
+                        </p>
+                    </div>
+
+                    <p className="text-slate-500 text-sm">
+                        © 2024 Athena Institute for Political Praxis
+                    </p>
+                </div>
+            </div>
+
+            {/* Right Side - Login Form */}
+            <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white">
+                <div className="w-full max-w-md">
+                    {/* Mobile Logo */}
+                    <div className="lg:hidden text-center mb-10">
+                        <div className="inline-flex items-center justify-center w-16 h-16 bg-slate-900 text-white rounded-xl mb-4">
+                            <Building2 size={32} />
+                        </div>
+                        <h1 className="text-xl font-serif text-slate-900">Athena Institute for Political Praxis</h1>
+                    </div>
+
+                    {/* Desktop Title */}
+                    <div className="hidden lg:block mb-10">
+                        <div className="inline-flex items-center justify-center w-14 h-14 bg-slate-900 text-white rounded-xl mb-6">
+                            <Building2 size={28} />
+                        </div>
+                        <h1 className="text-2xl font-serif text-slate-900">Athena Institute for Political Praxis</h1>
+                    </div>
+
+                    {/* Form Card */}
+                    <div className="bg-white border border-slate-200 p-8 rounded-sm">
+                        <h2 className="text-xs font-bold text-slate-900 uppercase tracking-[0.2em] text-center mb-8 pb-4 border-b border-slate-100">
+                            Administrator Access
+                        </h2>
+
+                        <form onSubmit={handleLogin} className="space-y-6">
+                            <div className="space-y-2">
+                                <label className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+                                    Email Address
+                                </label>
                                 <input
                                     type="email"
                                     required
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    className="w-full pl-12 pr-5 py-4 rounded-2xl bg-slate-50 border border-slate-100 focus:outline-none focus:ring-2 focus:ring-violet-500/20 text-slate-900"
-                                    placeholder="admin@empowerwomen.org"
+                                    className="w-full px-4 py-4 bg-slate-50 border border-slate-200 focus:border-slate-400 focus:bg-white outline-none transition-all text-slate-900 placeholder:text-slate-400"
+                                    placeholder="e.g. admin@aipp.org"
                                 />
                             </div>
-                        </div>
 
-                        <div className="space-y-2">
-                            <label className="text-xs font-bold text-slate-400 uppercase ml-1">Password</label>
-                            <div className="relative">
-                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
-                                <input
-                                    type="password"
-                                    required
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full pl-12 pr-5 py-4 rounded-2xl bg-slate-50 border border-slate-100 focus:outline-none focus:ring-2 focus:ring-violet-500/20 text-slate-900"
-                                    placeholder="••••••••"
-                                />
+                            <div className="space-y-2">
+                                <div className="flex justify-between items-center">
+                                    <label className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+                                        Password
+                                    </label>
+                                    <button type="button" className="text-xs text-slate-500 hover:text-slate-900 transition-colors">
+                                        Forgot password?
+                                    </button>
+                                </div>
+                                <div className="relative">
+                                    <input
+                                        type={showPassword ? 'text' : 'password'}
+                                        required
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        className="w-full px-4 py-4 pr-12 bg-slate-50 border border-slate-200 focus:border-slate-400 focus:bg-white outline-none transition-all text-slate-900 placeholder:text-slate-400"
+                                        placeholder="Enter your credentials"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                                    >
+                                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                    </button>
+                                </div>
                             </div>
+
+                            {error && (
+                                <div className="flex items-start gap-3 p-4 bg-rose-50 text-rose-700 text-sm font-medium">
+                                    <ShieldAlert size={18} className="shrink-0 mt-0.5" />
+                                    <span>{error}</span>
+                                </div>
+                            )}
+
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="w-full bg-slate-900 text-white py-4 font-bold text-sm uppercase tracking-widest hover:bg-slate-800 transition-all disabled:opacity-50"
+                            >
+                                {loading ? 'Authenticating...' : 'Login to Portal'}
+                            </button>
+                        </form>
+
+                        {/* Security Notice */}
+                        <div className="mt-8 pt-6 border-t border-slate-100 flex items-start gap-3">
+                            <ShieldAlert size={16} className="text-slate-400 shrink-0 mt-0.5" />
+                            <p className="text-xs text-slate-500 leading-relaxed">
+                                This is a restricted administrative portal of the Athena Institute. Unauthorized access attempts are automatically logged and monitored by AIPP security protocols.
+                            </p>
                         </div>
+                    </div>
 
-                        {error && (
-                            <div className="flex items-start space-x-3 p-4 bg-rose-50 text-rose-600 rounded-2xl text-sm font-medium">
-                                <ShieldAlert size={18} className="shrink-0" />
-                                <span>{error}</span>
-                            </div>
-                        )}
-
-                        <Button
-                            type="submit"
-                            disabled={loading}
-                            className="w-full py-5 text-lg"
-                        >
-                            {loading ? 'Authenticating...' : 'Sign In'}
-                        </Button>
-                    </form>
+                    {/* Footer for mobile */}
+                    <p className="lg:hidden text-center mt-8 text-xs text-slate-400">
+                        © 2024 Athena Institute for Political Praxis
+                    </p>
                 </div>
-
-                <p className="text-center mt-8 text-sm text-slate-400">
-                    Unauthorized access is strictly prohibited.
-                </p>
             </div>
         </div>
     );
