@@ -20,7 +20,7 @@ export default function MessagesAdmin() {
             <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
                 <div className="p-6 border-b border-slate-50">
                     <div className="relative max-w-md">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                        <Search suppressHydrationWarning className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                         <input
                             type="text"
                             placeholder="Search messages..."
@@ -35,7 +35,7 @@ export default function MessagesAdmin() {
                             <div className="flex justify-between items-start mb-4">
                                 <div className="flex items-center space-x-4">
                                     <div className="w-12 h-12 bg-pink-50 text-pink-600 rounded-2xl flex items-center justify-center">
-                                        <MessageSquare size={24} />
+                                        <MessageSquare suppressHydrationWarning size={24} />
                                     </div>
                                     <div>
                                         <h4 className="font-bold text-slate-900">{msg.name}</h4>
@@ -43,7 +43,7 @@ export default function MessagesAdmin() {
                                     </div>
                                 </div>
                                 <div className="flex items-center space-x-2 text-slate-400 text-xs font-bold uppercase tracking-widest">
-                                    <Clock size={14} />
+                                    <Clock suppressHydrationWarning size={14} />
                                     <span>{msg.date}</span>
                                 </div>
                             </div>
@@ -54,11 +54,11 @@ export default function MessagesAdmin() {
                                 </p>
                                 <div className="flex space-x-3">
                                     <Button variant="outline" size="sm" className="space-x-2">
-                                        <Reply size={16} />
+                                        <Reply suppressHydrationWarning size={16} />
                                         <span>Reply Now</span>
                                     </Button>
                                     <Button variant="ghost" size="sm" className="text-rose-600 hover:bg-rose-50 p-2">
-                                        <Trash2 size={18} />
+                                        <Trash2 suppressHydrationWarning size={18} />
                                     </Button>
                                 </div>
                             </div>

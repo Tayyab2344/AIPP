@@ -55,11 +55,11 @@ const BlogsPage = () => {
                             <div className="p-8 flex flex-col flex-grow">
                                 <div className="flex items-center space-x-4 text-xs text-slate-400 mb-4 font-bold uppercase tracking-tighter">
                                     <div className="flex items-center space-x-1">
-                                        <Clock size={14} />
+                                        <Clock suppressHydrationWarning size={14} />
                                         <span>{blog.date}</span>
                                     </div>
                                     <div className="flex items-center space-x-1">
-                                        <User size={14} />
+                                        <User suppressHydrationWarning size={14} />
                                         <span>{blog.author}</span>
                                     </div>
                                 </div>
@@ -73,7 +73,7 @@ const BlogsPage = () => {
 
                                 <Link href={`/blogs/${i}`} className="inline-flex items-center space-x-2 text-violet-600 font-bold text-sm group/link">
                                     <span>Read Article</span>
-                                    <ArrowRight size={16} className="translate-x-0 group-hover/link:translate-x-1 transition-transform" />
+                                    <ArrowRight suppressHydrationWarning size={16} className="translate-x-0 group-hover/link:translate-x-1 transition-transform" />
                                 </Link>
                             </div>
                         </article>

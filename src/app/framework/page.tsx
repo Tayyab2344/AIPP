@@ -41,22 +41,22 @@ const FrameworkPage = () => {
                         </div>
                         <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-px bg-slate-100 border border-slate-100">
                             <div className="bg-white p-10 space-y-4">
-                                <Database className="text-[var(--primary)] w-6 h-6" />
+                                <Database suppressHydrationWarning className="text-[var(--primary)] w-6 h-6" />
                                 <h3 className="text-xl font-serif text-slate-900">Evidence-Based</h3>
                                 <p className="text-sm text-slate-500 leading-relaxed">Rigorous data collections and quantitative analysis form the basis of our policy recommendations.</p>
                             </div>
                             <div className="bg-white p-10 space-y-4">
-                                <Globe className="text-[var(--primary)] w-6 h-6" />
+                                <Globe suppressHydrationWarning className="text-[var(--primary)] w-6 h-6" />
                                 <h3 className="text-xl font-serif text-slate-900">Interdisciplinary</h3>
                                 <p className="text-sm text-slate-500 leading-relaxed">Crossing traditional academic silos to understand the interconnected causality of power dynamics.</p>
                             </div>
                             <div className="bg-white p-10 space-y-4">
-                                <TrendingUp className="text-[var(--primary)] w-6 h-6" />
+                                <TrendingUp suppressHydrationWarning className="text-[var(--primary)] w-6 h-6" />
                                 <h3 className="text-xl font-serif text-slate-900">Forward-Looking</h3>
                                 <p className="text-sm text-slate-500 leading-relaxed">Identifying tomorrow's institutional challenges through predictive modeling and strategic foresight.</p>
                             </div>
                             <div className="bg-[#1A5261] p-10 space-y-4 text-white">
-                                <Users className="text-white/60 w-6 h-6" />
+                                <Users suppressHydrationWarning className="text-white/60 w-6 h-6" />
                                 <h3 className="text-xl font-serif">Institutional Discourse</h3>
                                 <p className="text-sm text-white/80 leading-relaxed">Translating complex research into the language of statesmanship and actionable legislative frameworks.</p>
                             </div>
@@ -74,7 +74,7 @@ const FrameworkPage = () => {
                             <h2 className="text-4xl font-serif text-slate-900 italic leading-tight">Key Research Areas</h2>
                         </div>
                         <Link href="/publications" className="text-xs font-bold uppercase tracking-widest flex items-center gap-2 hover:text-[var(--primary)] transition-colors">
-                            View All Clusters <ArrowRight size={14} />
+                            View All Clusters <ArrowRight suppressHydrationWarning size={14} />
                         </Link>
                     </div>
 
@@ -133,7 +133,7 @@ const FrameworkPage = () => {
                         ].map((report, idx) => (
                             <div key={idx} className="flex gap-8 p-8 border border-slate-100 hover:shadow-lg transition-all items-start bg-[#FBFBFA]">
                                 <div className="w-24 h-32 bg-slate-100 flex-shrink-0 flex flex-col items-center justify-center p-4 text-center">
-                                    <FileText className="text-slate-300 mb-2" size={32} />
+                                    <FileText suppressHydrationWarning className="text-slate-300 mb-2" size={32} />
                                     <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">{report.type}</span>
                                 </div>
                                 <div>
@@ -141,7 +141,7 @@ const FrameworkPage = () => {
                                     <h3 className="text-xl font-serif text-slate-900 mb-4 leading-tight">{report.title}</h3>
                                     <p className="text-sm text-slate-500 mb-6 leading-relaxed">{report.desc}</p>
                                     <Link href="#" className="text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 hover:gap-3 transition-all">
-                                        Access Report <ArrowRight size={12} className="text-[var(--primary)]" />
+                                        Access Report <ArrowRight suppressHydrationWarning size={12} className="text-[var(--primary)]" />
                                     </Link>
                                 </div>
                             </div>
@@ -186,7 +186,7 @@ const FrameworkPage = () => {
             {/* Shape the Discourse */}
             <section className="py-24 bg-[#FBFBFA]">
                 <div className="max-w-3xl mx-auto px-4 text-center">
-                    <BookOpen size={48} className="mx-auto text-[var(--primary)] mb-8 opacity-50" />
+                    <BookOpen suppressHydrationWarning size={48} className="mx-auto text-[var(--primary)] mb-8 opacity-50" />
                     <h2 className="text-4xl font-serif text-slate-900 mb-8 italic">Shape the Discourse</h2>
                     <p className="text-lg text-slate-500 font-medium leading-relaxed mb-12">
                         Join our network of scholars and policy experts. We invite formal dialogue, partnership inquiries, and strategic consultations.

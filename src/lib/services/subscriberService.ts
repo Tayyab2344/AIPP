@@ -5,6 +5,7 @@ import {
     query,
     where,
     getDocs,
+    orderBy,
     serverTimestamp
 } from "firebase/firestore";
 
@@ -34,5 +35,14 @@ export const subscriberService = {
         });
 
         return docRef.id;
+    },
+
+    getSubscribers: async () => {
+        const q = query(collection(db, COLLECTION_NAME), orderBy("subscribedDate", "desc"));
+        const snapshot = await getDocs(q);
+        return snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
     }
 };

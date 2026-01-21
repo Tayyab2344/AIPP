@@ -1,8 +1,12 @@
 export interface BlogPost {
     id: string;
+    slug: string;
     title: string;
+    excerpt: string;
     content: string;
-    featuredImage: string;
+    category: string;
+    status: 'draft' | 'published' | 'archived';
+    featuredImage?: string;
     publishDate: any; // Firestore Timestamp
     author: string;
 }

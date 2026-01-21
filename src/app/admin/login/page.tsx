@@ -45,7 +45,7 @@ export default function AdminLogin() {
                     <div>
                         <Link href="/" className="flex items-center gap-3">
                             <img
-                                src="/روشنِ_نسواں__2_-removebg-preview (1).png"
+                                src="/aipp-logo.png"
                                 alt="AIPP Logo"
                                 className="h-12 w-12 object-contain"
                             />
@@ -105,7 +105,7 @@ export default function AdminLogin() {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     className="w-full px-4 py-4 bg-slate-50 border border-slate-200 focus:border-slate-400 focus:bg-white outline-none transition-all text-slate-900 placeholder:text-slate-400"
-                                    placeholder="e.g. admin@aipp.org"
+                                    placeholder="e.g. Connect.aipp@gmail.com"
                                 />
                             </div>
 

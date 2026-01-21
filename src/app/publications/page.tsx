@@ -1,44 +1,34 @@
-"use client";
+'use client';
 
-import { useState } from 'react';
-import { FileText, Download, BookOpen, ChevronRight, CheckCircle2, ArrowRight, TrendingUp } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { FileText, Download, BookOpen, ChevronRight, CheckCircle2, ArrowRight, TrendingUp, Loader2 } from 'lucide-react';
 import Link from 'next/link';
+import { publicationService } from '@/lib/services/publicationService';
+import { Publication } from '@/types';
 
 const PublicationsPage = () => {
     const [activeFilter, setActiveFilter] = useState('Newest');
+    const [publications, setPublications] = useState<Publication[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchPublications = async () => {
+            try {
+                const data = await publicationService.getPublished();
+                setPublications(data);
+            } catch (error) {
+                console.error("Error fetching publications:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchPublications();
+    }, []);
 
     const publicationTypes = [
-        { label: 'Research Papers', count: 24 },
-        { label: 'Policy Briefs', count: 12 },
-        { label: 'Analytical Reports', count: 8 },
-        { label: 'Monographs', count: 3 },
-    ];
-
-    const publications = [
-        {
-            type: 'RESEARCH PAPER',
-            date: 'OCTOBER 2023',
-            title: 'Technocratic Feminism and the Bureaucratic State: A Strategic Analysis',
-            abstract: 'An examination of the integration of gender-responsive mechanisms within the administrative structures of contemporary African states, evaluating the tension between radical transformation and bureaucratic inertia.',
-            author: 'Dr. Elena Kante',
-            readTime: '12 min read'
-        },
-        {
-            type: 'POLICY BRIEF',
-            date: 'AUGUST 2023',
-            title: 'Structural Quotas vs. Organic Inclusion: Assessing Long-term Political Efficacy',
-            abstract: 'Comparative research into the sustainability of legislative quotas in Nordic and East African contexts, focusing on the quality of participation over descriptive representation.',
-            author: 'Prof. Sarah Miller',
-            readTime: '8 min read'
-        },
-        {
-            type: 'ANALYTICAL REPORT',
-            date: 'JULY 2023',
-            title: "Digital Praxis: The Impact of Networked Activism on Institutional Change",
-            abstract: 'How decentralized digital movements are reshaping formal political agendas and the risks of technological capture by institutional elites.',
-            author: 'Marcus Thorne',
-            readTime: '22 min read'
-        }
+        { label: 'Research Papers', count: publications.filter(p => p.category === 'Research Paper').length },
+        { label: 'Policy Briefs', count: publications.filter(p => p.category === 'Policy Brief').length },
+        { label: 'Analytical Reports', count: publications.filter(p => p.category === 'Report').length },
     ];
 
     return (
@@ -66,11 +56,10 @@ const PublicationsPage = () => {
                         </div>
                         <div className="lg:col-span-5 relative hidden lg:block">
                             <div className="aspect-square bg-slate-50 rounded-full flex items-center justify-center overflow-hidden">
-                                {/* Abstract Graphic placeholder using CSS gradients/lines if image not available */}
                                 <div className="absolute inset-0 opacity-20"
                                     style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #1A5261 1px, transparent 0)', backgroundSize: '24px 24px' }} />
                                 <div className="z-10 w-full h-full bg-gradient-to-br from-transparent to-slate-200/50 flex items-center justify-center p-12">
-                                    <FileText size={120} className="text-slate-200" strokeWidth={0.5} />
+                                    <FileText suppressHydrationWarning size={120} className="text-slate-200" strokeWidth={0.5} />
                                 </div>
                             </div>
                         </div>
@@ -101,7 +90,7 @@ const PublicationsPage = () => {
                                 All AIPP publications undergo a rigorous double-blind peer-review process and adhere to the highest standards of evidence-based political analysis.
                             </p>
                             <Link href="#" className="flex items-center gap-2 text-[10px] font-bold text-[var(--primary)] uppercase tracking-widest group">
-                                <CheckCircle2 size={14} /> View Review Standards
+                                <CheckCircle2 suppressHydrationWarning size={14} /> View Review Standards
                             </Link>
                         </div>
 
@@ -115,7 +104,7 @@ const PublicationsPage = () => {
                                     <option>2022</option>
                                 </select>
                                 <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
-                                    <ChevronRight size={14} className="rotate-90" />
+                                    <ChevronRight suppressHydrationWarning size={14} className="rotate-90" />
                                 </div>
                             </div>
                         </div>
@@ -123,18 +112,17 @@ const PublicationsPage = () => {
 
                     {/* Main Content */}
                     <main className="lg:col-span-9 space-y-16">
-
                         {/* Thematic Focus Areas */}
                         <div>
                             <h2 className="text-xl font-serif text-slate-900 mb-8 italic">Thematic Focus Areas</h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-slate-100 border border-slate-100">
                                 <div className="bg-white p-8 group cursor-pointer hover:bg-slate-50 transition-all">
-                                    <BookOpen className="text-[var(--primary)] mb-6 opacity-40" size={24} />
+                                    <BookOpen suppressHydrationWarning className="text-[var(--primary)] mb-6 opacity-40" size={24} />
                                     <h3 className="text-lg font-serif text-slate-900 mb-3 italic">Gender-Responsive Governance</h3>
                                     <p className="text-sm text-slate-500 leading-relaxed">Inquiry into institutional re-engineering and policy frameworks for balanced representation.</p>
                                 </div>
                                 <div className="bg-white p-8 group cursor-pointer hover:bg-slate-50 transition-all">
-                                    <TrendingUp className="text-[var(--primary)] mb-6 opacity-40" size={24} />
+                                    <TrendingUp suppressHydrationWarning className="text-[var(--primary)] mb-6 opacity-40" size={24} />
                                     <h3 className="text-lg font-serif text-slate-900 mb-3 italic">Political Strategy</h3>
                                     <p className="text-sm text-slate-500 leading-relaxed">Analytical frameworks for navigating complex political ecosystems and leadership transitions.</p>
                                 </div>
@@ -158,37 +146,53 @@ const PublicationsPage = () => {
                                 </div>
                             </div>
 
-                            <div className="space-y-12">
-                                {publications.map((pub, i) => (
-                                    <article key={i} className="group grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-slate-100 last:border-0">
-                                        <div className="md:col-span-9 space-y-4">
-                                            <p className="text-[10px] font-bold text-[var(--primary)] uppercase tracking-widest">
-                                                {pub.type} • {pub.date}
-                                            </p>
-                                            <h3 className="text-2xl font-serif text-slate-900 leading-tight group-hover:text-[var(--primary)] transition-colors">
-                                                {pub.title}
-                                            </h3>
-                                            <p className="text-sm text-slate-500 leading-relaxed italic">
-                                                {pub.abstract}
-                                            </p>
-                                            <div className="flex items-center gap-4 text-[10px] font-bold uppercase tracking-widest text-slate-400">
-                                                <div className="w-6 h-6 bg-slate-200 rounded-full" />
-                                                <span>{pub.author}</span>
-                                                <span className="w-1 h-1 bg-slate-300 rounded-full" />
-                                                <span>{pub.readTime}</span>
+                            {loading ? (
+                                <div className="py-20 flex flex-col items-center justify-center space-y-4">
+                                    <Loader2 suppressHydrationWarning className="animate-spin text-[var(--primary)]" size={32} />
+                                    <p className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em]">Retrieving Repository...</p>
+                                </div>
+                            ) : (
+                                <div className="space-y-12">
+                                    {publications.length > 0 ? publications.map((pub, i) => (
+                                        <article key={i} className="group grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-slate-100 last:border-0">
+                                            <div className="md:col-span-9 space-y-4">
+                                                <p className="text-[10px] font-bold text-[var(--primary)] uppercase tracking-widest">
+                                                    {pub.category} • {pub.year}
+                                                </p>
+                                                <h3 className="text-2xl font-serif text-slate-900 leading-tight group-hover:text-[var(--primary)] transition-colors">
+                                                    {pub.title}
+                                                </h3>
+                                                <p className="text-sm text-slate-500 leading-relaxed italic">
+                                                    {pub.summary}
+                                                </p>
+                                                <div className="flex items-center gap-4 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                                                    <div className="w-6 h-6 bg-slate-200 rounded-full" />
+                                                    <span>AIPP Research Division</span>
+                                                    <span className="w-1 h-1 bg-slate-300 rounded-full" />
+                                                    <span>Formal Repository</span>
+                                                </div>
                                             </div>
+                                            <div className="md:col-span-3 flex flex-col gap-3 justify-center">
+                                                <a
+                                                    href={pub.pdfUrl}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="flex items-center justify-between px-4 py-3 bg-[#1A5261] text-white text-[10px] font-bold uppercase tracking-widest hover:bg-[#14414d] transition-all"
+                                                >
+                                                    PDF <Download suppressHydrationWarning size={14} />
+                                                </a>
+                                                <button className="flex items-center justify-between px-4 py-3 border border-slate-200 text-slate-900 text-[10px] font-bold uppercase tracking-widest hover:bg-slate-50 transition-all">
+                                                    Details <ArrowRight suppressHydrationWarning size={14} />
+                                                </button>
+                                            </div>
+                                        </article>
+                                    )) : (
+                                        <div className="py-12 text-center text-slate-400 italic text-sm">
+                                            No publications currently available in the repository.
                                         </div>
-                                        <div className="md:col-span-3 flex flex-col gap-3 justify-center">
-                                            <button className="flex items-center justify-between px-4 py-3 bg-[#1A5261] text-white text-[10px] font-bold uppercase tracking-widest hover:bg-[#14414d] transition-all">
-                                                PDF <Download size={14} />
-                                            </button>
-                                            <button className="flex items-center justify-between px-4 py-3 border border-slate-200 text-slate-900 text-[10px] font-bold uppercase tracking-widest hover:bg-slate-50 transition-all">
-                                                Read <ArrowRight size={14} />
-                                            </button>
-                                        </div>
-                                    </article>
-                                ))}
-                            </div>
+                                    )}
+                                </div>
+                            )}
 
                             <div className="mt-12">
                                 <button className="w-full py-4 bg-slate-100 text-[10px] font-bold text-slate-600 uppercase tracking-widest hover:bg-slate-200 transition-all">
@@ -196,12 +200,11 @@ const PublicationsPage = () => {
                                 </button>
                             </div>
                         </div>
-
                     </main>
                 </div>
             </div>
 
-            {/* Collaborative act footer */}
+            {/* Collaborative footer */}
             <section className="mt-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="bg-slate-50 p-12 sm:p-20 text-center rounded-sm">
                     <blockquote className="text-3xl sm:text-4xl font-serif text-slate-900 mb-8 italic">
@@ -215,7 +218,7 @@ const PublicationsPage = () => {
                             Call for Papers 2024 <ArrowRight size={14} className="text-[var(--primary)]" />
                         </Link>
                         <Link href="#" className="flex items-center gap-2 hover:text-[var(--primary)] transition-colors">
-                            Connect for Peer Exchange <ArrowRight size={14} className="text-[var(--primary)]" />
+                            Connect for Peer Exchange <ArrowRight suppressHydrationWarning size={14} className="text-[var(--primary)]" />
                         </Link>
                     </div>
                 </div>

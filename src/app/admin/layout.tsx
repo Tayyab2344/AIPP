@@ -5,25 +5,30 @@ import { auth } from '@/lib/firebase';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
-    LayoutDashboard,
+    LayoutGrid,
     BookOpen,
-    Video,
     FileText,
+    FlaskConical,
+    Sparkles,
     Users,
-    MessageSquare,
+    Mail,
     Settings,
     LogOut,
-    ChevronRight
+    Search,
+    Bell,
+    BarChart3,
 } from 'lucide-react';
 
 const navItems = [
-    { label: 'Dashboard', href: '/admin/dashboard', icon: LayoutDashboard },
-    { label: 'Blogs', href: '/admin/blogs', icon: BookOpen },
-    { label: 'Labs', href: '/admin/labs', icon: Video },
+    { label: 'Overview', href: '/admin/dashboard', icon: LayoutGrid },
+    { label: 'Programs', href: '/admin/programs', icon: BookOpen },
     { label: 'Publications', href: '/admin/publications', icon: FileText },
+    { label: 'Labs', href: '/admin/labs', icon: FlaskConical },
+    { label: 'Insights', href: '/admin/insights', icon: BarChart3 },
     { label: 'Subscribers', href: '/admin/subscribers', icon: Users },
-    { label: 'Messages', href: '/admin/messages', icon: MessageSquare },
+    { label: 'Messages', href: '/admin/messages', icon: Mail },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -47,8 +52,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
     if (loading) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-slate-50">
-                <div className="w-8 h-8 border-4 border-violet-600 border-t-transparent rounded-full animate-spin" />
+            <div className="min-h-screen flex items-center justify-center bg-[#F8F9FA]">
+                <div className="w-8 h-8 border-4 border-[#2F4F4F] border-t-transparent rounded-full animate-spin" />
             </div>
         );
     }
@@ -58,54 +63,123 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     }
 
     return (
-        <div className="min-h-screen bg-slate-50 flex">
+        <div className="min-h-screen bg-[#F8F9FA] flex">
             {/* Sidebar */}
-            <aside className="w-72 bg-white border-r border-slate-200 flex flex-col fixed inset-y-0">
-                <div className="p-8">
-                    <Link href="/" className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-pink-500">
-                        Empower Admin
-                    </Link>
+            <aside className="w-64 bg-[#2F4F4F] flex flex-col fixed inset-y-0">
+                {/* Logo Section */}
+                <div className="p-6 border-b border-white/10">
+                    <div className="flex items-center space-x-3">
+                        <div className="w-10 h-10 bg-[#B19B4C] rounded-lg flex items-center justify-center">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect x="3" y="3" width="7" height="7" fill="white" />
+                                <rect x="14" y="3" width="7" height="7" fill="white" />
+                                <rect x="3" y="14" width="7" height="7" fill="white" />
+                                <rect x="14" y="14" width="7" height="7" fill="white" />
+                            </svg>
+                        </div>
+                        <div>
+                            <div className="text-white font-bold text-lg tracking-wide">AIPP ADMIN</div>
+                            <div className="text-[#7FB3B3] text-xs tracking-widest uppercase">Think Tank</div>
+                        </div>
+                    </div>
                 </div>
 
-                <nav className="flex-grow px-4 space-y-2">
+                {/* Navigation */}
+                <nav className="flex-grow py-4 px-3 space-y-1">
                     {navItems.map((item) => {
-                        const isActive = pathname === item.href;
+                        const isActive = pathname === item.href || (item.href === '/admin/dashboard' && pathname === '/admin');
                         return (
                             <Link
                                 key={item.href}
                                 href={item.href}
-                                className={`flex items-center justify-between px-4 py-3 rounded-2xl transition-all group ${isActive
-                                        ? 'bg-violet-600 text-white shadow-lg shadow-violet-500/20'
-                                        : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
+                                className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all ${isActive
+                                    ? 'bg-[#B19B4C] text-white'
+                                    : 'text-[#A8C5C5] hover:bg-white/5 hover:text-white'
                                     }`}
                             >
-                                <div className="flex items-center space-x-3">
-                                    <item.icon size={20} />
-                                    <span className="text-sm font-semibold">{item.label}</span>
-                                </div>
-                                {isActive && <ChevronRight size={16} />}
+                                <item.icon size={20} />
+                                <span className="text-sm font-medium">{item.label}</span>
                             </Link>
                         );
                     })}
                 </nav>
 
-                <div className="p-4 border-t border-slate-100">
-                    <button
-                        onClick={() => auth.signOut()}
-                        className="w-full flex items-center space-x-3 px-4 py-3 rounded-2xl text-slate-500 hover:bg-rose-50 hover:text-rose-600 transition-all font-semibold text-sm"
-                    >
-                        <LogOut size={20} />
-                        <span>Sign Out</span>
-                    </button>
+                {/* Bottom Actions - Settings & Logout */}
+                <div className="mt-auto">
+                    <div className="px-3 py-2 space-y-1">
+                        <Link
+                            href="/admin/settings"
+                            className="flex items-center space-x-3 px-4 py-3 rounded-lg text-[#A8C5C5] hover:bg-white/5 hover:text-white transition-all"
+                        >
+                            <Settings suppressHydrationWarning size={20} />
+                            <span className="text-sm font-medium">Settings</span>
+                        </Link>
+                        <button
+                            onClick={() => auth.signOut()}
+                            className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-rose-400 hover:bg-rose-500/10 transition-all"
+                        >
+                            <LogOut suppressHydrationWarning size={20} />
+                            <span className="text-sm font-medium">Logout</span>
+                        </button>
+                    </div>
+
+                    {/* Footer */}
+                    <div className="px-4 py-4 border-t border-white/10">
+                        <p className="text-[10px] text-[#7FB3B3] text-center">
+                            © 2024 Athena Institute for Political Praxis. Institutional Access Only.
+                        </p>
+                        <div className="flex justify-center space-x-4 mt-2 text-[10px] text-[#7FB3B3]">
+                            <a href="#" className="hover:text-white transition-colors underline">Privacy Protocol</a>
+                            <a href="#" className="hover:text-white transition-colors underline">System Documentation</a>
+                            <a href="#" className="hover:text-white transition-colors underline">Help Desk</a>
+                        </div>
+                    </div>
                 </div>
             </aside>
 
             {/* Main Content */}
-            <main className="flex-grow ml-72 p-10">
-                <div className="max-w-6xl mx-auto">
+            <div className="flex-grow ml-64 flex flex-col min-h-screen">
+                {/* Top Header */}
+                <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
+                    <div className="flex items-center justify-between px-8 py-4">
+                        <h1 className="text-xl font-semibold text-slate-800">Dashboard Overview</h1>
+
+                        <div className="flex items-center space-x-6">
+                            {/* Search Bar */}
+                            <div className="relative">
+                                <Search suppressHydrationWarning size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                                <input
+                                    type="text"
+                                    placeholder="Search resources..."
+                                    className="w-64 pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-[#B19B4C] focus:ring-1 focus:ring-[#B19B4C] transition-all"
+                                />
+                            </div>
+
+                            {/* Notification Bell */}
+                            <button className="relative p-2 text-slate-500 hover:text-slate-700 transition-colors">
+                                <Bell suppressHydrationWarning size={20} />
+                                <span className="absolute top-1 right-1 w-2 h-2 bg-rose-500 rounded-full"></span>
+                            </button>
+
+                            {/* User Profile */}
+                            <div className="flex items-center space-x-3">
+                                <div className="text-right">
+                                    <div className="text-sm font-semibold text-slate-800">Dr. Alistair Vance</div>
+                                    <div className="text-xs text-slate-500">Senior Administrator</div>
+                                </div>
+                                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#2F4F4F] to-[#4A7070] flex items-center justify-center text-white font-semibold text-sm">
+                                    AV
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                {/* Page Content */}
+                <main className="flex-grow p-8">
                     {children}
-                </div>
-            </main>
+                </main>
+            </div>
         </div>
     );
 }

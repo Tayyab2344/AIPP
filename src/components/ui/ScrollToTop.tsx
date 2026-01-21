@@ -43,7 +43,7 @@ const ScrollToTop = () => {
                 `}
                 aria-label="Scroll to top"
             >
-                <ChevronUp size={24} />
+                <ChevronUp suppressHydrationWarning size={24} />
             </button>
         </div>
     );

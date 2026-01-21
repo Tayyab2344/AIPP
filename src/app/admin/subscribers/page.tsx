@@ -19,7 +19,7 @@ export default function SubscribersAdmin() {
                     <p className="text-slate-500 mt-1">View and manage your community mailing list.</p>
                 </div>
                 <Button className="space-x-2 bg-emerald-600 hover:bg-emerald-700 shadow-emerald-500/20">
-                    <Download size={18} />
+                    <Download suppressHydrationWarning size={18} />
                     <span>Export CSV</span>
                 </Button>
             </div>
@@ -27,7 +27,7 @@ export default function SubscribersAdmin() {
             <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
                 <div className="p-6 border-b border-slate-50">
                     <div className="relative max-w-md">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                        <Search suppressHydrationWarning className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                         <input
                             type="text"
                             placeholder="Search by email..."
@@ -52,7 +52,7 @@ export default function SubscribersAdmin() {
                                     <td className="px-8 py-6">
                                         <div className="flex items-center space-x-4">
                                             <div className="p-3 bg-emerald-50 text-emerald-600 rounded-xl">
-                                                <Mail size={20} />
+                                                <Mail suppressHydrationWarning size={20} />
                                             </div>
                                             <p className="font-bold text-slate-900 leading-tight">{sub.email}</p>
                                         </div>
@@ -68,7 +68,7 @@ export default function SubscribersAdmin() {
                                     </td>
                                     <td className="px-8 py-6 text-right">
                                         <div className="flex justify-end space-x-1">
-                                            <Button variant="ghost" size="sm" className="p-2 text-rose-600 hover:bg-rose-50"><Trash2 size={18} /></Button>
+                                            <Button variant="ghost" size="sm" className="p-2 text-rose-600 hover:bg-rose-50"><Trash2 suppressHydrationWarning size={18} /></Button>
                                         </div>
                                     </td>
                                 </tr>

@@ -93,7 +93,7 @@ const AboutPage = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10">
                         {principles.map((item, idx) => (
                             <div key={idx} className="flex items-start space-x-4">
-                                <CheckCircle2 className="text-[var(--primary)] mt-1 flex-shrink-0" size={20} />
+                                <CheckCircle2 suppressHydrationWarning className="text-[var(--primary)] mt-1 flex-shrink-0" size={20} />
                                 <div>
                                     <h3 className="font-bold text-slate-900 mb-1 sm:mb-2">{item.title}:</h3>
                                     <p className="text-slate-600 text-sm leading-relaxed">{item.description}</p>

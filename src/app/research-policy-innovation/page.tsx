@@ -49,7 +49,7 @@ export default function RPIPage() {
                         <div className="bg-white p-8 border border-slate-200">
                             <div className="flex items-start gap-4 mb-4">
                                 <div className="p-2 bg-slate-100 rounded">
-                                    <Users size={24} className="text-[#1A5261]" />
+                                    <Users suppressHydrationWarning size={24} className="text-[#1A5261]" />
                                 </div>
                                 <div>
                                     <h3 className="font-bold text-slate-900 mb-2">Interdisciplinary Frameworks</h3>
@@ -62,7 +62,7 @@ export default function RPIPage() {
                         <div className="bg-white p-8 border border-slate-200">
                             <div className="flex items-start gap-4 mb-4">
                                 <div className="p-2 bg-slate-100 rounded">
-                                    <Lightbulb size={24} className="text-[#1A5261]" />
+                                    <Lightbulb suppressHydrationWarning size={24} className="text-[#1A5261]" />
                                 </div>
                                 <div>
                                     <h3 className="font-bold text-slate-900 mb-2">Evidence-Based Innovation</h3>
@@ -75,7 +75,7 @@ export default function RPIPage() {
                         <div className="bg-white p-8 border border-slate-200">
                             <div className="flex items-start gap-4 mb-4">
                                 <div className="p-2 bg-slate-100 rounded">
-                                    <Search size={24} className="text-[#1A5261]" />
+                                    <Search suppressHydrationWarning size={24} className="text-[#1A5261]" />
                                 </div>
                                 <div>
                                     <h3 className="font-bold text-slate-900 mb-2">Research Banking Methods</h3>
@@ -88,7 +88,7 @@ export default function RPIPage() {
                         <div className="bg-white p-8 border border-slate-200">
                             <div className="flex items-start gap-4 mb-4">
                                 <div className="p-2 bg-slate-100 rounded">
-                                    <Award size={24} className="text-[#1A5261]" />
+                                    <Award suppressHydrationWarning size={24} className="text-[#1A5261]" />
                                 </div>
                                 <div>
                                     <h3 className="font-bold text-slate-900 mb-2">Scholarly Excellence</h3>
@@ -145,7 +145,7 @@ export default function RPIPage() {
                             </p>
                         </div>
                         <Link href="/contact" className="text-[#1A5261] font-bold text-sm uppercase tracking-widest mt-4 md:mt-0 hover:underline flex items-center gap-2">
-                            Explore All Programs <ArrowRight size={16} />
+                            Explore All Programs <ArrowRight suppressHydrationWarning size={16} />
                         </Link>
                     </div>
 
@@ -153,7 +153,7 @@ export default function RPIPage() {
                         {/* Program 1 */}
                         <div className="border border-slate-200 p-8">
                             <div className="flex items-center gap-3 mb-4">
-                                <BookOpen size={20} className="text-[#1A5261]" />
+                                <BookOpen suppressHydrationWarning size={20} className="text-[#1A5261]" />
                                 <h3 className="font-bold text-slate-900">The Athena Praxis Lab</h3>
                             </div>
                             <p className="text-slate-600 text-sm mb-6">
@@ -181,7 +181,7 @@ export default function RPIPage() {
                         {/* Program 2 */}
                         <div className="border border-slate-200 p-8">
                             <div className="flex items-center gap-3 mb-4">
-                                <Users size={20} className="text-[#1A5261]" />
+                                <Users suppressHydrationWarning size={20} className="text-[#1A5261]" />
                                 <h3 className="font-bold text-slate-900">Strategic Fellows Program</h3>
                             </div>
                             <p className="text-slate-600 text-sm mb-6">
@@ -220,7 +220,7 @@ export default function RPIPage() {
                         {/* Publication 1 */}
                         <div className="bg-white border border-slate-200 overflow-hidden">
                             <div className="aspect-[4/3] bg-[#2D241E] flex items-center justify-center">
-                                <FileText size={48} className="text-stone-600" />
+                                <FileText suppressHydrationWarning size={48} className="text-stone-600" />
                             </div>
                             <div className="p-6">
                                 <p className="text-xs text-slate-500 uppercase tracking-widest mb-2">Research Paper</p>
@@ -234,7 +234,7 @@ export default function RPIPage() {
                         {/* Publication 2 */}
                         <div className="bg-white border border-slate-200 overflow-hidden">
                             <div className="aspect-[4/3] bg-[#2D241E] flex items-center justify-center">
-                                <Globe size={48} className="text-stone-600" />
+                                <Globe suppressHydrationWarning size={48} className="text-stone-600" />
                             </div>
                             <div className="p-6">
                                 <p className="text-xs text-slate-500 uppercase tracking-widest mb-2">Policy Brief</p>
@@ -248,7 +248,7 @@ export default function RPIPage() {
                         {/* Publication 3 */}
                         <div className="bg-white border border-slate-200 overflow-hidden">
                             <div className="aspect-[4/3] bg-[#2D241E] flex items-center justify-center">
-                                <BookOpen size={48} className="text-stone-600" />
+                                <BookOpen suppressHydrationWarning size={48} className="text-stone-600" />
                             </div>
                             <div className="p-6">
                                 <p className="text-xs text-slate-500 uppercase tracking-widest mb-2">Review Article</p>

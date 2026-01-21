@@ -22,7 +22,7 @@ const StrategicLearning = () => {
                             Our online labs and strategic sessions enhance praxis, simulations, policy analysis, leadership development, and foresight training, providing a dynamic environment for intellectual growth and practical application.
                         </p>
                         <Link href="/framework" className="inline-flex items-center text-[var(--primary)] font-bold text-base sm:text-lg hover:underline gap-2">
-                            Learn More About Labs <ArrowRight size={20} />
+                            Learn More About Labs <ArrowRight suppressHydrationWarning size={20} />
                         </Link>
                     </div>
                 </div>

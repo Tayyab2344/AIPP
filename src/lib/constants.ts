@@ -19,6 +19,13 @@ export const SITE_CONFIG = {
         linktree: 'https://linktr.ee/aipp_org',
         wix: 'https://connectaipp.wixsite.com/athena-institute-for',
     },
+    social: {
+        instagram: 'https://www.instagram.com/aipp_org',
+        x: 'https://x.com/aipp_institute',
+        discord: 'https://discord.com/invite/gBP57ahN',
+        linkedin: 'https://www.linkedin.com/company/athena-institute-for-political-praxis-aipp/posts/?feedView=all',
+        substack: 'https://substack.com/@aippdiscourse'
+    }
 };
 
 export const NAV_LINKS = [

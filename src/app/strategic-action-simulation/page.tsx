@@ -67,7 +67,7 @@ export default function SASPage() {
                         {/* Theory */}
                         <div className="bg-white p-8 border border-slate-200">
                             <div className="w-10 h-10 bg-amber-100 rounded flex items-center justify-center mb-6">
-                                <BookOpen size={20} className="text-amber-700" />
+                                <BookOpen suppressHydrationWarning size={20} className="text-amber-700" />
                             </div>
                             <h3 className="text-amber-700 font-bold uppercase tracking-widest text-sm mb-4">Theory</h3>
                             <p className="text-slate-600 text-sm leading-relaxed">
@@ -78,7 +78,7 @@ export default function SASPage() {
                         {/* Reflection */}
                         <div className="bg-white p-8 border border-slate-200">
                             <div className="w-10 h-10 bg-slate-100 rounded flex items-center justify-center mb-6">
-                                <Brain size={20} className="text-slate-700" />
+                                <Brain suppressHydrationWarning size={20} className="text-slate-700" />
                             </div>
                             <h3 className="text-slate-700 font-bold uppercase tracking-widest text-sm mb-4">Reflection</h3>
                             <p className="text-slate-600 text-sm leading-relaxed">
@@ -89,7 +89,7 @@ export default function SASPage() {
                         {/* Action */}
                         <div className="bg-white p-8 border border-slate-200">
                             <div className="w-10 h-10 bg-teal-100 rounded flex items-center justify-center mb-6">
-                                <Zap size={20} className="text-teal-700" />
+                                <Zap suppressHydrationWarning size={20} className="text-teal-700" />
                             </div>
                             <h3 className="text-teal-700 font-bold uppercase tracking-widest text-sm mb-4">Action</h3>
                             <p className="text-slate-600 text-sm leading-relaxed">
@@ -148,7 +148,7 @@ export default function SASPage() {
 
                             <ul className="space-y-4">
                                 <li className="flex items-center gap-3">
-                                    <CheckCircle size={18} className="text-teal-600" />
+                                    <CheckCircle suppressHydrationWarning size={18} className="text-teal-600" />
                                     <span className="text-slate-700 font-medium">12+ Simulation-Based Sessions</span>
                                 </li>
                                 <li className="flex items-center gap-3">
@@ -166,7 +166,7 @@ export default function SASPage() {
                         <div className="space-y-4">
                             <div className="bg-white p-6 border border-slate-200 flex items-center justify-between">
                                 <div className="flex items-center gap-4">
-                                    <Target size={24} className="text-slate-600" />
+                                    <Target suppressHydrationWarning size={24} className="text-slate-600" />
                                     <div>
                                         <h3 className="font-bold text-slate-900">The Sovereignty Simulation</h3>
                                     </div>
@@ -178,7 +178,7 @@ export default function SASPage() {
 
                             <div className="bg-white p-6 border border-slate-200 flex items-center justify-between">
                                 <div className="flex items-center gap-4">
-                                    <Users size={24} className="text-slate-600" />
+                                    <Users suppressHydrationWarning size={24} className="text-slate-600" />
                                     <div>
                                         <h3 className="font-bold text-slate-900">Policy War-Gaming</h3>
                                     </div>

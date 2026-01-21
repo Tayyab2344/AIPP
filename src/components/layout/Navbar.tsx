@@ -41,7 +41,7 @@ const Navbar = () => {
                     <div className="flex-shrink-0">
                         <Link href="/" className="flex items-center gap-3">
                             <img
-                                src="/روشنِ_نسواں__2_-removebg-preview (1).png"
+                                src="/aipp-logo.png"
                                 alt="AIPP Logo"
                                 className="h-14 w-auto object-contain"
                             />
@@ -64,11 +64,13 @@ const Navbar = () => {
                                 {link.dropdown ? (
                                     <>
                                         <button
+                                            type="button"
+                                            suppressHydrationWarning
                                             className={`flex items-center space-x-1 text-xs font-bold uppercase tracking-widest px-3 py-2 transition-colors ${activeDropdown === link.label ? 'text-[var(--primary)]' : 'text-slate-900 hover:text-[var(--primary)]'
                                                 }`}
                                         >
                                             <span>{link.label}</span>
-                                            <ChevronDown size={14} className={`transition-transform duration-200 ${activeDropdown === link.label ? 'rotate-180' : ''}`} />
+                                            <ChevronDown suppressHydrationWarning size={14} className={`transition-transform duration-200 ${activeDropdown === link.label ? 'rotate-180' : ''}`} />
                                         </button>
 
                                         {/* Main Dropdown */}
@@ -109,11 +111,13 @@ const Navbar = () => {
                     {/* Mobile menu button */}
                     <div className="lg:hidden flex items-center">
                         <button
+                            type="button"
+                            suppressHydrationWarning
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
                             className="text-slate-900 p-2"
                             aria-label="Toggle menu"
                         >
-                            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+                            {isMenuOpen ? <X suppressHydrationWarning size={28} /> : <Menu suppressHydrationWarning size={28} />}
                         </button>
                     </div>
                 </div>
@@ -127,11 +131,13 @@ const Navbar = () => {
                             {link.dropdown ? (
                                 <div>
                                     <button
+                                        type="button"
+                                        suppressHydrationWarning
                                         onClick={() => toggleDropdown(link.label)}
                                         className="flex items-center justify-between w-full py-3 text-sm font-bold text-slate-900 uppercase tracking-widest"
                                     >
                                         <span>{link.label}</span>
-                                        <ChevronDown size={18} className={`transition-transform duration-200 ${activeDropdown === link.label ? 'rotate-180' : ''}`} />
+                                        <ChevronDown suppressHydrationWarning size={18} className={`transition-transform duration-200 ${activeDropdown === link.label ? 'rotate-180' : ''}`} />
                                     </button>
 
                                     {activeDropdown === link.label && (

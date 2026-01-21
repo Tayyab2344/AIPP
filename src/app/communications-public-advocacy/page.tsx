@@ -24,7 +24,7 @@ export default function CPAPage() {
                         </p>
                         <div className="flex justify-end items-start">
                             <Link href="#approach" className="inline-flex items-center gap-2 text-sm font-bold text-slate-900 uppercase tracking-widest hover:text-[var(--primary)] transition-colors">
-                                Our Approach <ArrowRight size={16} />
+                                Our Approach <ArrowRight suppressHydrationWarning size={16} />
                             </Link>
                         </div>
                     </div>
@@ -55,7 +55,7 @@ export default function CPAPage() {
                         <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-10">
                             <div>
                                 <div className="flex items-center gap-3 mb-4">
-                                    <Mic size={20} className="text-slate-700" />
+                                    <Mic suppressHydrationWarning size={20} className="text-slate-700" />
                                     <h3 className="font-bold text-slate-900">Narrative Influence</h3>
                                 </div>
                                 <p className="text-sm text-slate-600 leading-relaxed">
@@ -65,7 +65,7 @@ export default function CPAPage() {
 
                             <div>
                                 <div className="flex items-center gap-3 mb-4">
-                                    <Shield size={20} className="text-slate-700" />
+                                    <Shield suppressHydrationWarning size={20} className="text-slate-700" />
                                     <h3 className="font-bold text-slate-900">Ethical Responsibility</h3>
                                 </div>
                                 <p className="text-sm text-slate-600 leading-relaxed">
@@ -75,7 +75,7 @@ export default function CPAPage() {
 
                             <div>
                                 <div className="flex items-center gap-3 mb-4">
-                                    <Eye size={20} className="text-slate-700" />
+                                    <Eye suppressHydrationWarning size={20} className="text-slate-700" />
                                     <h3 className="font-bold text-slate-900">Reflective Praxis</h3>
                                 </div>
                                 <p className="text-sm text-slate-600 leading-relaxed">
@@ -85,7 +85,7 @@ export default function CPAPage() {
 
                             <div>
                                 <div className="flex items-center gap-3 mb-4">
-                                    <Brain size={20} className="text-slate-700" />
+                                    <Brain suppressHydrationWarning size={20} className="text-slate-700" />
                                     <h3 className="font-bold text-slate-900">Knowledge Campaigns</h3>
                                 </div>
                                 <p className="text-sm text-slate-600 leading-relaxed">
@@ -139,7 +139,7 @@ export default function CPAPage() {
                         {/* Output 1 */}
                         <div className="group">
                             <div className="bg-slate-100 aspect-[4/3] mb-6 flex items-center justify-center overflow-hidden">
-                                <FileText size={48} className="text-slate-300" />
+                                <FileText suppressHydrationWarning size={48} className="text-slate-300" />
                             </div>
                             <p className="text-xs uppercase tracking-widest text-[var(--primary)] mb-2 font-bold">Policy Statement</p>
                             <h3 className="font-serif text-lg text-slate-900 mb-2 group-hover:text-[var(--primary)] transition-colors">
@@ -154,7 +154,7 @@ export default function CPAPage() {
                         {/* Output 2 */}
                         <div className="group">
                             <div className="bg-slate-100 aspect-[4/3] mb-6 flex items-center justify-center overflow-hidden">
-                                <Newspaper size={48} className="text-slate-300" />
+                                <Newspaper suppressHydrationWarning size={48} className="text-slate-300" />
                             </div>
                             <p className="text-xs uppercase tracking-widest text-[var(--primary)] mb-2 font-bold">Public Editorial</p>
                             <h3 className="font-serif text-lg text-slate-900 mb-2 group-hover:text-[var(--primary)] transition-colors">
@@ -169,7 +169,7 @@ export default function CPAPage() {
                         {/* Output 3 */}
                         <div className="group">
                             <div className="bg-slate-100 aspect-[4/3] mb-6 flex items-center justify-center overflow-hidden">
-                                <Radio size={48} className="text-slate-300" />
+                                <Radio suppressHydrationWarning size={48} className="text-slate-300" />
                             </div>
                             <p className="text-xs uppercase tracking-widest text-[var(--primary)] mb-2 font-bold">Podcast Interview</p>
                             <h3 className="font-serif text-lg text-slate-900 mb-2 group-hover:text-[var(--primary)] transition-colors">

@@ -63,14 +63,14 @@ const ContactPage = () => {
                                 <div className="border-l-2 border-slate-100 pl-6 space-y-4">
                                     <div>
                                         <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">Official Inquiry</p>
-                                        <p className="text-lg text-slate-900 font-medium">inquiries@aipp.org</p>
+                                        <p className="text-lg text-slate-900 font-medium">Connect.aipp@gmail.com</p>
                                     </div>
                                     <div>
                                         <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">Strategic Discourse</p>
                                         <div className="flex gap-4 text-slate-900 font-bold text-sm">
-                                            <a href="#" className="hover:text-[var(--primary)] transition-colors">LinkedIn</a>
-                                            <a href="#" className="hover:text-[var(--primary)] transition-colors">Twitter / X</a>
-                                            <a href="#" className="hover:text-[var(--primary)] transition-colors">SSRN</a>
+                                            <a href="https://www.linkedin.com/company/athena-institute-for-political-praxis-aipp/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--primary)] transition-colors">LinkedIn</a>
+                                            <a href="https://x.com/aipp_institute" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--primary)] transition-colors">X (Twitter)</a>
+                                            <a href="https://substack.com/@aippdiscourse" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--primary)] transition-colors">Substack</a>
                                         </div>
                                     </div>
                                 </div>
@@ -187,7 +187,7 @@ const ContactPage = () => {
                                         className="bg-[#1A5261] text-white px-10 py-5 font-bold hover:bg-[#14414d] transition-all flex items-center gap-3 uppercase tracking-widest text-sm disabled:opacity-50"
                                     >
                                         {status === 'loading' ? 'Submitting...' : 'Submit Inquiry'}
-                                        <ArrowRight size={18} />
+                                        <ArrowRight suppressHydrationWarning size={18} />
                                     </button>
                                     <p className="mt-4 text-[10px] text-slate-400 italic">
                                         A response can be expected within 3-5 business days for all formal inquiries.
@@ -196,7 +196,7 @@ const ContactPage = () => {
 
                                 {status === 'success' && (
                                     <div className="flex items-center gap-3 p-4 bg-emerald-50 text-emerald-700 rounded-sm font-bold text-sm">
-                                        <CheckCircle2 size={20} />
+                                        <CheckCircle2 suppressHydrationWarning size={20} />
                                         {statusMessage}
                                     </div>
                                 )}
