@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { FileText, Download, BookOpen, ChevronRight, CheckCircle2, ArrowRight, TrendingUp, Loader2 } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { publicationService } from '@/lib/services/publicationService';
 import { Publication } from '@/types';
 
@@ -55,12 +56,12 @@ const PublicationsPage = () => {
                             </div>
                         </div>
                         <div className="lg:col-span-5 relative hidden lg:block">
-                            <div className="aspect-square bg-slate-50 rounded-full flex items-center justify-center overflow-hidden">
-                                <div className="absolute inset-0 opacity-20"
-                                    style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #1A5261 1px, transparent 0)', backgroundSize: '24px 24px' }} />
-                                <div className="z-10 w-full h-full bg-gradient-to-br from-transparent to-slate-200/50 flex items-center justify-center p-12">
-                                    <FileText suppressHydrationWarning size={120} className="text-slate-200" strokeWidth={0.5} />
-                                </div>
+                            <div className="aspect-square bg-slate-100 rounded-full flex items-center justify-center overflow-hidden">
+                                <img
+                                    src="/images/pillar_rpi_hijab.png"
+                                    alt="Research Publications"
+                                    className="w-full h-full object-cover"
+                                />
                             </div>
                         </div>
                     </div>
@@ -154,15 +155,28 @@ const PublicationsPage = () => {
                             ) : (
                                 <div className="space-y-12">
                                     {publications.length > 0 ? publications.map((pub, i) => (
-                                        <article key={i} className="group grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-slate-100 last:border-0">
-                                            <div className="md:col-span-9 space-y-4">
+                                        <article key={i} className="group grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-slate-100 last:border-0 items-start">
+                                            {pub.imageUrl && (
+                                                <div className="md:col-span-3">
+                                                    <div className="relative h-full min-h-[200px] w-full rounded-sm overflow-hidden bg-slate-50 border border-slate-200 shadow-sm">
+                                                        <Image
+                                                            src={pub.imageUrl}
+                                                            alt={pub.title}
+                                                            fill
+                                                            className="object-cover transition-transform group-hover:scale-105 duration-700"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            <div className={`${pub.imageUrl ? 'md:col-span-6' : 'md:col-span-9'} space-y-4`}>
                                                 <p className="text-[10px] font-bold text-[var(--primary)] uppercase tracking-widest">
                                                     {pub.category} • {pub.year}
                                                 </p>
                                                 <h3 className="text-2xl font-serif text-slate-900 leading-tight group-hover:text-[var(--primary)] transition-colors">
                                                     {pub.title}
                                                 </h3>
-                                                <p className="text-sm text-slate-500 leading-relaxed italic">
+                                                <p className="text-sm text-slate-500 leading-relaxed italic line-clamp-3">
                                                     {pub.summary}
                                                 </p>
                                                 <div className="flex items-center gap-4 text-[10px] font-bold uppercase tracking-widest text-slate-400">
@@ -214,10 +228,10 @@ const PublicationsPage = () => {
                         AIPP invites scholars, practitioners, and strategic thinkers to contribute to our upcoming journal volume on Institutional Re-engineering.
                     </p>
                     <div className="flex flex-col sm:flex-row justify-center gap-8 text-[10px] font-bold uppercase tracking-widest">
-                        <Link href="#" className="flex items-center gap-2 hover:text-[var(--primary)] transition-colors">
-                            Call for Papers 2024 <ArrowRight size={14} className="text-[var(--primary)]" />
+                        <Link href="/collaborate" className="flex items-center gap-2 hover:text-[var(--primary)] transition-colors">
+                            Call for Papers {new Date().getFullYear()} <ArrowRight size={14} className="text-[var(--primary)]" />
                         </Link>
-                        <Link href="#" className="flex items-center gap-2 hover:text-[var(--primary)] transition-colors">
+                        <Link href="/contact" className="flex items-center gap-2 hover:text-[var(--primary)] transition-colors">
                             Connect for Peer Exchange <ArrowRight suppressHydrationWarning size={14} className="text-[var(--primary)]" />
                         </Link>
                     </div>

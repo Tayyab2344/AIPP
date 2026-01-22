@@ -1,24 +1,30 @@
-import Link from 'next/link';
+'use client';
 
-const publications = [
-    {
-        type: 'Policy Brief',
-        date: 'May 2024',
-        title: 'Strategic Horizons: Foresight in Feminist Policy',
-    },
-    {
-        type: 'Research Paper',
-        date: 'April 2024',
-        title: 'The Praxis Gap: A New Framework for Political Action',
-    },
-    {
-        type: 'Article',
-        date: 'March 2024',
-        title: 'Rethinking Governance: Gendered Intellect in Institutions',
-    },
-];
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { publicationService } from '@/lib/services/publicationService';
+import { Publication } from '@/types';
+import { FileText, Loader2, ArrowRight } from 'lucide-react';
 
 const PublicationsTeaser = () => {
+    const [publications, setPublications] = useState<Publication[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchRecent = async () => {
+            try {
+                const data = await publicationService.getPublished();
+                // Take latest 3
+                setPublications(data.slice(0, 3));
+            } catch (error) {
+                console.error("Error fetching recent publications:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchRecent();
+    }, []);
+
     return (
         <section className="py-24 bg-slate-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -33,24 +39,42 @@ const PublicationsTeaser = () => {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {publications.map((item, index) => (
-                        <div key={index} className="flex flex-col group">
-                            <div className="aspect-[3/4] bg-slate-200 mb-6 rounded-sm transition-transform group-hover:-translate-y-2 duration-300 shadow-sm" />
-                            <div className="flex flex-col">
-                                <p className="text-slate-400 text-sm font-bold uppercase tracking-wider mb-2">
-                                    {item.type} • {item.date}
-                                </p>
-                                <h3 className="text-xl font-serif text-slate-900 mb-4 group-hover:text-[var(--primary)] transition-colors leading-snug">
-                                    {item.title}
-                                </h3>
-                                <Link href="/framework" className="text-sm font-bold text-slate-900 hover:text-[var(--primary)] transition-colors inline-flex items-center gap-1">
-                                    Read Now <span className="text-lg">›</span>
-                                </Link>
+                {loading ? (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {[1, 2, 3].map((i) => (
+                            <div key={i} className="animate-pulse space-y-6">
+                                <div className="aspect-[3/4] bg-slate-200 rounded-sm" />
+                                <div className="h-4 bg-slate-200 w-1/2" />
+                                <div className="h-8 bg-slate-200" />
                             </div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center sm:text-left">
+                        {publications.length > 0 ? publications.map((item) => (
+                            <div key={item.id} className="flex flex-col group">
+                                <Link href="/publications" className="aspect-[3/4] bg-slate-200 mb-6 rounded-sm transition-transform group-hover:-translate-y-2 duration-300 shadow-sm flex items-center justify-center">
+                                    <FileText suppressHydrationWarning size={48} className="text-slate-400 opacity-20" />
+                                </Link>
+                                <div className="flex flex-col">
+                                    <p className="text-[var(--primary)] text-[10px] font-bold uppercase tracking-[0.2em] mb-3">
+                                        {item.category} • {item.year}
+                                    </p>
+                                    <h3 className="text-xl font-serif text-slate-900 mb-4 group-hover:text-[var(--primary)] transition-colors leading-snug line-clamp-2 min-h-[3.5rem]">
+                                        {item.title}
+                                    </h3>
+                                    <Link href="/publications" className="text-xs font-bold text-slate-900 hover:text-[var(--primary)] transition-colors inline-flex items-center gap-2 uppercase tracking-widest mt-auto">
+                                        Read Now <ArrowRight suppressHydrationWarning size={14} className="text-[var(--primary)]" />
+                                    </Link>
+                                </div>
+                            </div>
+                        )) : (
+                            <div className="col-span-full py-12 text-center text-slate-400 font-serif italic">
+                                No recent publications registered.
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
         </section>
     );

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 
 const StrategicLearning = () => {
@@ -6,11 +7,13 @@ const StrategicLearning = () => {
         <section className="py-24 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-                    <div className="relative aspect-[4/3] rounded-sm overflow-hidden shadow-2xl overflow-hidden group">
-                        <img
+                    <div className="relative aspect-[4/3] rounded-sm overflow-hidden shadow-2xl group">
+                        <Image
                             src="/images/labs_niqab.png"
                             alt="Strategic Learning"
-                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                            fill
+                            suppressHydrationWarning
+                            className="object-cover group-hover:scale-105 transition-transform duration-700"
                         />
                     </div>
 

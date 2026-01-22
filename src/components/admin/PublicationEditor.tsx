@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import {
     ArrowLeft,
     Save,
@@ -11,9 +12,12 @@ import {
     ChevronDown,
     Calendar,
     Type,
-    FileDown
+    Image as ImageIcon,
+    Upload,
+    X
 } from 'lucide-react';
 import { publicationService } from '@/lib/services/publicationService';
+import { storageService } from '@/lib/services/storageService';
 import { Publication } from '@/types';
 
 interface PublicationEditorProps {
@@ -29,9 +33,11 @@ export default function PublicationEditor({ initialData, isNew = false }: Public
         year: new Date().getFullYear(),
         summary: '',
         pdfUrl: '',
+        imageUrl: '',
         publishStatus: 'draft'
     });
     const [isSaving, setIsSaving] = useState(false);
+    const [isUploading, setIsUploading] = useState(false);
 
     const handleSave = async () => {
         if (!pub.title || !pub.summary) {
@@ -53,6 +59,22 @@ export default function PublicationEditor({ initialData, isNew = false }: Public
             alert("Failed to save record.");
         } finally {
             setIsSaving(false);
+        }
+    };
+
+    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (!e.target.files || e.target.files.length === 0) return;
+
+        const file = e.target.files[0];
+        setIsUploading(true);
+        try {
+            const url = await storageService.uploadImage(file, 'publications');
+            setPub({ ...pub, imageUrl: url });
+        } catch (error) {
+            console.error("Upload failed", error);
+            alert("Failed to upload image.");
+        } finally {
+            setIsUploading(false);
         }
     };
 
@@ -79,7 +101,7 @@ export default function PublicationEditor({ initialData, isNew = false }: Public
 
                 <button
                     onClick={handleSave}
-                    disabled={isSaving}
+                    disabled={isSaving || isUploading}
                     className="bg-[#2F4F4F] text-white px-6 py-2.5 rounded-lg font-bold text-[10px] uppercase tracking-widest hover:bg-[#1F3F3F] transition-all flex items-center gap-2 disabled:opacity-50 shadow-lg shadow-[#2F4F4F]/20"
                 >
                     {isSaving ? <Loader2 suppressHydrationWarning size={14} className="animate-spin" /> : <Save suppressHydrationWarning size={14} />}
@@ -149,6 +171,50 @@ export default function PublicationEditor({ initialData, isNew = false }: Public
                             placeholder="Provide a concise summary of the analytical findings..."
                             className="w-full text-sm leading-relaxed text-slate-600 border-none bg-slate-50 rounded-2xl px-6 py-4 focus:ring-1 focus:ring-[#B19B4C] placeholder:text-slate-200 resize-none"
                         />
+                    </div>
+
+                    {/* Visual Assets (New) */}
+                    <div className="space-y-3">
+                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                            <ImageIcon size={12} /> Cover Image
+                        </label>
+                        <div className="border-2 border-dashed border-slate-200 rounded-2xl p-6 text-center hover:bg-slate-50 transition-colors relative">
+                            {pub.imageUrl ? (
+                                <div className="relative aspect-video w-full rounded-xl overflow-hidden mb-2 shadow-md">
+                                    <Image
+                                        src={pub.imageUrl}
+                                        alt="Cover"
+                                        fill
+                                        className="object-cover"
+                                    />
+                                    <button
+                                        onClick={() => setPub({ ...pub, imageUrl: '' })}
+                                        className="absolute top-2 right-2 p-1.5 bg-black/50 text-white rounded-full hover:bg-rose-500 transition-colors backdrop-blur-sm"
+                                    >
+                                        <X size={14} />
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="py-8">
+                                    <Upload className="mx-auto text-slate-300 mb-3" size={24} />
+                                    <span className="text-xs text-slate-400 font-medium">Click to upload cover image</span>
+                                </div>
+                            )}
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleImageUpload}
+                                disabled={isUploading}
+                                className={`absolute inset-0 w-full h-full opacity-0 cursor-pointer ${isUploading ? 'cursor-wait' : ''}`}
+                            />
+                            {isUploading && (
+                                <div className="absolute inset-0 flex items-center justify-center bg-white/80 rounded-2xl z-10">
+                                    <div className="flex items-center gap-2 text-[#2F4F4F] text-xs font-bold">
+                                        <Loader2 size={14} className="animate-spin" /> Uploading...
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     </div>
 
                     {/* PDF URL */}

@@ -25,10 +25,9 @@ const navItems = [
     { label: 'Overview', href: '/admin/dashboard', icon: LayoutGrid },
     { label: 'Programs', href: '/admin/programs', icon: BookOpen },
     { label: 'Publications', href: '/admin/publications', icon: FileText },
-    { label: 'Labs', href: '/admin/labs', icon: FlaskConical },
     { label: 'Insights', href: '/admin/insights', icon: BarChart3 },
     { label: 'Subscribers', href: '/admin/subscribers', icon: Users },
-    { label: 'Messages', href: '/admin/messages', icon: Mail },
+    { label: 'Engagement', href: '/admin/collaborations', icon: Sparkles },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -69,13 +68,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 {/* Logo Section */}
                 <div className="p-6 border-b border-white/10">
                     <div className="flex items-center space-x-3">
-                        <div className="w-10 h-10 bg-[#B19B4C] rounded-lg flex items-center justify-center">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <rect x="3" y="3" width="7" height="7" fill="white" />
-                                <rect x="14" y="3" width="7" height="7" fill="white" />
-                                <rect x="3" y="14" width="7" height="7" fill="white" />
-                                <rect x="14" y="14" width="7" height="7" fill="white" />
-                            </svg>
+                        <div className="w-10 h-10 flex items-center justify-center">
+                            <Image
+                                src="/aipp-logo.png"
+                                alt="AIPP Logo"
+                                width={40}
+                                height={40}
+                                className="object-contain"
+                            />
                         </div>
                         <div>
                             <div className="text-white font-bold text-lg tracking-wide">AIPP ADMIN</div>
@@ -164,11 +164,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                             {/* User Profile */}
                             <div className="flex items-center space-x-3">
                                 <div className="text-right">
-                                    <div className="text-sm font-semibold text-slate-800">Dr. Alistair Vance</div>
-                                    <div className="text-xs text-slate-500">Senior Administrator</div>
+                                    <div className="text-sm font-semibold text-slate-800">{user?.displayName || 'Tayyaba Atiq'}</div>
+                                    <div className="text-xs text-slate-500">Administrator</div>
                                 </div>
                                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#2F4F4F] to-[#4A7070] flex items-center justify-center text-white font-semibold text-sm">
-                                    AV
+                                    TA
                                 </div>
                             </div>
                         </div>

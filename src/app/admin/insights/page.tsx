@@ -11,10 +11,12 @@ import {
     Info,
     Download,
     Loader2,
+    Pencil,
 } from 'lucide-react';
 import { blogService } from '@/lib/services/blogService';
 import { subscriberService } from '@/lib/services/subscriberService';
 import { BlogPost } from '@/types';
+import DeleteConfirmationModal from '@/components/admin/DeleteConfirmationModal';
 
 const statusOptions = ['All', 'Published', 'Draft', 'Archived'];
 
@@ -24,6 +26,11 @@ export default function InsightsAdmin() {
     const [loading, setLoading] = useState(true);
     const [statusFilter, setStatusFilter] = useState('All');
     const [searchQuery, setSearchQuery] = useState('');
+
+    // Delete Modal State
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [itemToDelete, setItemToDelete] = useState<string | null>(null);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     useEffect(() => {
         fetchBlogs();
@@ -41,13 +48,24 @@ export default function InsightsAdmin() {
         }
     };
 
-    const handleDelete = async (id: string) => {
-        if (!confirm("Are you sure you want to delete this article? This action cannot be undone.")) return;
+    const handleDeleteClick = (id: string) => {
+        setItemToDelete(id);
+        setShowDeleteModal(true);
+    };
+
+    const handleConfirmDelete = async () => {
+        if (!itemToDelete) return;
+        setIsDeleting(true);
         try {
-            await blogService.delete(id);
+            await blogService.delete(itemToDelete);
             await fetchBlogs();
+            setShowDeleteModal(false);
+            setItemToDelete(null);
         } catch (error) {
             console.error("Error deleting blog:", error);
+            alert("Failed to delete article.");
+        } finally {
+            setIsDeleting(false);
         }
     };
 
@@ -227,7 +245,17 @@ export default function InsightsAdmin() {
                                             <button
                                                 onClick={(e) => {
                                                     e.stopPropagation();
-                                                    handleDelete(blog.id);
+                                                    router.push(`/admin/insights/${blog.id}`);
+                                                }}
+                                                className="p-2.5 text-slate-400 hover:text-[#2F4F4F] hover:bg-slate-50 rounded-lg transition-all"
+                                                title="Edit Article"
+                                            >
+                                                <Pencil suppressHydrationWarning size={18} />
+                                            </button>
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleDeleteClick(blog.id);
                                                 }}
                                                 className="p-2.5 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-all"
                                                 title="Delete Manuscript"
@@ -265,6 +293,15 @@ export default function InsightsAdmin() {
                     </div>
                 </div>
             </div>
+
+            <DeleteConfirmationModal
+                isOpen={showDeleteModal}
+                onClose={() => setShowDeleteModal(false)}
+                onConfirm={handleConfirmDelete}
+                title="Delete Manuscript"
+                message="Are you sure you want to delete this article? This action cannot be undone."
+                isDeleting={isDeleting}
+            />
         </div>
     );
 }

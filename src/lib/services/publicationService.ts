@@ -27,16 +27,19 @@ export const publicationService = {
     },
 
     getPublished: async () => {
+        // Fetch all ordered by year to avoid index requirement for where + orderBy
         const q = query(
             collection(db, COLLECTION_NAME),
-            where('publishStatus', '==', 'published'),
             orderBy('year', 'desc')
         );
         const snapshot = await getDocs(q);
-        return snapshot.docs.map(doc => ({
+        const all = snapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data()
         })) as Publication[];
+
+        // Filter for published status in-memory
+        return all.filter(p => p.publishStatus === 'published');
     },
 
     getById: async (id: string) => {

@@ -8,10 +8,10 @@ const EngageSection = () => {
                     Engage With AIPP
                 </h2>
                 <p className="text-lg sm:text-xl text-slate-500 italic mb-10 sm:mb-12 font-medium leading-relaxed">
-                    We invite scholars, practitioners, and institutions to join us. Your collaboration is vital as we work towards a collective political rethinking and a more inclusive future.
+                    We invite scholars, practitioners, and passionate individuals to join us. Whether you seek to volunteer your skills or partner institutionally, your voice is vital to our collective mission.
                 </p>
-                <Link href="/framework" className="bg-[#1A5261] text-white px-8 sm:px-12 py-4 sm:py-5 rounded-md font-bold text-base sm:text-lg hover:bg-[#14414d] transition-all inline-block uppercase tracking-widest">
-                    Collaborate With Us
+                <Link href="/collaborate" className="bg-[#1A5261] text-white px-8 sm:px-12 py-4 sm:py-5 rounded-md font-bold text-base sm:text-lg hover:bg-[#14414d] transition-all inline-block uppercase tracking-widest">
+                    Join Our Mission
                 </Link>
             </div>
         </section>

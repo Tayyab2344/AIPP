@@ -1,14 +1,28 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { impactService } from '@/lib/services/impactService';
+import { Partner } from '@/types';
 
 const Partners = () => {
-    const partners = [
-        { name: 'Policy Reform Institute', logo: 'PRI' },
-        { name: 'Strategic Leadership Council', logo: 'SLC' },
-        { name: 'Global Governance Forum', logo: 'GGF' },
-        { name: 'Research for Development', logo: 'RED' },
-        { name: 'Inclusive Politics Group', logo: 'IPG' },
-        { name: 'Institutional Reform Lab', logo: 'IRL' }
-    ];
+    const [partners, setPartners] = useState<Partner[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchPartners = async () => {
+            try {
+                const data = await impactService.getPartners().catch(() => []);
+                setPartners(data);
+            } catch (error) {
+                console.error("Error fetching partners:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchPartners();
+    }, []);
+
+    if (loading || partners.length === 0) return null;
 
     return (
         <section className="py-20 bg-white border-y border-slate-100">
@@ -18,10 +32,14 @@ const Partners = () => {
                 </p>
 
                 <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500">
-                    {partners.map((partner, index) => (
-                        <div key={index} className="flex items-center space-x-3 group cursor-default">
-                            <div className="w-12 h-12 rounded-xl bg-slate-900 flex items-center justify-center font-black text-[var(--primary)] text-xs group-hover:bg-[var(--primary)] group-hover:text-white transition-colors shadow-lg">
-                                {partner.logo}
+                    {partners.map((partner) => (
+                        <div key={partner.id} className="flex items-center space-x-3 group cursor-default">
+                            <div className="w-12 h-12 rounded-xl bg-slate-900 flex items-center justify-center font-black text-[var(--primary)] text-xs group-hover:bg-[var(--primary)] group-hover:text-white transition-colors shadow-lg overflow-hidden">
+                                {partner.logoUrl ? (
+                                    <img src={partner.logoUrl} alt={partner.name} className="w-full h-full object-contain" />
+                                ) : (
+                                    partner.name.split(' ').map(w => w[0]).join('').substring(0, 3).toUpperCase()
+                                )}
                             </div>
                             <span className="text-slate-900 font-black tracking-tighter uppercase text-sm">{partner.name}</span>
                         </div>

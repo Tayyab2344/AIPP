@@ -1,0 +1,62 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // --- PUBLIC CONTENT (Read: Everyone, Write: Admin) ---
+
+    // Publications
+    match /publications/{document=**} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    // Programs (RPI, SAS, CPA content)
+    match /programs/{document=**} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    // Blogs / Insights
+    match /blogs/{document=**} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    // Partners / Affiliates
+    match /partners/{document=**} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    // Testimonials / Stories
+    match /testimonials/{document=**} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    // --- USER SUBMISSIONS (Create: Everyone, Read/Write: Admin) ---
+
+    // Newsletter Subscribers
+    match /subscribers/{document=**} {
+      allow create: if true;
+      allow read, update, delete: if isAuthenticated();
+    }
+
+    // Contact Form Messages (Inquiries)
+    match /inquiries/{document=**} {
+      allow create: if true;
+      allow read, update, delete: if isAuthenticated();
+    }
+    
+    // Collaboration/Volunteer Applications
+    match /collaborations/{document=**} {
+      allow create: if true; 
+      allow read, update, delete: if isAuthenticated();
+    }
+  }
+}

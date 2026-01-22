@@ -1,20 +1,29 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { impactService } from '@/lib/services/impactService';
+import { Testimonial } from '@/types';
 
 const StoriesOfChange = () => {
-    const stories = [
-        {
-            name: "Dr. Sarah Johnson",
-            role: "Policy Researcher, RPI",
-            quote: "AIPP provides the analytical depth needed to reframe women's roles in governance. It's about precision and evidence-based transformation.",
-            image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80"
-        },
-        {
-            name: "Fatima Noor",
-            role: "Political Strategist, SAS",
-            quote: "The SAS stream operationalized my approach to political negotiation. We are translating theory into real-world institutional impact.",
-            image: "https://images.unsplash.com/photo-1589115341253-90d577c8ef4e?auto=format&fit=crop&q=80"
-        }
-    ];
+    const [stories, setStories] = useState<Testimonial[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchStories = async () => {
+            try {
+                const data = await impactService.getTestimonials().catch(() => []);
+                setStories(data);
+            } catch (error) {
+                console.error("Error fetching testimonials:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchStories();
+    }, []);
+
+    if (loading || stories.length === 0) return null;
 
     return (
         <section className="py-24 bg-white">
@@ -32,14 +41,18 @@ const StoriesOfChange = () => {
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                    {stories.map((story, index) => (
-                        <div key={index} className="group flex flex-col md:flex-row bg-slate-50 rounded-[3rem] overflow-hidden border-2 border-slate-100 hover:border-[var(--primary)] transition-all duration-500 hover:-translate-y-2">
+                    {stories.map((story) => (
+                        <div key={story.id} className="group flex flex-col md:flex-row bg-slate-50 rounded-[3rem] overflow-hidden border-2 border-slate-100 hover:border-[var(--primary)] transition-all duration-500 hover:-translate-y-2">
                             <div className="md:w-2/5 relative h-64 md:h-auto overflow-hidden bg-slate-200">
-                                <img
-                                    src={story.image}
-                                    alt={story.name}
-                                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80"
-                                />
+                                {story.image && (
+                                    <Image
+                                        src={story.image}
+                                        alt={story.name}
+                                        fill
+                                        suppressHydrationWarning
+                                        className="object-cover group-hover:scale-110 transition-transform duration-700 opacity-80"
+                                    />
+                                )}
                                 <div className="absolute inset-0 bg-slate-900/10" />
                             </div>
                             <div className="md:w-3/5 p-8 md:p-12 flex flex-col justify-center">

@@ -96,7 +96,7 @@ const ContactPage = () => {
                             {/* Refined architecture image */}
                             <div className="w-full h-64 overflow-hidden rounded-sm bg-slate-100">
                                 <img
-                                    src="/images/strategic_learning_hijab.png"
+                                    src="/images/pillar_rpi_hijab.png"
                                     alt="AIPP Institution"
                                     className="w-full h-full object-cover grayscale opacity-80"
                                 />
@@ -121,6 +121,7 @@ const ContactPage = () => {
                                             required
                                             value={formData.fullName}
                                             onChange={handleChange}
+                                            suppressHydrationWarning
                                             className="w-full px-5 py-4 bg-slate-50 border border-transparent focus:border-[var(--primary)] focus:bg-white outline-none transition-all text-slate-900 font-medium placeholder:text-slate-400"
                                             placeholder="Enter your legal name"
                                         />
@@ -133,6 +134,7 @@ const ContactPage = () => {
                                             required
                                             value={formData.email}
                                             onChange={handleChange}
+                                            suppressHydrationWarning
                                             className="w-full px-5 py-4 bg-slate-50 border border-transparent focus:border-[var(--primary)] focus:bg-white outline-none transition-all text-slate-900 font-medium placeholder:text-slate-400"
                                             placeholder="Institutional email address"
                                         />
@@ -146,6 +148,7 @@ const ContactPage = () => {
                                         name="affiliation"
                                         value={formData.affiliation}
                                         onChange={handleChange}
+                                        suppressHydrationWarning
                                         className="w-full px-5 py-4 bg-slate-50 border border-transparent focus:border-[var(--primary)] focus:bg-white outline-none transition-all text-slate-900 font-medium placeholder:text-slate-400"
                                         placeholder="University, Think Tank, or Agency"
                                     />
@@ -157,6 +160,7 @@ const ContactPage = () => {
                                         name="natureOfInquiry"
                                         value={formData.natureOfInquiry}
                                         onChange={handleChange}
+                                        suppressHydrationWarning
                                         className="w-full px-5 py-4 bg-slate-50 border border-transparent focus:border-[var(--primary)] focus:bg-white outline-none transition-all text-slate-900 font-medium appearance-none cursor-pointer"
                                     >
                                         <option>Research Collaboration</option>
@@ -184,6 +188,7 @@ const ContactPage = () => {
                                     <button
                                         type="submit"
                                         disabled={status === 'loading'}
+                                        suppressHydrationWarning
                                         className="bg-[#1A5261] text-white px-10 py-5 font-bold hover:bg-[#14414d] transition-all flex items-center gap-3 uppercase tracking-widest text-sm disabled:opacity-50"
                                     >
                                         {status === 'loading' ? 'Submitting...' : 'Submit Inquiry'}

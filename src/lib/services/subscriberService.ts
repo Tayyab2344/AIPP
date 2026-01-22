@@ -5,6 +5,8 @@ import {
     query,
     where,
     getDocs,
+    deleteDoc,
+    doc,
     orderBy,
     serverTimestamp
 } from "firebase/firestore";
@@ -43,6 +45,11 @@ export const subscriberService = {
         return snapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data()
-        }));
+        })) as any[];
+    },
+
+    deleteSubscriber: async (id: string) => {
+        const docRef = doc(db, COLLECTION_NAME, id);
+        await deleteDoc(docRef);
     }
 };

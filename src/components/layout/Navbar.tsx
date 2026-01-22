@@ -43,6 +43,7 @@ const Navbar = () => {
                             <img
                                 src="/aipp-logo.png"
                                 alt="AIPP Logo"
+                                suppressHydrationWarning
                                 className="h-14 w-auto object-contain"
                             />
                             <span className="text-xl font-bold text-slate-900 tracking-wide">AIPP</span>
@@ -103,7 +104,7 @@ const Navbar = () => {
 
                     {/* Join Button */}
                     <div className="hidden lg:flex flex-shrink-0">
-                        <Link href="/join" className="bg-[#1A5261] text-white py-2.5 px-8 text-[11px] uppercase tracking-widest font-bold rounded-sm hover:bg-[#14414d] transition-all shadow-md">
+                        <Link href="/collaborate" className="bg-[#1A5261] text-white py-2.5 px-8 text-[11px] uppercase tracking-widest font-bold rounded-sm hover:bg-[#14414d] transition-all shadow-md">
                             Join AIPP
                         </Link>
                     </div>
@@ -168,7 +169,7 @@ const Navbar = () => {
                     ))}
                     <div className="pt-6">
                         <Link
-                            href="/join"
+                            href="/collaborate"
                             onClick={() => setIsMenuOpen(false)}
                             className="block w-full text-center bg-[#1A5261] text-white py-5 text-[12px] uppercase tracking-widest font-bold rounded-sm shadow-lg"
                         >

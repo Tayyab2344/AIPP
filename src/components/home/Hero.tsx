@@ -1,14 +1,18 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 const Hero = () => {
     return (
         <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-[#2D241E] pt-32 pb-20">
             {/* Background Image Layer - Clear & Vibrant */}
             <div className="absolute inset-0 z-0">
-                <img
+                <Image
                     src="/images/hero_hijab_niqab.png"
                     alt="AIPP Strategic Leadership"
-                    className="w-full h-full object-cover"
+                    fill
+                    priority
+                    suppressHydrationWarning
+                    className="object-cover"
                 />
 
                 {/* Subtle, Professional Overlays */}

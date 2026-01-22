@@ -9,9 +9,21 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
 
 export const metadata: Metadata = {
-  title: `${SITE_CONFIG.name} | ${SITE_CONFIG.tagline}`,
+  metadataBase: new URL('https://aipp-institute.org'), // Replace with actual production URL
+  title: {
+    default: `${SITE_CONFIG.name} | ${SITE_CONFIG.tagline}`,
+    template: `%s | ${SITE_CONFIG.name}`
+  },
   description: SITE_CONFIG.description,
-  keywords: ["Political Praxis", "Women Leadership", "Research", "Advocacy", "Political Strategy"],
+  keywords: ["Political Praxis", "Women Leadership", "Research", "Advocacy", "Political Strategy", "Gender Responsive Governance", "Think Tank"],
+  authors: [{ name: 'Athena Institute' }],
+  creator: 'Athena Institute',
+  publisher: 'Athena Institute',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   icons: {
     icon: '/icon.png',
     shortcut: '/icon.png',
@@ -20,7 +32,36 @@ export const metadata: Metadata = {
   openGraph: {
     title: SITE_CONFIG.name,
     description: SITE_CONFIG.description,
-    type: "website",
+    url: 'https://aipp-institute.org',
+    siteName: SITE_CONFIG.name,
+    images: [
+      {
+        url: '/images/hero_hijab_niqab.png',
+        width: 1200,
+        height: 630,
+        alt: 'AIPP Strategic Leadership',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: SITE_CONFIG.name,
+    description: SITE_CONFIG.description,
+    creator: '@aipp_institute',
+    images: ['/images/hero_hijab_niqab.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 

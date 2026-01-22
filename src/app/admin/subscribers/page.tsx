@@ -1,16 +1,51 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/Button';
-import { Search, Users, Download, Trash2, Mail } from 'lucide-react';
-
-const mockSubscribers = [
-    { id: '1', email: 'jane@example.com', date: 'Jan 12, 2026', status: 'Active' },
-    { id: '2', email: 'hello@world.com', date: 'Jan 11, 2026', status: 'Active' },
-    { id: '3', email: 'test@user.id', date: 'Jan 09, 2026', status: 'Inactive' },
-];
+import { Search, Download, Trash2, Mail, Loader2 } from 'lucide-react';
+import { subscriberService } from '@/lib/services/subscriberService';
+import { Subscriber } from '@/types';
 
 export default function SubscribersAdmin() {
+    const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState('');
+
+    useEffect(() => {
+        fetchSubscribers();
+    }, []);
+
+    const fetchSubscribers = async () => {
+        setLoading(true);
+        try {
+            const data = await subscriberService.getSubscribers();
+            setSubscribers(data as Subscriber[]);
+        } catch (error) {
+            console.error("Error fetching subscribers:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleDelete = async (id: string) => {
+        if (!confirm("Are you sure you want to remove this subscriber?")) return;
+        try {
+            await subscriberService.deleteSubscriber(id);
+            await fetchSubscribers();
+        } catch (error) {
+            console.error("Error deleting subscriber:", error);
+        }
+    };
+
+    const filteredSubscribers = subscribers.filter(sub =>
+        sub.email.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    const formatDate = (date: any) => {
+        if (!date) return '—';
+        const d = date?.toDate ? date.toDate() : new Date(date);
+        return d.toLocaleDateString();
+    };
     return (
         <div className="space-y-8">
             <div className="flex justify-between items-center">
@@ -31,50 +66,63 @@ export default function SubscribersAdmin() {
                         <input
                             type="text"
                             placeholder="Search by email..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
                             className="w-full pl-12 pr-4 py-3 rounded-2xl bg-slate-50 border border-slate-100 focus:outline-none focus:ring-2 focus:ring-violet-500/20 text-sm"
                         />
                     </div>
                 </div>
 
                 <div className="overflow-x-auto">
-                    <table className="w-full text-left">
-                        <thead>
-                            <tr className="bg-slate-50/50 text-[10px] uppercase tracking-[0.2em] text-slate-400 font-extrabold">
-                                <th className="px-8 py-5">Subscriber</th>
-                                <th className="px-8 py-5">Subscribed Date</th>
-                                <th className="px-8 py-5">Status</th>
-                                <th className="px-8 py-5 text-right">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-slate-50">
-                            {mockSubscribers.map((sub) => (
-                                <tr key={sub.id} className="hover:bg-slate-50/50 transition-all group">
-                                    <td className="px-8 py-6">
-                                        <div className="flex items-center space-x-4">
-                                            <div className="p-3 bg-emerald-50 text-emerald-600 rounded-xl">
-                                                <Mail suppressHydrationWarning size={20} />
-                                            </div>
-                                            <p className="font-bold text-slate-900 leading-tight">{sub.email}</p>
-                                        </div>
-                                    </td>
-                                    <td className="px-8 py-6 text-sm text-slate-500 capitalize">
-                                        {sub.date}
-                                    </td>
-                                    <td className="px-8 py-6">
-                                        <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${sub.status === 'Active' ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-500'
-                                            }`}>
-                                            {sub.status}
-                                        </span>
-                                    </td>
-                                    <td className="px-8 py-6 text-right">
-                                        <div className="flex justify-end space-x-1">
-                                            <Button variant="ghost" size="sm" className="p-2 text-rose-600 hover:bg-rose-50"><Trash2 suppressHydrationWarning size={18} /></Button>
-                                        </div>
-                                    </td>
+                    {loading ? (
+                        <div className="p-16 flex flex-col items-center justify-center space-y-4">
+                            <Loader2 suppressHydrationWarning className="animate-spin text-emerald-500" size={32} />
+                            <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Synchronizing Network...</p>
+                        </div>
+                    ) : filteredSubscribers.length > 0 ? (
+                        <table className="w-full text-left">
+                            <thead>
+                                <tr className="bg-slate-50/50 text-[10px] uppercase tracking-[0.2em] text-slate-400 font-extrabold">
+                                    <th className="px-8 py-5">Subscriber</th>
+                                    <th className="px-8 py-5">Subscribed Date</th>
+                                    <th className="px-8 py-5 text-right">Actions</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody className="divide-y divide-slate-50">
+                                {filteredSubscribers.map((sub: Subscriber) => (
+                                    <tr key={sub.id} className="hover:bg-slate-50/50 transition-all group">
+                                        <td className="px-8 py-6">
+                                            <div className="flex items-center space-x-4">
+                                                <div className="p-3 bg-emerald-50 text-emerald-600 rounded-xl">
+                                                    <Mail suppressHydrationWarning size={20} />
+                                                </div>
+                                                <p className="font-bold text-slate-900 leading-tight">{sub.email}</p>
+                                            </div>
+                                        </td>
+                                        <td className="px-8 py-6 text-sm text-slate-500 font-mono">
+                                            {formatDate(sub.subscribedDate)}
+                                        </td>
+                                        <td className="px-8 py-6 text-right">
+                                            <div className="flex justify-end space-x-1">
+                                                <Button
+                                                    onClick={() => handleDelete(sub.id)}
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    className="p-2 text-rose-600 hover:bg-rose-50 rounded-lg transition-all"
+                                                >
+                                                    <Trash2 suppressHydrationWarning size={18} />
+                                                </Button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    ) : (
+                        <div className="p-16 text-center text-slate-400 italic text-sm">
+                            {searchQuery ? 'No subscribers found matching your search.' : 'Your intellectual network is currently empty.'}
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

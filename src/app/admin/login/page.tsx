@@ -34,7 +34,7 @@ export default function AdminLogin() {
             {/* Left Side - Image */}
             <div className="hidden lg:flex lg:w-1/2 bg-slate-900 relative overflow-hidden">
                 <img
-                    src="/images/strategic_learning_hijab.png"
+                    src="/images/hero_hijab_niqab.png"
                     alt="Athena Institute"
                     className="absolute inset-0 w-full h-full object-cover opacity-60"
                 />
@@ -114,9 +114,9 @@ export default function AdminLogin() {
                                     <label className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                                         Password
                                     </label>
-                                    <button type="button" className="text-xs text-slate-500 hover:text-slate-900 transition-colors">
+                                    <Link href="/admin/forgot-password" className="text-xs text-slate-500 hover:text-slate-900 transition-colors">
                                         Forgot password?
-                                    </button>
+                                    </Link>
                                 </div>
                                 <div className="relative">
                                     <input

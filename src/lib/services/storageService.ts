@@ -1,40 +1,53 @@
-import { storage } from '../firebase';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+// Cloudinary storage implementation
+// import { storage } from '../firebase'; - removed
+// import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'; - removed
 
 export const storageService = {
     uploadImage: async (file: File, folder: string = 'insights'): Promise<string> => {
-        console.log(`Starting resumable upload for: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`);
+        const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+        const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
 
-        const timestamp = Date.now();
-        const fileName = `${timestamp}_${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
-        const storageRef = ref(storage, `${folder}/${fileName}`);
+        if (!cloudName || !uploadPreset || cloudName.includes('your_cloud_name')) {
+            throw new Error("Cloudinary configuration missing. Please check .env.local");
+        }
 
-        const uploadTask = uploadBytesResumable(storageRef, file);
+        console.log(`Starting Cloudinary upload for: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`);
+
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', uploadPreset);
+        formData.append('folder', folder);
 
         return new Promise((resolve, reject) => {
-            uploadTask.on('state_changed',
-                (snapshot) => {
-                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            const xhr = new XMLHttpRequest();
+            const url = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
+
+            xhr.open('POST', url, true);
+
+            xhr.upload.onprogress = (event) => {
+                if (event.lengthComputable) {
+                    const progress = (event.loaded / event.total) * 100;
                     console.log(`Upload is ${progress.toFixed(2)}% done`);
-                    switch (snapshot.state) {
-                        case 'paused':
-                            console.log('Upload is paused');
-                            break;
-                        case 'running':
-                            console.log('Upload is running');
-                            break;
-                    }
-                },
-                (error) => {
-                    console.error("Firebase Storage Upload Task Error:", error);
-                    reject(error);
-                },
-                async () => {
-                    console.log("Upload task completed successfully.");
-                    const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-                    resolve(downloadURL);
                 }
-            );
+            };
+
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    console.log("Upload task completed successfully.");
+                    resolve(response.secure_url);
+                } else {
+                    console.error("Cloudinary Upload Error:", xhr.responseText);
+                    reject(new Error(`Upload failed: ${xhr.statusText}`));
+                }
+            };
+
+            xhr.onerror = () => {
+                console.error("Cloudinary Network Error");
+                reject(new Error("Network error during upload"));
+            };
+
+            xhr.send(formData);
         });
     }
 };

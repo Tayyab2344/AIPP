@@ -1,7 +1,29 @@
-import { ArrowRight, FileText, Database, Users, TrendingUp, Globe, BookOpen } from 'lucide-react';
+'use client';
+
+import { useState, useEffect } from 'react';
+import { ArrowRight, FileText, Database, Users, TrendingUp, Globe, BookOpen, Loader2 } from 'lucide-react';
 import Link from 'next/link';
+import { publicationService } from '@/lib/services/publicationService';
+import { Publication } from '@/types';
 
 const FrameworkPage = () => {
+    const [outputs, setOutputs] = useState<Publication[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchRecent = async () => {
+            try {
+                const data = await publicationService.getPublished();
+                setOutputs(data.slice(0, 2));
+            } catch (error) {
+                console.error("Error fetching framework outputs:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchRecent();
+    }, []);
+
     return (
         <div className="bg-white min-h-screen">
             {/* Hero Section */}
@@ -16,12 +38,12 @@ const FrameworkPage = () => {
                             Advancing women's strategic intellect to transform global political praxis through rigorous, interdisciplinary, and evidence-based inquiry.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4">
-                            <button className="bg-[#1A5261] text-white px-8 py-4 font-bold uppercase tracking-widest text-xs hover:bg-[#14414d] transition-all">
+                            <Link href="#domains" className="bg-[#1A5261] text-white px-8 py-4 font-bold uppercase tracking-widest text-xs hover:bg-[#14414d] transition-all text-center">
                                 Explore Our Areas
-                            </button>
-                            <button className="bg-white text-slate-900 border border-slate-200 px-8 py-4 font-bold uppercase tracking-widest text-xs hover:bg-slate-50 transition-all">
-                                Download 2024 Agenda
-                            </button>
+                            </Link>
+                            <Link href="/publications" className="bg-white text-slate-900 border border-slate-200 px-8 py-4 font-bold uppercase tracking-widest text-xs hover:bg-slate-50 transition-all text-center">
+                                Access Repository
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -66,7 +88,7 @@ const FrameworkPage = () => {
             </section>
 
             {/* Research Areas */}
-            <section className="py-24 bg-[#FBFBFA]">
+            <section id="domains" className="py-24 bg-[#FBFBFA]">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex flex-col sm:flex-row justify-between items-baseline mb-16 gap-4">
                         <div>
@@ -97,11 +119,11 @@ const FrameworkPage = () => {
                             }
                         ].map((area, idx) => (
                             <div key={idx} className="group cursor-pointer">
-                                <div className="aspect-[16/10] overflow-hidden rounded-sm mb-6 bg-slate-200">
+                                <div className="aspect-[16/10] overflow-hidden rounded-sm mb-6 bg-slate-200 relative">
                                     <img src={area.img} alt={area.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                                 </div>
                                 <h3 className="text-xl font-serif text-slate-900 mb-3 group-hover:text-[var(--primary)] transition-colors italic">{area.title}</h3>
-                                <p className="text-sm text-slate-500 leading-relaxed leading-relaxed">{area.desc}</p>
+                                <p className="text-sm text-slate-500 leading-relaxed">{area.desc}</p>
                             </div>
                         ))}
                     </div>
@@ -116,37 +138,34 @@ const FrameworkPage = () => {
                         <span className="absolute -left-12 top-1/2 w-8 h-px bg-slate-300" />
                     </h2>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                        {[
-                            {
-                                type: "Policy Brief",
-                                title: "The Strategic Calculus of Women in Multilateral Diplomacy",
-                                desc: "An investigation into the negotiation tactics and institutional leverage of female leaders in...",
-                                date: "Oct 2023"
-                            },
-                            {
-                                type: "Research Paper",
-                                title: "Algorithmic Bias in Gender-Responsive Policy Audits",
-                                desc: "Exploring the unintended consequences of automated governance on marginalized...",
-                                date: "Sep 2023"
-                            }
-                        ].map((report, idx) => (
-                            <div key={idx} className="flex gap-8 p-8 border border-slate-100 hover:shadow-lg transition-all items-start bg-[#FBFBFA]">
-                                <div className="w-24 h-32 bg-slate-100 flex-shrink-0 flex flex-col items-center justify-center p-4 text-center">
-                                    <FileText suppressHydrationWarning className="text-slate-300 mb-2" size={32} />
-                                    <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">{report.type}</span>
+                    {loading ? (
+                        <div className="py-12 flex justify-center">
+                            <Loader2 suppressHydrationWarning size={32} className="animate-spin text-slate-200" />
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                            {outputs.length > 0 ? outputs.map((out) => (
+                                <div key={out.id} className="flex gap-8 p-8 border border-slate-100 hover:shadow-lg transition-all items-start bg-[#FBFBFA] group">
+                                    <div className="w-24 h-32 bg-slate-100 flex-shrink-0 flex flex-col items-center justify-center p-4 text-center group-hover:bg-slate-200 transition-colors">
+                                        <FileText suppressHydrationWarning className="text-slate-300 mb-2" size={32} />
+                                        <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">{out.category}</span>
+                                    </div>
+                                    <div className="flex-grow">
+                                        <p className="text-[10px] font-bold text-[var(--primary)] uppercase tracking-widest mb-2">{out.year} • {out.category}</p>
+                                        <h3 className="text-xl font-serif text-slate-900 mb-4 leading-tight group-hover:text-[var(--primary)] transition-colors line-clamp-2">{out.title}</h3>
+                                        <p className="text-sm text-slate-500 mb-6 leading-relaxed line-clamp-3 italic">{out.summary}</p>
+                                        <Link href="/publications" className="text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 hover:gap-3 transition-all">
+                                            Access Report <ArrowRight suppressHydrationWarning size={12} className="text-[var(--primary)]" />
+                                        </Link>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p className="text-[10px] font-bold text-[var(--primary)] uppercase tracking-widest mb-2">{report.date} • {report.type}</p>
-                                    <h3 className="text-xl font-serif text-slate-900 mb-4 leading-tight">{report.title}</h3>
-                                    <p className="text-sm text-slate-500 mb-6 leading-relaxed">{report.desc}</p>
-                                    <Link href="#" className="text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 hover:gap-3 transition-all">
-                                        Access Report <ArrowRight suppressHydrationWarning size={12} className="text-[var(--primary)]" />
-                                    </Link>
+                            )) : (
+                                <div className="col-span-full py-12 text-center text-slate-400 italic font-serif">
+                                    No strategic outputs currently available.
                                 </div>
-                            </div>
-                        ))}
-                    </div>
+                            )}
+                        </div>
+                    )}
 
                     <div className="mt-16 text-center">
                         <Link href="/publications" className="inline-block border border-slate-900 px-10 py-4 text-[10px] font-bold uppercase tracking-widest hover:bg-slate-900 hover:text-white transition-all">
@@ -160,9 +179,9 @@ const FrameworkPage = () => {
             <section className="py-24 bg-[#1A1F2B] text-white overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="max-w-3xl mb-20">
-                        <h2 className="text-3xl sm:text-4xl font-serif mb-8 leading-tight">Collaborative Inquiry</h2>
+                        <h2 className="text-3xl sm:text-4xl font-serif mb-8 leading-tight">Community & Global Impact</h2>
                         <p className="text-lg text-white/70 font-medium leading-relaxed">
-                            The Athena Institute actively partners with leading universities, global think tanks, and independent scholars to co-create knowledge that challenges the status quo. Our Fellowship programs support the next generation of strategic thinkers.
+                            AIPP is a collective endeavor. We partner with universities, global think tanks, and passionate individuals to co-create knowledge. From research fellows to grassroots volunteers, every contributor helps shape our impact.
                         </p>
                     </div>
 
@@ -189,11 +208,11 @@ const FrameworkPage = () => {
                     <BookOpen suppressHydrationWarning size={48} className="mx-auto text-[var(--primary)] mb-8 opacity-50" />
                     <h2 className="text-4xl font-serif text-slate-900 mb-8 italic">Shape the Discourse</h2>
                     <p className="text-lg text-slate-500 font-medium leading-relaxed mb-12">
-                        Join our network of scholars and policy experts. We invite formal dialogue, partnership inquiries, and strategic consultations.
+                        Join our global network of scholars, practitioners, and activists. We invite you to volunteer, partner, or contribute to our ongoing research and advocacy.
                     </p>
                     <div className="flex flex-col sm:flex-row justify-center gap-6">
-                        <Link href="/contact" className="bg-[#1A5261] text-white px-10 py-5 font-bold uppercase tracking-widest text-[10px] hover:bg-[#14414d] transition-all">
-                            Contact Our Office
+                        <Link href="/collaborate" className="bg-[#1A5261] text-white px-10 py-5 font-bold uppercase tracking-widest text-[10px] hover:bg-[#14414d] transition-all">
+                            Join Our Mission
                         </Link>
                         <button className="text-slate-900 border-b-2 border-slate-900 pb-2 font-bold uppercase tracking-widest text-[10px] hover:text-[var(--primary)] hover:border-[var(--primary)] transition-all">
                             Sign up for Briefings

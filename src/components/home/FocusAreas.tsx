@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 const focusAreas = [
     {
         title: 'Research & Policy Innovation',
@@ -33,11 +35,13 @@ const FocusAreas = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {focusAreas.map((area, index) => (
                         <div key={index} className="bg-white rounded-sm overflow-hidden border border-slate-200 hover:shadow-xl transition-all group h-full flex flex-col">
-                            <div className="aspect-[4/3] overflow-hidden">
-                                <img
+                            <div className="aspect-[4/3] overflow-hidden relative">
+                                <Image
                                     src={area.image}
                                     alt={area.title}
-                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                    fill
+                                    suppressHydrationWarning
+                                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                                 />
                             </div>
                             <div className="p-8 flex-grow">

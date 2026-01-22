@@ -14,40 +14,57 @@ import {
     CheckCircle2,
     History,
     FileDown,
-    ChevronRight,
-    ArrowUpRight
+    ArrowUpRight,
+    Pencil,
 } from 'lucide-react';
 import { publicationService } from '@/lib/services/publicationService';
 import { Publication } from '@/types';
 import Link from 'next/link';
+import DeleteConfirmationModal from '@/components/admin/DeleteConfirmationModal';
 
 export default function AdminPublications() {
     const [publications, setPublications] = useState<Publication[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
 
+    // Delete Modal State
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [itemToDelete, setItemToDelete] = useState<string | null>(null);
+    const [isDeleting, setIsDeleting] = useState(false);
+
     useEffect(() => {
-        const fetchPublications = async () => {
-            try {
-                const data = await publicationService.getAll();
-                setPublications(data);
-            } catch (error) {
-                console.error("Error fetching publications:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
         fetchPublications();
     }, []);
 
-    const handleDelete = async (id: string) => {
-        if (!confirm("Are you sure you want to remove this publication from the formal repository?")) return;
+    const fetchPublications = async () => {
         try {
-            await publicationService.delete(id);
-            setPublications(publications.filter(p => p.id !== id));
+            const data = await publicationService.getAll();
+            setPublications(data);
+        } catch (error) {
+            console.error("Error fetching publications:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleDeleteClick = (id: string) => {
+        setItemToDelete(id);
+        setShowDeleteModal(true);
+    };
+
+    const handleConfirmDelete = async () => {
+        if (!itemToDelete) return;
+        setIsDeleting(true);
+        try {
+            await publicationService.delete(itemToDelete);
+            setPublications(publications.filter(p => p.id !== itemToDelete));
+            setShowDeleteModal(false);
+            setItemToDelete(null);
         } catch (error) {
             console.error("Error deleting publication:", error);
             alert("Failed to delete publication.");
+        } finally {
+            setIsDeleting(false);
         }
     };
 
@@ -188,12 +205,14 @@ export default function AdminPublications() {
                                                 <Link
                                                     href={`/admin/publications/${pub.id}`}
                                                     className="p-2 text-slate-400 hover:text-[#B19B4C] hover:bg-white rounded-lg transition-all"
+                                                    title="Edit Publication"
                                                 >
-                                                    <Plus size={18} />
+                                                    <Pencil suppressHydrationWarning size={18} />
                                                 </Link>
                                                 <button
-                                                    onClick={(e) => { e.stopPropagation(); handleDelete(pub.id); }}
+                                                    onClick={(e) => { e.stopPropagation(); handleDeleteClick(pub.id); }}
                                                     className="p-2 text-slate-400 hover:text-rose-500 hover:bg-white rounded-lg transition-all"
+                                                    title="Delete Publication"
                                                 >
                                                     <Trash2 size={18} />
                                                 </button>
@@ -214,6 +233,15 @@ export default function AdminPublications() {
                     )}
                 </div>
             </div>
+
+            <DeleteConfirmationModal
+                isOpen={showDeleteModal}
+                onClose={() => setShowDeleteModal(false)}
+                onConfirm={handleConfirmDelete}
+                title="Archive Removal"
+                message="Are you sure you want to remove this publication from the formal repository? This action is permanent."
+                isDeleting={isDeleting}
+            />
         </div>
     );
 }
