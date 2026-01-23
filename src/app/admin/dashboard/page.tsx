@@ -21,6 +21,20 @@ import { subscriberService } from '@/lib/services/subscriberService';
 import { inquiryService } from '@/lib/services/inquiryService';
 import { programService } from '@/lib/services/programService';
 import { engagementService } from '@/lib/services/engagementService';
+import { blogService } from '@/lib/services/blogService';
+import { publicationService } from '@/lib/services/publicationService';
+import { getRelativeTime } from '@/lib/utils';
+
+interface Activity {
+    id: string;
+    icon: any;
+    iconBg: string;
+    iconColor: string;
+    title: string;
+    description: string;
+    time: string;
+    date: Date;
+}
 
 export default function Dashboard() {
     const [stats, setStats] = useState({
@@ -30,25 +44,92 @@ export default function Dashboard() {
         collaborations: { value: '0', loading: true },
     });
 
+    const [activities, setActivities] = useState<Activity[]>([]);
+    const [loadingActivities, setLoadingActivities] = useState(true);
+
     useEffect(() => {
-        const fetchStats = async () => {
+        const fetchDashboardData = async () => {
             try {
-                const subs = await subscriberService.getSubscribers();
-                setStats(prev => ({ ...prev, subscribers: { value: subs.length.toString(), loading: false } }));
+                // Fetch stats as before
+                const [subs, inqs, progs, collabs, blogs, pubs] = await Promise.all([
+                    subscriberService.getSubscribers(),
+                    inquiryService.getInquiries(),
+                    programService.getAll(),
+                    engagementService.getAll(),
+                    blogService.getAll(),
+                    publicationService.getAll()
+                ]);
 
-                const inqs = await inquiryService.getInquiries();
-                setStats(prev => ({ ...prev, inquiries: { value: inqs.length.toString(), loading: false } }));
+                setStats({
+                    subscribers: { value: subs.length.toString(), loading: false },
+                    inquiries: { value: inqs.length.toString(), loading: false },
+                    programs: { value: progs.length.toString(), loading: false },
+                    collaborations: { value: collabs.length.toString(), loading: false }
+                });
 
-                const progs = await programService.getAll();
-                setStats(prev => ({ ...prev, programs: { value: progs.length.toString(), loading: false } }));
+                // Compile activities
+                const allActivities: Activity[] = [
+                    ...subs.slice(0, 3).map(s => ({
+                        id: s.id,
+                        icon: UserPlus,
+                        iconBg: 'bg-blue-50',
+                        iconColor: 'text-blue-600',
+                        title: 'New Subscriber Registered',
+                        description: `Institutional digest requested by ${s.email}.`,
+                        time: getRelativeTime(s.subscribedDate?.toDate() || new Date()),
+                        date: s.subscribedDate?.toDate() || new Date()
+                    })),
+                    ...inqs.slice(0, 3).map(i => ({
+                        id: i.id,
+                        icon: Mail,
+                        iconBg: 'bg-emerald-50',
+                        iconColor: 'text-emerald-600',
+                        title: 'Inquiry Received',
+                        description: `Nature: ${i.natureOfInquiry} from ${i.fullName}.`,
+                        time: getRelativeTime(i.createdAt instanceof Date ? i.createdAt : new Date()),
+                        date: i.createdAt instanceof Date ? i.createdAt : new Date()
+                    })),
+                    ...blogs.slice(0, 2).map(b => ({
+                        id: b.id,
+                        icon: FileText,
+                        iconBg: 'bg-purple-50',
+                        iconColor: 'text-purple-600',
+                        title: 'Blog Content Updated',
+                        description: `Insight released: "${b.title}".`,
+                        time: getRelativeTime(b.publishDate instanceof Date ? b.publishDate : new Date()),
+                        date: b.publishDate instanceof Date ? b.publishDate : new Date()
+                    })),
+                    ...collabs.slice(0, 2).map(c => ({
+                        id: c.id,
+                        icon: Sparkles,
+                        iconBg: 'bg-amber-50',
+                        iconColor: 'text-amber-600',
+                        title: 'Engagement Interest',
+                        description: `Collaboration proposed: ${c.type} from ${c.fullName}.`,
+                        time: getRelativeTime(c.createdAt instanceof Date ? c.createdAt : new Date()),
+                        date: c.createdAt instanceof Date ? c.createdAt : new Date()
+                    })),
+                    ...progs.slice(0, 2).map(p => ({
+                        id: p.id,
+                        icon: FlaskConical,
+                        iconBg: 'bg-rose-50',
+                        iconColor: 'text-rose-600',
+                        title: 'Program Repository Update',
+                        description: `Architecture defined for ${p.title}.`,
+                        time: getRelativeTime(p.createdDate instanceof Date ? p.createdDate : new Date()),
+                        date: p.createdDate instanceof Date ? p.createdDate : new Date()
+                    }))
+                ];
 
-                const collabs = await engagementService.getAll();
-                setStats(prev => ({ ...prev, collaborations: { value: collabs.length.toString(), loading: false } }));
+                // Sort and set
+                setActivities(allActivities.sort((a, b) => b.date.getTime() - a.date.getTime()).slice(0, 6));
             } catch (error) {
-                console.error("Error fetching dashboard stats:", error);
+                console.error("Error fetching dashboard data:", error);
+            } finally {
+                setLoadingActivities(false);
             }
         };
-        fetchStats();
+        fetchDashboardData();
     }, []);
 
     const statCards = [
@@ -78,25 +159,6 @@ export default function Dashboard() {
         },
     ];
 
-    // Mock activities for now, but could be made dynamic
-    const recentActivities = [
-        {
-            icon: FileText,
-            iconBg: 'bg-[#2F4F4F]',
-            iconColor: 'text-white',
-            title: 'Institutional Portal Active',
-            description: 'The Athena Institute administrative nexus is fully operational with Firestore synchronization.',
-            time: 'Just now'
-        },
-        {
-            icon: MessageSquare,
-            iconBg: 'bg-orange-50',
-            iconColor: 'text-orange-600',
-            title: 'Dynamic Data Transition',
-            description: 'Hardcoded arrays have been purged from Blogs, Programs, and Inquiries.',
-            time: '2h ago'
-        },
-    ];
     return (
         <div>
             {/* Header Section */}
@@ -147,22 +209,35 @@ export default function Dashboard() {
                 {/* Recent Activities - Takes 2 columns */}
                 <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 p-6">
                     <h3 className="text-sm font-bold text-slate-400 uppercase tracking-[0.2em] mb-8">System Activity Log</h3>
-                    <div className="space-y-6">
-                        {recentActivities.map((activity, i) => (
-                            <div key={i} className="flex items-start space-x-4">
-                                <div className={`w-10 h-10 rounded-lg ${activity.iconBg} flex items-center justify-center ${activity.iconColor} shrink-0 border border-slate-100 shadow-sm`}>
-                                    <activity.icon size={18} />
-                                </div>
-                                <div className="flex-grow min-w-0">
-                                    <div className="flex items-center justify-between">
-                                        <p className="text-sm font-bold text-slate-900">{activity.title}</p>
-                                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest shrink-0 ml-2">{activity.time}</span>
+
+                    {loadingActivities ? (
+                        <div className="py-20 flex flex-col items-center justify-center text-slate-400">
+                            <Loader2 size={32} className="animate-spin mb-4" />
+                            <p className="text-xs font-bold uppercase tracking-widest">Synchronizing Nexus</p>
+                        </div>
+                    ) : activities.length > 0 ? (
+                        <div className="space-y-6">
+                            {activities.map((activity, i) => (
+                                <div key={i} className="flex items-start space-x-4 group">
+                                    <div className={`w-10 h-10 rounded-lg ${activity.iconBg} flex items-center justify-center ${activity.iconColor} shrink-0 border border-slate-100 shadow-sm transition-transform group-hover:scale-110`}>
+                                        <activity.icon size={18} />
                                     </div>
-                                    <p className="text-sm text-slate-500 mt-1 leading-relaxed italic">"{activity.description}"</p>
+                                    <div className="flex-grow min-w-0">
+                                        <div className="flex items-center justify-between">
+                                            <p className="text-sm font-bold text-slate-900">{activity.title}</p>
+                                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest shrink-0 ml-2">{activity.time}</span>
+                                        </div>
+                                        <p className="text-sm text-slate-500 mt-1 leading-relaxed italic">"{activity.description}"</p>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="py-20 flex flex-col items-center justify-center text-slate-400 border-2 border-dashed border-slate-50 rounded-xl">
+                            <FileText size={32} className="opacity-20 mb-4" />
+                            <p className="text-xs font-bold uppercase tracking-widest">No activities recorded</p>
+                        </div>
+                    )}
                 </div>
 
                 {/* Right Column - Quick Actions & System Status */}

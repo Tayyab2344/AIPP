@@ -190,14 +190,26 @@ const PublicationsPage = () => {
                                                 </div>
                                             </div>
                                             <div className="md:col-span-3 flex flex-col gap-3 justify-center">
-                                                <a
-                                                    href={pub.pdfUrl}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="flex items-center justify-between px-4 py-3 bg-[#1A5261] text-white text-[10px] font-bold uppercase tracking-widest hover:bg-[#14414d] transition-all"
-                                                >
-                                                    PDF <Download suppressHydrationWarning size={14} />
-                                                </a>
+                                                {pub.pdfUrl && (
+                                                    <a
+                                                        href={pub.allowDownload ? pub.pdfUrl : '#'}
+                                                        target={pub.allowDownload ? "_blank" : "_self"}
+                                                        rel="noopener noreferrer"
+                                                        onClick={(e) => {
+                                                            if (!pub.allowDownload) {
+                                                                e.preventDefault();
+                                                                alert("This document is restricted to institutional viewing only.");
+                                                            }
+                                                        }}
+                                                        className={`flex items-center justify-between px-4 py-3 text-[10px] font-bold uppercase tracking-widest transition-all
+                                                            ${pub.allowDownload
+                                                                ? 'bg-[#1A5261] text-white hover:bg-[#14414d]'
+                                                                : 'bg-slate-100 text-slate-400 cursor-not-allowed'}`}
+                                                    >
+                                                        {pub.allowDownload ? 'PDF' : 'Protected'}
+                                                        {pub.allowDownload ? <Download suppressHydrationWarning size={14} /> : <FileText size={14} />}
+                                                    </a>
+                                                )}
                                                 <button className="flex items-center justify-between px-4 py-3 border border-slate-200 text-slate-900 text-[10px] font-bold uppercase tracking-widest hover:bg-slate-50 transition-all">
                                                     Details <ArrowRight suppressHydrationWarning size={14} />
                                                 </button>

@@ -75,6 +75,7 @@ export default function RPIClient() {
                             year: 2024,
                             publishStatus: 'published',
                             pdfUrl: '#',
+                            allowDownload: true,
                         },
                         {
                             id: 'fallback-2',
@@ -84,6 +85,7 @@ export default function RPIClient() {
                             year: 2024,
                             publishStatus: 'published',
                             pdfUrl: '#',
+                            allowDownload: true,
                         }
                     ]);
                 } else {

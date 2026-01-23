@@ -33,6 +33,7 @@ export interface Publication {
     pdfUrl: string;
     imageUrl?: string; // Cover image for the publication
     publishStatus: 'published' | 'draft';
+    allowDownload: boolean;
 }
 
 export interface Department {

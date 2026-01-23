@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
-import { motion, useInView, useAnimation, Variant } from 'framer-motion';
+import { motion, useInView, useAnimation, Variants } from 'framer-motion';
 
 interface RevealProps {
   children: React.ReactNode;
@@ -39,7 +39,7 @@ export const Reveal = ({
         }}
         initial="hidden"
         animate={mainControls}
-        transition={{ duration, delay, ease: [0.25, 0.1, 0.25, 1.0] }}
+        transition={{ duration, delay, ease: "easeOut" }}
       >
         {children}
       </motion.div>
@@ -61,7 +61,7 @@ export const RevealList = ({
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const container = {
+  const container: Variants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
@@ -72,9 +72,9 @@ export const RevealList = ({
     }
   };
 
-  const item = {
+  const item: Variants = {
     hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1.0] } }
+    show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
   };
 
   return (

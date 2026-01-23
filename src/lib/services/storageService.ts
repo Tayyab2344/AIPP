@@ -3,7 +3,7 @@
 // import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'; - removed
 
 export const storageService = {
-    uploadImage: async (file: File, folder: string = 'insights'): Promise<string> => {
+    uploadFile: async (file: File, folder: string = 'insights'): Promise<string> => {
         const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
         const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
 
@@ -17,6 +17,10 @@ export const storageService = {
         formData.append('file', file);
         formData.append('upload_preset', uploadPreset);
         formData.append('folder', folder);
+
+        // Ensure resource_type is handled correctly (auto for PDFs/Images)
+        // Cloudinary handles this automatically usually, but explicitly setting it helps
+        // formData.append('resource_type', 'auto'); 
 
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
@@ -49,5 +53,10 @@ export const storageService = {
 
             xhr.send(formData);
         });
+    },
+
+    // Maintaining uploadImage alias for compatibility
+    uploadImage: async (file: File, folder: string = 'insights'): Promise<string> => {
+        return storageService.uploadFile(file, folder);
     }
 };
