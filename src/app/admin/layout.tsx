@@ -85,20 +85,22 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 </div>
 
                 {/* Navigation */}
-                <nav className="flex-grow py-4 px-3 space-y-1">
+                <nav className="flex-grow py-8 px-4 space-y-2">
                     {navItems.map((item) => {
                         const isActive = pathname === item.href || (item.href === '/admin/dashboard' && pathname === '/admin');
                         return (
                             <Link
                                 key={item.href}
                                 href={item.href}
-                                className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all ${isActive
-                                    ? 'bg-[#B19B4C] text-white'
+                                className={`flex items-center space-x-3 px-4 py-3.5 rounded-lg transition-all duration-200 ${isActive
+                                    ? 'bg-[#B19B4C] text-white shadow-md'
                                     : 'text-[#A8C5C5] hover:bg-white/5 hover:text-white'
                                     }`}
                             >
-                                <item.icon size={20} />
-                                <span className="text-sm font-medium">{item.label}</span>
+                                <item.icon size={18} strokeWidth={isActive ? 2.5 : 2} />
+                                <span className={`text-sm tracking-wide ${isActive ? 'font-bold' : 'font-medium'}`}>
+                                    {item.label}
+                                </span>
                             </Link>
                         );
                     })}

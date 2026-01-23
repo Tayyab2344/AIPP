@@ -24,13 +24,13 @@ const Hero = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full text-center">
                 <div className="max-w-5xl mx-auto">
                     <Reveal width="100%" yOffset={40} delay={0.4} duration={0.8}>
-                        <h1 className="text-3xl sm:text-4xl md:text-6xl font-serif text-white leading-tight mb-6 sm:mb-8 tracking-tight max-w-4xl mx-auto drop-shadow-2xl">
+                        <h1 className="text-3xl sm:text-4xl md:text-6xl font-serif text-white leading-[1.15] mb-8 sm:mb-10 tracking-tight max-w-4xl mx-auto drop-shadow-lg">
                             Advancing Women's Strategic <br className="hidden sm:block" /> Intellect in Political Praxis
                         </h1>
                     </Reveal>
 
                     <Reveal width="100%" yOffset={20} delay={0.6} duration={0.8}>
-                        <p className="text-base sm:text-lg md:text-xl text-stone- stone-300 mb-8 sm:mb-12 leading-relaxed max-w-3xl mx-auto font-medium">
+                        <p className="text-base sm:text-lg md:text-xl text-stone-200/90 mb-10 sm:mb-14 leading-relaxed max-w-3xl mx-auto font-medium drop-shadow-sm">
                             AIPP is a think tank focused on women's strategic intellect and political transformation, addressing the gaps in political thought caused by excluding women's strategic wisdom.
                         </p>
                     </Reveal>
