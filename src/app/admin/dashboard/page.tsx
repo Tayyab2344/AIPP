@@ -24,6 +24,14 @@ import { engagementService } from '@/lib/services/engagementService';
 import { blogService } from '@/lib/services/blogService';
 import { publicationService } from '@/lib/services/publicationService';
 import { getRelativeTime } from '@/lib/utils';
+import {
+    Subscriber,
+    ContactMessage,
+    Program,
+    Collaboration,
+    BlogPost,
+    Publication
+} from '@/types';
 
 interface Activity {
     id: string;
@@ -51,7 +59,14 @@ export default function Dashboard() {
         const fetchDashboardData = async () => {
             try {
                 // Fetch stats as before
-                const [subs, inqs, progs, collabs, blogs, pubs] = await Promise.all([
+                const [subs, inqs, progs, collabs, blogs, pubs]: [
+                    Subscriber[],
+                    ContactMessage[],
+                    Program[],
+                    Collaboration[],
+                    BlogPost[],
+                    Publication[]
+                ] = await Promise.all([
                     subscriberService.getSubscribers(),
                     inquiryService.getInquiries(),
                     programService.getAll(),
@@ -70,7 +85,7 @@ export default function Dashboard() {
                 // Compile activities
                 const allActivities: Activity[] = [
                     ...subs.slice(0, 3).map(s => ({
-                        id: s.id,
+                        id: s.id || Math.random().toString(),
                         icon: UserPlus,
                         iconBg: 'bg-blue-50',
                         iconColor: 'text-blue-600',
@@ -80,7 +95,7 @@ export default function Dashboard() {
                         date: s.subscribedDate?.toDate() || new Date()
                     })),
                     ...inqs.slice(0, 3).map(i => ({
-                        id: i.id,
+                        id: i.id || Math.random().toString(),
                         icon: Mail,
                         iconBg: 'bg-emerald-50',
                         iconColor: 'text-emerald-600',
@@ -90,7 +105,7 @@ export default function Dashboard() {
                         date: i.createdAt instanceof Date ? i.createdAt : new Date()
                     })),
                     ...blogs.slice(0, 2).map(b => ({
-                        id: b.id,
+                        id: b.id || Math.random().toString(),
                         icon: FileText,
                         iconBg: 'bg-purple-50',
                         iconColor: 'text-purple-600',
@@ -100,17 +115,17 @@ export default function Dashboard() {
                         date: b.publishDate instanceof Date ? b.publishDate : new Date()
                     })),
                     ...collabs.slice(0, 2).map(c => ({
-                        id: c.id,
+                        id: c.id || Math.random().toString(),
                         icon: Sparkles,
                         iconBg: 'bg-amber-50',
                         iconColor: 'text-amber-600',
                         title: 'Engagement Interest',
-                        description: `Collaboration proposed: ${c.type} from ${c.fullName}.`,
+                        description: `Collaboration proposed: ${c.engagementType} from ${c.fullName}.`,
                         time: getRelativeTime(c.createdAt instanceof Date ? c.createdAt : new Date()),
                         date: c.createdAt instanceof Date ? c.createdAt : new Date()
                     })),
                     ...progs.slice(0, 2).map(p => ({
-                        id: p.id,
+                        id: p.id || Math.random().toString(),
                         icon: FlaskConical,
                         iconBg: 'bg-rose-50',
                         iconColor: 'text-rose-600',

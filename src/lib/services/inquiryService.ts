@@ -1,5 +1,6 @@
 import { db } from "../firebase";
 import { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp } from "firebase/firestore";
+import { ContactMessage } from "@/types";
 
 export interface ContactInquiry {
     fullName: string;
@@ -33,14 +34,14 @@ export const inquiryService = {
         }
     },
 
-    async getInquiries() {
+    async getInquiries(): Promise<ContactMessage[]> {
         const q = query(collection(db, "inquiries"), orderBy("createdAt", "desc"));
         const snapshot = await getDocs(q);
         return snapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data(),
             createdAt: doc.data().createdAt?.toDate() || new Date()
-        }));
+        })) as ContactMessage[];
     },
 
     async deleteInquiry(id: string) {

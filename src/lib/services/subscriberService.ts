@@ -11,6 +11,8 @@ import {
     serverTimestamp
 } from "firebase/firestore";
 
+import { Subscriber } from "@/types";
+
 const COLLECTION_NAME = "subscribers";
 
 export const subscriberService = {
@@ -39,13 +41,13 @@ export const subscriberService = {
         return docRef.id;
     },
 
-    getSubscribers: async () => {
+    getSubscribers: async (): Promise<Subscriber[]> => {
         const q = query(collection(db, COLLECTION_NAME), orderBy("subscribedDate", "desc"));
         const snapshot = await getDocs(q);
         return snapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data()
-        })) as any[];
+        })) as Subscriber[];
     },
 
     deleteSubscriber: async (id: string) => {
