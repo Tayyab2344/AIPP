@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { Reveal } from '@/components/ui/Reveal';
 
 const Hero = () => {
     return (
@@ -22,17 +23,25 @@ const Hero = () => {
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full text-center">
                 <div className="max-w-5xl mx-auto">
-                    <h1 className="text-3xl sm:text-4xl md:text-6xl font-serif text-white leading-tight mb-6 sm:mb-8 tracking-tight max-w-4xl mx-auto drop-shadow-2xl">
-                        Advancing Women's Strategic <br className="hidden sm:block" /> Intellect in Political Praxis
-                    </h1>
-                    <p className="text-base sm:text-lg md:text-xl text-stone-300 mb-8 sm:mb-12 leading-relaxed max-w-3xl mx-auto font-medium">
-                        AIPP is a think tank focused on women's strategic intellect and political transformation, addressing the gaps in political thought caused by excluding women's strategic wisdom.
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center items-stretch sm:items-center px-4 sm:px-0">
-                        <Link href="/framework" className="bg-[var(--primary)] text-white px-6 sm:px-10 py-3 sm:py-4 rounded-md font-bold text-base sm:text-lg hover:opacity-90 transition-all text-center">
-                            Explore Our Work
-                        </Link>
-                    </div>
+                    <Reveal width="100%" yOffset={40} delay={0.4} duration={0.8}>
+                        <h1 className="text-3xl sm:text-4xl md:text-6xl font-serif text-white leading-tight mb-6 sm:mb-8 tracking-tight max-w-4xl mx-auto drop-shadow-2xl">
+                            Advancing Women's Strategic <br className="hidden sm:block" /> Intellect in Political Praxis
+                        </h1>
+                    </Reveal>
+
+                    <Reveal width="100%" yOffset={20} delay={0.6} duration={0.8}>
+                        <p className="text-base sm:text-lg md:text-xl text-stone- stone-300 mb-8 sm:mb-12 leading-relaxed max-w-3xl mx-auto font-medium">
+                            AIPP is a think tank focused on women's strategic intellect and political transformation, addressing the gaps in political thought caused by excluding women's strategic wisdom.
+                        </p>
+                    </Reveal>
+
+                    <Reveal width="100%" yOffset={10} delay={0.8} duration={0.8}>
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center items-stretch sm:items-center px-4 sm:px-0">
+                            <Link href="/framework" className="bg-[var(--primary)] text-white px-6 sm:px-10 py-3 sm:py-4 rounded-md font-bold text-base sm:text-lg hover:opacity-90 transition-all text-center">
+                                Explore Our Work
+                            </Link>
+                        </div>
+                    </Reveal>
                 </div>
             </div>
         </section>

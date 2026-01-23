@@ -6,6 +6,7 @@ import PublicationsTeaser from '@/components/home/PublicationsTeaser';
 import Newsletter from '@/components/home/Newsletter';
 import EngageSection from '@/components/home/EngageSection';
 import { Metadata } from 'next';
+import { Reveal } from '@/components/ui/Reveal';
 
 export const metadata: Metadata = {
   title: 'Athena Institute for Political Praxis | Advancing Women\'s Strategic Intellect',
@@ -17,17 +18,29 @@ export default function Home() {
     <div className="flex flex-col">
       <Hero />
 
-      <AboutGlance />
+      <Reveal width="100%" yOffset={30}>
+        <AboutGlance />
+      </Reveal>
 
-      <FocusAreas />
+      <Reveal width="100%" yOffset={30} delay={0.3}>
+        <FocusAreas />
+      </Reveal>
 
-      <StrategicLearning />
+      <Reveal width="100%" yOffset={30}>
+        <StrategicLearning />
+      </Reveal>
 
-      <PublicationsTeaser />
+      <Reveal width="100%" yOffset={30}>
+        <PublicationsTeaser />
+      </Reveal>
 
-      <Newsletter />
+      <Reveal width="100%" yOffset={30}>
+        <Newsletter />
+      </Reveal>
 
-      <EngageSection />
+      <Reveal width="100%" yOffset={30}>
+        <EngageSection />
+      </Reveal>
     </div>
   );
 }

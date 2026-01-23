@@ -7,6 +7,7 @@ import { BookOpen, Users, Lightbulb, Search, Award, Globe, FileText, ArrowRight,
 import { publicationService } from '@/lib/services/publicationService';
 import { programService } from '@/lib/services/programService';
 import { Program, Publication } from '@/types';
+import { Reveal, RevealList } from '@/components/ui/Reveal';
 
 export default function RPIClient() {
     const [programs, setPrograms] = useState<Program[]>([]);
@@ -110,22 +111,24 @@ export default function RPIClient() {
             {/* Hero Section */}
             <section className="relative py-32 px-4" style={{ backgroundColor: '#1e3a5f' }}>
                 <div className="max-w-7xl mx-auto">
-                    <p className="text-sm uppercase tracking-widest text-slate-300 mb-4 font-medium">What We Offer</p>
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white mb-6 leading-tight">
-                        Research & Policy<br />
-                        Innovation (RPI)
-                    </h1>
-                    <p className="text-lg text-slate-200 max-w-2xl mb-10 leading-relaxed">
-                        Producing intellectual rigor as the foundation of political praxis. We bridge the gap between academic theory and strategic governance to transform women's political participation.
-                    </p>
-                    <div className="flex flex-wrap gap-4">
-                        <Link href="#programs" className="inline-block bg-teal-700 text-white px-8 py-3 font-bold text-sm uppercase tracking-widest hover:bg-teal-800 transition-all">
-                            View our Research
-                        </Link>
-                        <Link href="/contact" className="inline-block border-2 border-white/40 text-white px-8 py-3 font-bold text-sm uppercase tracking-widest hover:bg-white/10 transition-all">
-                            Download Research Agenda
-                        </Link>
-                    </div>
+                    <Reveal width="100%">
+                        <p className="text-sm uppercase tracking-widest text-slate-300 mb-4 font-medium">What We Offer</p>
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white mb-6 leading-tight">
+                            Research & Policy<br />
+                            Innovation (RPI)
+                        </h1>
+                        <p className="text-lg text-slate-200 max-w-2xl mb-10 leading-relaxed">
+                            Producing intellectual rigor as the foundation of political praxis. We bridge the gap between academic theory and strategic governance to transform women's political participation.
+                        </p>
+                        <div className="flex flex-wrap gap-4">
+                            <Link href="#programs" className="inline-block bg-teal-700 text-white px-8 py-3 font-bold text-sm uppercase tracking-widest hover:bg-teal-800 transition-all">
+                                View our Research
+                            </Link>
+                            <Link href="/contact" className="inline-block border-2 border-white/40 text-white px-8 py-3 font-bold text-sm uppercase tracking-widest hover:bg-white/10 transition-all">
+                                Download Research Agenda
+                            </Link>
+                        </div>
+                    </Reveal>
                 </div>
             </section>
 
@@ -136,7 +139,7 @@ export default function RPIClient() {
                         Research Philosophy &<br />Approach
                     </h2>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <RevealList className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {/* Card 1 */}
                         <div className="bg-white p-8 border border-slate-200">
                             <p className="text-sm text-slate-500 mb-2 font-medium">Our methodology is grounded in transformative scholarship that centers women's experiences</p>
@@ -193,7 +196,7 @@ export default function RPIClient() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </RevealList>
                 </div>
             </section>
 
@@ -204,7 +207,7 @@ export default function RPIClient() {
                         Key Areas of Inquiry
                     </h2>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                    <RevealList className="grid grid-cols-1 md:grid-cols-3 gap-12">
                         <div className="text-center md:text-left">
                             <h3 className="text-[var(--primary)] font-bold uppercase tracking-widest text-sm mb-4">Gender-Responsive Governance</h3>
                             <p className="text-stone-400 text-sm leading-relaxed">
@@ -225,7 +228,7 @@ export default function RPIClient() {
                                 Researching how institutions can be designed and reformed to better serve diverse populations and ensure equitable representation.
                             </p>
                         </div>
-                    </div>
+                    </RevealList>
                 </div>
             </section>
 
@@ -251,7 +254,7 @@ export default function RPIClient() {
                             <Loader2 suppressHydrationWarning size={40} className="animate-spin text-teal-700" />
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <RevealList className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             {programs.length > 0 ? programs.map((program) => (
                                 <div key={program.id} className="border border-slate-200 hover:shadow-lg transition-shadow bg-white flex flex-col h-full rounded-lg overflow-hidden group">
                                     {program.imageUrl && (
@@ -306,7 +309,7 @@ export default function RPIClient() {
                                     No active Research & Policy initiatives found.
                                 </div>
                             )}
-                        </div>
+                        </RevealList>
                     )}
                 </div>
             </section>
@@ -323,7 +326,7 @@ export default function RPIClient() {
                             <Loader2 suppressHydrationWarning size={40} className="animate-spin text-teal-700" />
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <RevealList className="grid grid-cols-1 md:grid-cols-3 gap-8">
                             {outputs.length > 0 ? outputs.map((out) => (
                                 <div key={out.id} className="bg-white border border-slate-200 overflow-hidden flex flex-col group">
                                     <div className="aspect-[4/3] bg-[#2D241E] flex items-center justify-center transition-transform group-hover:bg-[#1A5261]/20 duration-500">
@@ -344,7 +347,7 @@ export default function RPIClient() {
                                     No recent knowledge outputs found.
                                 </div>
                             )}
-                        </div>
+                        </RevealList>
                     )}
                 </div>
             </section>

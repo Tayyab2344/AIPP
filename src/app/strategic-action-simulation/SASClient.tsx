@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { BookOpen, Users, Lightbulb, Target, Brain, Zap, CheckCircle, ArrowRight, Loader2 } from 'lucide-react';
 import { programService } from '@/lib/services/programService';
 import { Program } from '@/types';
+import { Reveal, RevealList } from '@/components/ui/Reveal';
 
 export default function SASClient() {
     const [programs, setPrograms] = useState<Program[]>([]);
@@ -47,7 +48,7 @@ export default function SASClient() {
 
                 {/* Content */}
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 w-full">
-                    <div className="max-w-xl">
+                    <Reveal className="max-w-xl" width="100%">
                         <p className="text-sm uppercase tracking-widest text-slate-500 mb-4 font-bold">What We Offer</p>
                         <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-slate-900 mb-6 leading-tight">
                             Strategic<br />
@@ -65,7 +66,7 @@ export default function SASClient() {
                                 Core Pillars
                             </Link>
                         </div>
-                    </div>
+                    </Reveal>
                 </div>
             </section>
 
@@ -83,7 +84,7 @@ export default function SASClient() {
                         </h2>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <RevealList className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {/* Theory */}
                         <div className="bg-white p-8 border border-slate-200">
                             <div className="w-10 h-10 bg-amber-100 rounded flex items-center justify-center mb-6">
@@ -116,7 +117,7 @@ export default function SASClient() {
                                 The application of theory through real-value simulated political and non-adversarial scenarios.
                             </p>
                         </div>
-                    </div>
+                    </RevealList>
                 </div>
             </section>
 
@@ -128,7 +129,7 @@ export default function SASClient() {
                         Areas of Strategic Engagement
                     </h2>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                    <RevealList className="grid grid-cols-1 md:grid-cols-3 gap-12">
                         <div>
                             <h3 className="font-bold text-slate-900 mb-3">Systems Thinking</h3>
                             <p className="text-slate-600 text-sm leading-relaxed">
@@ -149,7 +150,7 @@ export default function SASClient() {
                                 Strategic decision-making frameworks under volatile and uncontrollable geopolitical contexts.
                             </p>
                         </div>
-                    </div>
+                    </RevealList>
                 </div>
             </section>
 
@@ -183,7 +184,7 @@ export default function SASClient() {
                         </div>
 
                         {/* Right - Lab Cards */}
-                        <div className="space-y-4">
+                        <RevealList className="space-y-4">
                             {loading ? (
                                 <div className="flex justify-center py-10">
                                     <Loader2 suppressHydrationWarning size={32} className="animate-spin text-slate-400" />
@@ -240,7 +241,7 @@ export default function SASClient() {
                                     No simulation labs currently scheduled.
                                 </div>
                             )}
-                        </div>
+                        </RevealList>
                     </div>
                 </div>
             </section>

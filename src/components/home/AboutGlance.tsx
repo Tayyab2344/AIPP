@@ -1,11 +1,12 @@
 import React from 'react';
+import { Reveal, RevealList } from '@/components/ui/Reveal';
 
 const AboutGlance = () => {
     return (
         <section className="py-24 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-                    <div>
+                    <Reveal width="100%">
                         <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-slate-900 mb-6 sm:mb-8 tracking-tight">
                             AIPP at a Glance
                         </h2>
@@ -17,22 +18,26 @@ const AboutGlance = () => {
                                 We are dedicated to building an inclusive and gender-responsive political order through interdisciplinary research and evidence-based policy innovation.
                             </p>
                         </div>
-                    </div>
+                    </Reveal>
 
-                    <div className="bg-slate-50 p-8 sm:p-12 md:p-16 rounded-sm border-l-4 border-[var(--primary)]">
-                        <div className="mb-10 sm:mb-12">
-                            <h3 className="text-xl sm:text-2xl font-serif text-slate-900 mb-4 uppercase tracking-wider">Our Vision</h3>
-                            <p className="text-base sm:text-lg text-slate-600 font-medium">
-                                To foster an inclusive, gender-responsive political order.
-                            </p>
+                    <Reveal width="100%" delay={0.4}>
+                        <div className="bg-slate-50 p-8 sm:p-12 md:p-16 rounded-sm border-l-4 border-[var(--primary)]">
+                            <RevealList staggerDelay={0.2}>
+                                <div className="mb-10 sm:mb-12">
+                                    <h3 className="text-xl sm:text-2xl font-serif text-slate-900 mb-4 uppercase tracking-wider">Our Vision</h3>
+                                    <p className="text-base sm:text-lg text-slate-600 font-medium">
+                                        To foster an inclusive, gender-responsive political order.
+                                    </p>
+                                </div>
+                                <div>
+                                    <h3 className="text-xl sm:text-2xl font-serif text-slate-900 mb-4 uppercase tracking-wider">Our Mission</h3>
+                                    <p className="text-base sm:text-lg text-slate-600 font-medium leading-relaxed">
+                                        Championing interdisciplinary research, cultivating women's political leadership, driving evidence-based policy innovation, shaping public discourse, and advocating for institutional reform.
+                                    </p>
+                                </div>
+                            </RevealList>
                         </div>
-                        <div>
-                            <h3 className="text-xl sm:text-2xl font-serif text-slate-900 mb-4 uppercase tracking-wider">Our Mission</h3>
-                            <p className="text-base sm:text-lg text-slate-600 font-medium leading-relaxed">
-                                Championing interdisciplinary research, cultivating women's political leadership, driving evidence-based policy innovation, shaping public discourse, and advocating for institutional reform.
-                            </p>
-                        </div>
-                    </div>
+                    </Reveal>
                 </div>
             </div>
         </section>

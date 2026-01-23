@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { blogService } from '@/lib/services/blogService';
 import { BlogPost } from '@/types';
+import { Reveal, RevealList } from '@/components/ui/Reveal';
 
 const InsightsClient = () => {
     const [insights, setInsights] = useState<BlogPost[]>([]);
@@ -52,16 +53,18 @@ const InsightsClient = () => {
             {/* Hero Section */}
             <header className="bg-white border-b border-slate-100 pt-24 pb-16 sm:pt-32 sm:pb-24">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] mb-6">Public Reflections</p>
-                    <h1 className="text-4xl sm:text-6xl font-serif text-slate-900 leading-tight mb-8">
-                        Insights & Analytical <br /> Commentary
-                    </h1>
-                    <p className="text-lg text-slate-500 font-medium leading-relaxed max-w-2xl mb-10">
-                        Extending the boundaries of political praxis through rigorous reflection and strategic intellect. Our blog serves as a bridge between formal research and the public discourse.
-                    </p>
-                    <Link href="#" className="inline-flex items-center gap-2 text-[10px] font-bold text-[var(--primary)] uppercase tracking-widest hover:gap-3 transition-all">
-                        Our Editorial Commitment <ArrowRight suppressHydrationWarning size={14} />
-                    </Link>
+                    <Reveal width="100%">
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] mb-6">Public Reflections</p>
+                        <h1 className="text-4xl sm:text-6xl font-serif text-slate-900 leading-tight mb-8">
+                            Insights & Analytical <br /> Commentary
+                        </h1>
+                        <p className="text-lg text-slate-500 font-medium leading-relaxed max-w-2xl mb-10">
+                            Extending the boundaries of political praxis through rigorous reflection and strategic intellect. Our blog serves as a bridge between formal research and the public discourse.
+                        </p>
+                        <Link href="#" className="inline-flex items-center gap-2 text-[10px] font-bold text-[var(--primary)] uppercase tracking-widest hover:gap-3 transition-all">
+                            Our Editorial Commitment <ArrowRight suppressHydrationWarning size={14} />
+                        </Link>
+                    </Reveal>
                 </div>
             </header>
 
@@ -94,7 +97,7 @@ const InsightsClient = () => {
                         ))}
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+                    <RevealList className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
                         {filteredInsights.length > 0 ? filteredInsights.map((insight, idx) => (
                             <article key={insight.id || idx} className="group flex flex-col h-full">
                                 <Link href={`/insights/${insight.slug}`} className="block aspect-[4/3] bg-slate-100 rounded-sm overflow-hidden mb-6">
@@ -142,7 +145,7 @@ const InsightsClient = () => {
                                 <p className="text-slate-400 font-serif italic">No institutional insights found in this category.</p>
                             </div>
                         )}
-                    </div>
+                    </RevealList>
                 )}
 
                 {/* Pagination */}

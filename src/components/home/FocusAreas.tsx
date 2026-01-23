@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { RevealList } from '@/components/ui/Reveal';
 
 const focusAreas = [
     {
@@ -32,7 +33,7 @@ const FocusAreas = () => {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <RevealList className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {focusAreas.map((area, index) => (
                         <div key={index} className="bg-white rounded-sm overflow-hidden border border-slate-200 hover:shadow-xl transition-all group h-full flex flex-col">
                             <div className="aspect-[4/3] overflow-hidden relative">
@@ -54,7 +55,7 @@ const FocusAreas = () => {
                             </div>
                         </div>
                     ))}
-                </div>
+                </RevealList>
             </div>
         </section>
     );

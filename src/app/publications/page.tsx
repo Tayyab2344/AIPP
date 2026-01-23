@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { publicationService } from '@/lib/services/publicationService';
 import { Publication } from '@/types';
+import { Reveal, RevealList } from '@/components/ui/Reveal';
 
 const PublicationsPage = () => {
     const [activeFilter, setActiveFilter] = useState('Newest');
@@ -38,7 +39,7 @@ const PublicationsPage = () => {
             <section className="bg-white border-b border-slate-100 overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 sm:pt-32 sm:pb-24">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                        <div className="lg:col-span-7">
+                        <Reveal className="lg:col-span-7" width="100%">
                             <p className="text-[10px] font-bold text-[var(--primary)] uppercase tracking-widest mb-4">Institutional Research</p>
                             <h1 className="text-4xl sm:text-6xl font-serif text-slate-900 leading-tight mb-8">
                                 The Architecture <br /> of Praxis
@@ -54,15 +55,17 @@ const PublicationsPage = () => {
                                     Submission Guidelines
                                 </button>
                             </div>
-                        </div>
+                        </Reveal>
                         <div className="lg:col-span-5 relative hidden lg:block">
-                            <div className="aspect-square bg-slate-100 rounded-full flex items-center justify-center overflow-hidden">
-                                <img
-                                    src="/images/pillar_rpi_hijab.png"
-                                    alt="Research Publications"
-                                    className="w-full h-full object-cover"
-                                />
-                            </div>
+                            <Reveal width="100%" delay={0.4}>
+                                <div className="aspect-square bg-slate-100 rounded-full flex items-center justify-center overflow-hidden">
+                                    <img
+                                        src="/images/pillar_rpi_hijab.png"
+                                        alt="Research Publications"
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                            </Reveal>
                         </div>
                     </div>
                 </div>
@@ -116,7 +119,7 @@ const PublicationsPage = () => {
                         {/* Thematic Focus Areas */}
                         <div>
                             <h2 className="text-xl font-serif text-slate-900 mb-8 italic">Thematic Focus Areas</h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-slate-100 border border-slate-100">
+                            <RevealList className="grid grid-cols-1 md:grid-cols-2 gap-px bg-slate-100 border border-slate-100">
                                 <div className="bg-white p-8 group cursor-pointer hover:bg-slate-50 transition-all">
                                     <BookOpen suppressHydrationWarning className="text-[var(--primary)] mb-6 opacity-40" size={24} />
                                     <h3 className="text-lg font-serif text-slate-900 mb-3 italic">Gender-Responsive Governance</h3>
@@ -127,7 +130,7 @@ const PublicationsPage = () => {
                                     <h3 className="text-lg font-serif text-slate-900 mb-3 italic">Political Strategy</h3>
                                     <p className="text-sm text-slate-500 leading-relaxed">Analytical frameworks for navigating complex political ecosystems and leadership transitions.</p>
                                 </div>
-                            </div>
+                            </RevealList>
                         </div>
 
                         {/* Recent Publications Feed */}
@@ -153,7 +156,7 @@ const PublicationsPage = () => {
                                     <p className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em]">Retrieving Repository...</p>
                                 </div>
                             ) : (
-                                <div className="space-y-12">
+                                <RevealList className="space-y-12">
                                     {publications.length > 0 ? publications.map((pub, i) => (
                                         <article key={i} className="group grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-slate-100 last:border-0 items-start">
                                             {pub.imageUrl && (
@@ -205,7 +208,7 @@ const PublicationsPage = () => {
                                             No publications currently available in the repository.
                                         </div>
                                     )}
-                                </div>
+                                </RevealList>
                             )}
 
                             <div className="mt-12">

@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { Mic, Eye, Brain, Shield, Target, ArrowRight, FileText, Newspaper, Radio, Loader2 } from 'lucide-react';
 import { publicationService } from '@/lib/services/publicationService';
 import { Publication } from '@/types';
+import { Reveal, RevealList } from '@/components/ui/Reveal';
 
 export default function CPAClient() {
     const [outputs, setOutputs] = useState<Publication[]>([]);
@@ -39,21 +40,23 @@ export default function CPAClient() {
             {/* Hero Section */}
             <section className="py-24 px-4 border-b border-slate-100">
                 <div className="max-w-7xl mx-auto">
-                    <p className="text-xs uppercase tracking-widest text-slate-500 mb-4 font-bold">What We Offer</p>
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-slate-900 mb-6 leading-tight">
-                        Communications &<br />
-                        Public Advocacy
-                    </h1>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-12">
-                        <p className="text-lg text-slate-600 leading-relaxed">
-                            Bridging rigorous research with public discourse to amplify women in strategic, intellectual, and transformative democratic understanding through reflective political praxis.
-                        </p>
-                        <div className="flex justify-end items-start">
-                            <Link href="#approach" className="inline-flex items-center gap-2 text-sm font-bold text-slate-900 uppercase tracking-widest hover:text-[var(--primary)] transition-all">
-                                Our Approach <ArrowRight suppressHydrationWarning size={16} />
-                            </Link>
+                    <Reveal width="100%">
+                        <p className="text-xs uppercase tracking-widest text-slate-500 mb-4 font-bold">What We Offer</p>
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-slate-900 mb-6 leading-tight">
+                            Communications &<br />
+                            Public Advocacy
+                        </h1>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-12">
+                            <p className="text-lg text-slate-600 leading-relaxed">
+                                Bridging rigorous research with public discourse to amplify women in strategic, intellectual, and transformative democratic understanding through reflective political praxis.
+                            </p>
+                            <div className="flex justify-end items-start">
+                                <Link href="#approach" className="inline-flex items-center gap-2 text-sm font-bold text-slate-900 uppercase tracking-widest hover:text-[var(--primary)] transition-all">
+                                    Our Approach <ArrowRight suppressHydrationWarning size={16} />
+                                </Link>
+                            </div>
                         </div>
-                    </div>
+                    </Reveal>
                 </div>
             </section>
 
@@ -80,7 +83,7 @@ export default function CPAClient() {
                         </div>
 
                         {/* Right Side - Grid of Cards */}
-                        <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-10">
+                        <RevealList className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-10">
                             <div>
                                 <div className="flex items-center gap-3 mb-4">
                                     <Mic suppressHydrationWarning size={20} className="text-slate-700" />
@@ -120,7 +123,7 @@ export default function CPAClient() {
                                     Designing and executing sustained efforts to educate, persuade, and positively influence policy by synthesizing bold arguments and rigorous data.
                                 </p>
                             </div>
-                        </div>
+                        </RevealList>
                     </div>
                 </div>
             </section>
@@ -133,7 +136,7 @@ export default function CPAClient() {
                         Areas of Focus
                     </h2>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <RevealList className="grid grid-cols-1 md:grid-cols-2 gap-12">
                         <div className="border-l-2 border-slate-300 pl-8">
                             <h3 className="text-xl font-serif text-slate-900 mb-4">Public Discourse on Governance</h3>
                             <p className="text-sm text-slate-600 leading-relaxed">
@@ -147,7 +150,7 @@ export default function CPAClient() {
                                 Positioning women as serious actors in the field of strategic political theorization—not as symbolic participants, but as architects of leadership making a mark on complex policy domains.
                             </p>
                         </div>
-                    </div>
+                    </RevealList>
                 </div>
             </section>
 
@@ -168,7 +171,7 @@ export default function CPAClient() {
                             <Loader2 suppressHydrationWarning size={40} className="animate-spin text-slate-200" />
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <RevealList className="grid grid-cols-1 md:grid-cols-3 gap-8">
                             {outputs.length > 0 ? outputs.map((out) => (
                                 <div key={out.id} className="group">
                                     <div className="bg-slate-50 aspect-[4/3] mb-6 flex items-center justify-center overflow-hidden border border-slate-100 relative">
@@ -197,7 +200,7 @@ export default function CPAClient() {
                                     No strategic outputs registered in the repository.
                                 </div>
                             )}
-                        </div>
+                        </RevealList>
                     )}
                 </div>
             </section>
