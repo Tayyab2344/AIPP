@@ -89,7 +89,8 @@ export interface Collaboration {
     organization?: string;
     engagementType: EngagementType;
     proposal: string;
-    status: 'pending' | 'reviewed' | 'resolved';
+    status: 'pending' | 'reviewed' | 'resolved' | 'accepted' | 'declined';
+
     createdAt: any;
 }
 

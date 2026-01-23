@@ -68,7 +68,8 @@ export default function CollaborateClient() {
         try {
             await engagementService.submitApplication({
                 ...formData,
-                type: selectedPath
+                engagementType: selectedPath
+
             });
             setSubmitted(true);
             window.scrollTo({ top: 0, behavior: 'smooth' });

@@ -63,7 +63,8 @@ export default function AdminCollaborations() {
     const filtered = collaborations.filter(c =>
         c.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         c.organization?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        c.type.toLowerCase().includes(searchQuery.toLowerCase())
+        c.engagementType.toLowerCase().includes(searchQuery.toLowerCase())
+
     );
 
     const getStatusStyle = (status: string) => {
@@ -126,7 +127,8 @@ export default function AdminCollaborations() {
                                         </td>
                                         <td className="px-6 py-4">
                                             <span className="text-[10px] font-bold text-slate-600 bg-slate-100 px-2 py-1 rounded uppercase tracking-widest">
-                                                {collab.type}
+                                                {collab.engagementType}
+
                                             </span>
                                         </td>
                                         <td className="px-6 py-4">
@@ -139,7 +141,8 @@ export default function AdminCollaborations() {
                                         </td>
                                         <td className="px-6 py-4 text-right">
                                             <button
-                                                onClick={(e) => { e.stopPropagation(); handleDelete(collab.id); }}
+                                                onClick={(e) => { e.stopPropagation(); if (collab.id) handleDelete(collab.id); }}
+
                                                 className="p-2 text-slate-300 hover:text-rose-500 transition-colors"
                                             >
                                                 <Trash2 suppressHydrationWarning size={18} />
@@ -169,7 +172,8 @@ export default function AdminCollaborations() {
 
                     <div className="p-8 space-y-8 flex-grow">
                         <div>
-                            <p className="text-[10px] font-bold text-[var(--primary)] uppercase tracking-widest mb-2">{selectedCollab.type}</p>
+                            <p className="text-[10px] font-bold text-[var(--primary)] uppercase tracking-widest mb-2">{selectedCollab.engagementType}</p>
+
                             <h3 className="text-2xl font-serif text-slate-900 leading-tight mb-2">{selectedCollab.fullName}</h3>
                             <p className="text-slate-500 font-medium">{selectedCollab.organization || 'Individual Contributor'}</p>
                         </div>
@@ -199,19 +203,22 @@ export default function AdminCollaborations() {
                             <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Strategic Actions</label>
                             <div className="grid grid-cols-2 gap-3">
                                 <button
-                                    onClick={() => handleUpdateStatus(selectedCollab.id, 'accepted')}
+                                    onClick={() => selectedCollab.id && handleUpdateStatus(selectedCollab.id, 'accepted')}
+
                                     className="px-4 py-3 bg-emerald-600 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-emerald-700 transition-all rounded"
                                 >
                                     Accept Interest
                                 </button>
                                 <button
-                                    onClick={() => handleUpdateStatus(selectedCollab.id, 'reviewed')}
+                                    onClick={() => selectedCollab.id && handleUpdateStatus(selectedCollab.id, 'reviewed')}
+
                                     className="px-4 py-3 bg-slate-900 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-slate-800 transition-all rounded"
                                 >
                                     Mark Reviewed
                                 </button>
                                 <button
-                                    onClick={() => handleUpdateStatus(selectedCollab.id, 'declined')}
+                                    onClick={() => selectedCollab.id && handleUpdateStatus(selectedCollab.id, 'declined')}
+
                                     className="px-4 py-3 border border-rose-200 text-rose-600 text-[10px] font-bold uppercase tracking-widest hover:bg-rose-50 transition-all rounded"
                                 >
                                     Decline Inquiry

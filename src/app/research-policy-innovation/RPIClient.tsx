@@ -30,7 +30,11 @@ export default function RPIClient() {
                             coreOffering: 'RPI',
                             status: 'PUBLISHED',
                             modules: ['Institutional Analysis', 'Policy Design', 'Implementation Strategy'],
+                            shortDescription: 'A comprehensive framework for analyzing and restructuring governance models.',
+                            detailedDescription: 'A comprehensive framework for analyzing and restructuring governance models to be more inclusive and effective.',
+                            connectedEntities: [],
                             createdDate: new Date()
+
                         },
                         {
                             id: 'fallback-2',
@@ -39,8 +43,12 @@ export default function RPIClient() {
                             coreOffering: 'RPI',
                             status: 'PUBLISHED',
                             modules: ['Leadership Dynamics', 'Electoral Strategy', 'Public Discourse'],
+                            shortDescription: 'Examining the systemic barriers and strategic opportunities for women in high-level political leadership.',
+                            detailedDescription: 'Examining the systemic barriers and strategic opportunities for women in high-level political leadership.',
+                            connectedEntities: [],
                             createdDate: new Date()
                         }
+
                     ]);
                 } else {
                     console.error("Error fetching RPI programs:", error);
@@ -63,24 +71,18 @@ export default function RPIClient() {
                             title: 'The Architecture of Praxis',
                             summary: 'Reimagining political structures through the lens of strategic feminine leadership.',
                             category: 'Policy Brief',
-                            year: '2024',
+                            year: 2024,
                             publishStatus: 'published',
-                            slug: 'architecture-of-praxis',
-                            content: '',
-                            createdAt: new Date(),
-                            updatedAt: new Date()
+                            pdfUrl: '#',
                         },
                         {
                             id: 'fallback-2',
                             title: 'Institutional Re-engineering',
                             summary: 'A technical guide to modifying organizational DNA for greater equity.',
                             category: 'Report',
-                            year: '2024',
+                            year: 2024,
                             publishStatus: 'published',
-                            slug: 'institutional-reengineering',
-                            content: '',
-                            createdAt: new Date(),
-                            updatedAt: new Date()
+                            pdfUrl: '#',
                         }
                     ]);
                 } else {
