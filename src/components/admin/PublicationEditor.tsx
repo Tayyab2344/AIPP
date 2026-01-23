@@ -19,6 +19,8 @@ import {
 import { publicationService } from '@/lib/services/publicationService';
 import { storageService } from '@/lib/services/storageService';
 import { Publication } from '@/types';
+import RichTextEditor from './RichTextEditor';
+
 
 interface PublicationEditorProps {
     initialData?: Publication;
@@ -164,13 +166,12 @@ export default function PublicationEditor({ initialData, isNew = false }: Public
                     {/* Summary */}
                     <div className="space-y-3">
                         <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Formal Abstract / Summary</label>
-                        <textarea
-                            value={pub.summary}
-                            onChange={(e) => setPub({ ...pub, summary: e.target.value })}
-                            rows={6}
+                        <RichTextEditor
+                            value={pub.summary || ''}
+                            onChange={(content) => setPub({ ...pub, summary: content })}
                             placeholder="Provide a concise summary of the analytical findings..."
-                            className="w-full text-sm leading-relaxed text-slate-600 border-none bg-slate-50 rounded-2xl px-6 py-4 focus:ring-1 focus:ring-[#B19B4C] placeholder:text-slate-200 resize-none"
                         />
+
                     </div>
 
                     {/* Visual Assets (New) */}

@@ -21,6 +21,8 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import RichTextEditor from '@/components/admin/RichTextEditor';
+
 
 export default function EditProgramPage() {
     const router = useRouter();
@@ -296,13 +298,12 @@ export default function EditProgramPage() {
                                     Detailed Framework
                                 </label>
                                 <div className="border border-slate-200 rounded-lg overflow-hidden bg-slate-50">
-                                    <textarea
-                                        value={formData.detailedDescription}
-                                        onChange={(e) => setFormData({ ...formData, detailedDescription: e.target.value })}
-                                        rows={8}
-                                        className="w-full px-4 py-3 bg-transparent text-sm focus:outline-none resize-none leading-relaxed"
+                                    <RichTextEditor
+                                        value={formData.detailedDescription || ''}
+                                        onChange={(content) => setFormData({ ...formData, detailedDescription: content })}
                                         placeholder="Full detailed analysis and framework..."
                                     />
+
                                 </div>
                             </div>
                         </div>
