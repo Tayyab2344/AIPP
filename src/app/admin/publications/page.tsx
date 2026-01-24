@@ -21,16 +21,18 @@ import { publicationService } from '@/lib/services/publicationService';
 import { Publication } from '@/types';
 import Link from 'next/link';
 import DeleteConfirmationModal from '@/components/admin/DeleteConfirmationModal';
+import Toast, { ToastType } from '@/components/ui/Toast';
 
 export default function AdminPublications() {
     const [publications, setPublications] = useState<Publication[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
 
-    // Delete Modal State
+    // UI States
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [itemToDelete, setItemToDelete] = useState<string | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
+    const [toast, setToast] = useState<{ message: string; type: ToastType } | null>(null);
 
     useEffect(() => {
         fetchPublications();
@@ -58,11 +60,12 @@ export default function AdminPublications() {
         try {
             await publicationService.delete(itemToDelete);
             setPublications(publications.filter(p => p.id !== itemToDelete));
+            setToast({ message: "Publication archived successfully", type: "success" });
             setShowDeleteModal(false);
             setItemToDelete(null);
         } catch (error) {
             console.error("Error deleting publication:", error);
-            alert("Failed to delete publication.");
+            setToast({ message: "Failed to archive publication", type: "error" });
         } finally {
             setIsDeleting(false);
         }
@@ -242,6 +245,14 @@ export default function AdminPublications() {
                 message="Are you sure you want to remove this publication from the formal repository? This action is permanent."
                 isDeleting={isDeleting}
             />
+
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
         </div>
     );
 }

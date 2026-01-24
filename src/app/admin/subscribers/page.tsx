@@ -5,11 +5,19 @@ import { Button } from '@/components/ui/Button';
 import { Search, Download, Trash2, Mail, Loader2 } from 'lucide-react';
 import { subscriberService } from '@/lib/services/subscriberService';
 import { Subscriber } from '@/types';
+import DeleteConfirmationModal from '@/components/admin/DeleteConfirmationModal';
+import Toast, { ToastType } from '@/components/ui/Toast';
 
 export default function SubscribersAdmin() {
     const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
+
+    // UI States
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [itemToDelete, setItemToDelete] = useState<string | null>(null);
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [toast, setToast] = useState<{ message: string; type: ToastType } | null>(null);
 
     useEffect(() => {
         fetchSubscribers();
@@ -22,18 +30,31 @@ export default function SubscribersAdmin() {
             setSubscribers(data as Subscriber[]);
         } catch (error) {
             console.error("Error fetching subscribers:", error);
+            setToast({ message: "Failed to load subscribers", type: "error" });
         } finally {
             setLoading(false);
         }
     };
 
-    const handleDelete = async (id: string) => {
-        if (!confirm("Are you sure you want to remove this subscriber?")) return;
+    const handleDeleteClick = (id: string) => {
+        setItemToDelete(id);
+        setShowDeleteModal(true);
+    };
+
+    const handleConfirmDelete = async () => {
+        if (!itemToDelete) return;
+        setIsDeleting(true);
         try {
-            await subscriberService.deleteSubscriber(id);
+            await subscriberService.deleteSubscriber(itemToDelete);
             await fetchSubscribers();
+            setToast({ message: "Subscriber removed successfully", type: "success" });
         } catch (error) {
             console.error("Error deleting subscriber:", error);
+            setToast({ message: "Failed to remove subscriber", type: "error" });
+        } finally {
+            setIsDeleting(false);
+            setShowDeleteModal(false);
+            setItemToDelete(null);
         }
     };
 
@@ -105,7 +126,7 @@ export default function SubscribersAdmin() {
                                         <td className="px-8 py-6 text-right">
                                             <div className="flex justify-end space-x-1">
                                                 <Button
-                                                    onClick={() => handleDelete(sub.id)}
+                                                    onClick={() => handleDeleteClick(sub.id)}
                                                     variant="ghost"
                                                     size="sm"
                                                     className="p-2 text-rose-600 hover:bg-rose-50 rounded-lg transition-all"
@@ -125,6 +146,23 @@ export default function SubscribersAdmin() {
                     )}
                 </div>
             </div>
+
+            <DeleteConfirmationModal
+                isOpen={showDeleteModal}
+                onClose={() => setShowDeleteModal(false)}
+                onConfirm={handleConfirmDelete}
+                title="Remove Subscriber"
+                message="Are you sure you want to remove this subscriber from the network? This action cannot be undone."
+                isDeleting={isDeleting}
+            />
+
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
         </div>
     );
 }

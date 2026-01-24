@@ -16,12 +16,20 @@ import {
 } from 'lucide-react';
 import { engagementService } from '@/lib/services/engagementService';
 import { Collaboration } from '@/types';
+import DeleteConfirmationModal from '@/components/admin/DeleteConfirmationModal';
+import Toast, { ToastType } from '@/components/ui/Toast';
 
 export default function AdminCollaborations() {
     const [collaborations, setCollaborations] = useState<Collaboration[]>([]);
     const [loading, setLoading] = useState(true);
     const [selectedCollab, setSelectedCollab] = useState<Collaboration | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
+
+    // UI States
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [itemToDelete, setItemToDelete] = useState<string | null>(null);
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [toast, setToast] = useState<{ message: string; type: ToastType } | null>(null);
 
     useEffect(() => {
         fetchCollaborations();
@@ -43,20 +51,34 @@ export default function AdminCollaborations() {
         try {
             await engagementService.updateStatus(id, status);
             await fetchCollaborations();
+            setToast({ message: `Status updated to ${status}`, type: "success" });
             if (selectedCollab?.id === id) setSelectedCollab({ ...selectedCollab, status });
         } catch (error) {
             console.error("Error updating status:", error);
+            setToast({ message: "Failed to update status", type: "error" });
         }
     };
 
-    const handleDelete = async (id: string) => {
-        if (!confirm("Are you sure you want to delete this engagement record?")) return;
+    const handleDeleteClick = (id: string) => {
+        setItemToDelete(id);
+        setShowDeleteModal(true);
+    };
+
+    const handleConfirmDelete = async () => {
+        if (!itemToDelete) return;
+        setIsDeleting(true);
         try {
-            await engagementService.delete(id);
+            await engagementService.delete(itemToDelete);
             await fetchCollaborations();
-            if (selectedCollab?.id === id) setSelectedCollab(null);
+            setToast({ message: "Engagement record deleted successfully", type: "success" });
+            if (selectedCollab?.id === itemToDelete) setSelectedCollab(null);
+            setShowDeleteModal(false);
+            setItemToDelete(null);
         } catch (error) {
             console.error("Error deleting record:", error);
+            setToast({ message: "Failed to delete record", type: "error" });
+        } finally {
+            setIsDeleting(false);
         }
     };
 
@@ -141,7 +163,7 @@ export default function AdminCollaborations() {
                                         </td>
                                         <td className="px-6 py-4 text-right">
                                             <button
-                                                onClick={(e) => { e.stopPropagation(); if (collab.id) handleDelete(collab.id); }}
+                                                onClick={(e) => { e.stopPropagation(); if (collab.id) handleDeleteClick(collab.id); }}
 
                                                 className="p-2 text-slate-300 hover:text-rose-500 transition-colors"
                                             >
@@ -233,6 +255,23 @@ export default function AdminCollaborations() {
                         </div>
                     </div>
                 </div>
+            )}
+
+            <DeleteConfirmationModal
+                isOpen={showDeleteModal}
+                onClose={() => setShowDeleteModal(false)}
+                onConfirm={handleConfirmDelete}
+                title="Delete Engagement Record"
+                message="Are you sure you want to delete this engagement record? This action cannot be undone."
+                isDeleting={isDeleting}
+            />
+
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
             )}
         </div>
     );

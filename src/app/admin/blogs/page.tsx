@@ -23,6 +23,8 @@ import {
 import { blogService } from '@/lib/services/blogService';
 import { subscriberService } from '@/lib/services/subscriberService';
 import { BlogPost } from '@/types';
+import DeleteConfirmationModal from '@/components/admin/DeleteConfirmationModal';
+import Toast, { ToastType } from '@/components/ui/Toast';
 
 const statusOptions = ['All', 'Published', 'Draft', 'Archived'];
 const categoryOptions = ['All', 'Political Thought', 'Governance', 'Women & Leadership', 'Praxis & Strategy'];
@@ -35,6 +37,12 @@ export default function BlogsAdmin() {
     const [statusFilter, setStatusFilter] = useState('All');
     const [searchQuery, setSearchQuery] = useState('');
     const [isSaving, setIsSaving] = useState(false);
+
+    // UI States
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [itemToDelete, setItemToDelete] = useState<string | null>(null);
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [toast, setToast] = useState<{ message: string; type: ToastType } | null>(null);
 
     useEffect(() => {
         fetchBlogs();
@@ -69,7 +77,7 @@ export default function BlogsAdmin() {
     const handleSave = async () => {
         if (!selectedBlog) return;
         if (!selectedBlog.title || !selectedBlog.content) {
-            alert("Title and Content are required.");
+            setToast({ message: "Title and Content are required", type: "error" });
             return;
         }
 
@@ -89,23 +97,36 @@ export default function BlogsAdmin() {
                 await blogService.create(selectedBlog as Omit<BlogPost, 'id'>);
             }
             await fetchBlogs();
+            setToast({ message: "Article saved successfully", type: "success" });
             setShowDetails(false);
         } catch (error) {
             console.error("Error saving blog:", error);
-            alert("Failed to save article.");
+            setToast({ message: "Failed to save article", type: "error" });
         } finally {
             setIsSaving(false);
         }
     };
 
-    const handleDelete = async (id: string) => {
-        if (!confirm("Are you sure you want to delete this article? This action cannot be undone.")) return;
+    const handleDeleteClick = (id: string) => {
+        setItemToDelete(id);
+        setShowDeleteModal(true);
+    };
+
+    const handleConfirmDelete = async () => {
+        if (!itemToDelete) return;
+        setIsDeleting(true);
         try {
-            await blogService.delete(id);
+            await blogService.delete(itemToDelete);
             await fetchBlogs();
-            if (selectedBlog?.id === id) setShowDetails(false);
+            setToast({ message: "Article deleted successfully", type: "success" });
+            if (selectedBlog?.id === itemToDelete) setShowDetails(false);
+            setShowDeleteModal(false);
+            setItemToDelete(null);
         } catch (error) {
             console.error("Error deleting blog:", error);
+            setToast({ message: "Failed to delete article", type: "error" });
+        } finally {
+            setIsDeleting(false);
         }
     };
 
@@ -113,7 +134,7 @@ export default function BlogsAdmin() {
         try {
             const subscribers = await subscriberService.getSubscribers();
             if (subscribers.length === 0) {
-                alert("No subscribers found to export.");
+                setToast({ message: "No subscribers found to export", type: "error" });
                 return;
             }
 
@@ -133,9 +154,10 @@ export default function BlogsAdmin() {
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            setToast({ message: "Subscribers exported successfully", type: "success" });
         } catch (error) {
             console.error("Error exporting subscribers:", error);
-            alert("Failed to export subscribers.");
+            setToast({ message: "Failed to export subscribers", type: "error" });
         }
     };
 
@@ -284,7 +306,7 @@ export default function BlogsAdmin() {
                                             <button
                                                 onClick={(e) => {
                                                     e.stopPropagation();
-                                                    handleDelete(blog.id);
+                                                    handleDeleteClick(blog.id);
                                                 }}
                                                 className="p-1 text-slate-400 hover:text-rose-500 transition-colors"
                                             >
@@ -476,6 +498,23 @@ export default function BlogsAdmin() {
                         </button>
                     </div>
                 </div>
+            )}
+
+            <DeleteConfirmationModal
+                isOpen={showDeleteModal}
+                onClose={() => setShowDeleteModal(false)}
+                onConfirm={handleConfirmDelete}
+                title="Delete Manuscript"
+                message="Are you sure you want to delete this article? This action cannot be undone."
+                isDeleting={isDeleting}
+            />
+
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
             )}
         </div>
     );

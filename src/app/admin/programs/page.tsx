@@ -15,6 +15,7 @@ import {
 import { programService } from '@/lib/services/programService';
 import { Program } from '@/types';
 import DeleteConfirmationModal from '@/components/admin/DeleteConfirmationModal';
+import Toast, { ToastType } from '@/components/ui/Toast';
 
 const coreOfferings: Array<Program['coreOffering'] | 'All'> = ['All', 'RPI', 'SAS', 'CPA'];
 const statusOptions = ['All', 'PUBLISHED', 'DRAFT', 'ARCHIVED'];
@@ -27,10 +28,11 @@ export default function ProgramsPage() {
     const [statusFilter, setStatusFilter] = useState('All');
     const [searchQuery, setSearchQuery] = useState('');
 
-    // Delete Modal State
+    // UI States
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [itemToDelete, setItemToDelete] = useState<string | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
+    const [toast, setToast] = useState<{ message: string; type: ToastType } | null>(null);
 
     useEffect(() => {
         fetchPrograms();
@@ -60,11 +62,12 @@ export default function ProgramsPage() {
         try {
             await programService.delete(itemToDelete);
             await fetchPrograms(); // Refresh list
+            setToast({ message: "Program deleted successfully", type: "success" });
             setShowDeleteModal(false);
             setItemToDelete(null);
         } catch (error) {
             console.error("Error deleting program:", error);
-            alert("Failed to delete program. Please try again.");
+            setToast({ message: "Failed to delete program", type: "error" });
         } finally {
             setIsDeleting(false);
         }
@@ -257,6 +260,14 @@ export default function ProgramsPage() {
                 message="Are you sure you want to permanently remove this program? This will delete all associated data and cannot be undone."
                 isDeleting={isDeleting}
             />
+
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
         </div>
     );
 }

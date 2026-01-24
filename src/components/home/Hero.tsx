@@ -4,7 +4,7 @@ import { Reveal } from '@/components/ui/Reveal';
 
 const Hero = () => {
     return (
-        <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-[#2D241E] pt-32 pb-20">
+        <section className="relative h-[calc(100vh-80px)] min-h-[600px] flex items-center justify-center overflow-hidden bg-[#2D241E]">
             {/* Background Image Layer - Clear & Vibrant */}
             <div className="absolute inset-0 z-0">
                 <Image

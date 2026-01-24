@@ -5,24 +5,22 @@ import { auth } from '@/lib/firebase';
 import { updateEmail, updatePassword, updateProfile, User } from 'firebase/auth';
 import { Settings, Lock, Mail, User as UserIcon, AlertCircle, CheckCircle2 } from 'lucide-react';
 
+import Toast, { ToastType } from '@/components/ui/Toast';
+
 export default function AdminSettings() {
     const [user, setUser] = useState<User | null>(null);
 
     // Profile State
     const [displayName, setDisplayName] = useState('');
-    const [profileStatus, setProfileStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-    const [profileMsg, setProfileMsg] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [toast, setToast] = useState<{ message: string; type: ToastType } | null>(null);
 
     // Email State
     const [newEmail, setNewEmail] = useState('');
-    const [emailStatus, setEmailStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-    const [emailMsg, setEmailMsg] = useState('');
 
     // Password State
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [passStatus, setPassStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-    const [passMsg, setPassMsg] = useState('');
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((u) => {
@@ -39,17 +37,16 @@ export default function AdminSettings() {
         e.preventDefault();
         if (!user) return;
 
-        setProfileStatus('loading');
-        setProfileMsg('');
+        setIsLoading(true);
 
         try {
             await updateProfile(user, { displayName });
-            setProfileStatus('success');
-            setProfileMsg('Profile updated successfully.');
+            setToast({ message: "Profile updated successfully", type: "success" });
         } catch (error: any) {
             console.error(error);
-            setProfileStatus('error');
-            setProfileMsg(error.message || 'Failed to update profile.');
+            setToast({ message: error.message || "Failed to update profile", type: "error" });
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -57,21 +54,20 @@ export default function AdminSettings() {
         e.preventDefault();
         if (!user) return;
 
-        setEmailStatus('loading');
-        setEmailMsg('');
+        setIsLoading(true);
 
         try {
             await updateEmail(user, newEmail);
-            setEmailStatus('success');
-            setEmailMsg('Email updated successfully.');
+            setToast({ message: "Email updated successfully", type: "success" });
         } catch (error: any) {
             console.error(error);
-            setEmailStatus('error');
             if (error.code === 'auth/requires-recent-login') {
-                setEmailMsg('For security, please logout and login again to update your email.');
+                setToast({ message: "Please logout and login again to update your email", type: "error" });
             } else {
-                setEmailMsg(error.message || 'Failed to update email.');
+                setToast({ message: error.message || "Failed to update email", type: "error" });
             }
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -80,34 +76,31 @@ export default function AdminSettings() {
         if (!user) return;
 
         if (newPassword !== confirmPassword) {
-            setPassStatus('error');
-            setPassMsg('Passwords do not match.');
+            setToast({ message: "Passwords do not match", type: "error" });
             return;
         }
 
         if (newPassword.length < 6) {
-            setPassStatus('error');
-            setPassMsg('Password must be at least 6 characters.');
+            setToast({ message: "Password must be at least 6 characters", type: "error" });
             return;
         }
 
-        setPassStatus('loading');
-        setPassMsg('');
+        setIsLoading(true);
 
         try {
             await updatePassword(user, newPassword);
-            setPassStatus('success');
-            setPassMsg('Password updated successfully.');
+            setToast({ message: "Password updated successfully", type: "success" });
             setNewPassword('');
             setConfirmPassword('');
         } catch (error: any) {
             console.error(error);
-            setPassStatus('error');
             if (error.code === 'auth/requires-recent-login') {
-                setPassMsg('For security, please logout and login again to update your password.');
+                setToast({ message: "Please logout and login again to update your password", type: "error" });
             } else {
-                setPassMsg(error.message || 'Failed to update password.');
+                setToast({ message: error.message || "Failed to update password", type: "error" });
             }
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -141,20 +134,13 @@ export default function AdminSettings() {
                             />
                             <button
                                 type="submit"
-                                disabled={profileStatus === 'loading'}
+                                disabled={isLoading}
                                 className="bg-slate-900 text-white px-6 py-3 font-bold text-xs uppercase tracking-widest rounded hover:bg-slate-800 transition-all disabled:opacity-50"
                             >
-                                {profileStatus === 'loading' ? 'Saving...' : 'Save Changes'}
+                                {isLoading ? 'Saving...' : 'Save Changes'}
                             </button>
                         </div>
                     </div>
-
-                    {profileMsg && (
-                        <div className={`p-4 rounded-sm text-sm flex items-start gap-2 ${profileStatus === 'success' ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'}`}>
-                            {profileStatus === 'success' ? <CheckCircle2 size={16} className="mt-0.5" /> : <AlertCircle size={16} className="mt-0.5" />}
-                            <span>{profileMsg}</span>
-                        </div>
-                    )}
                 </form>
             </div>
 
@@ -187,19 +173,12 @@ export default function AdminSettings() {
                             />
                         </div>
 
-                        {emailMsg && (
-                            <div className={`p-4 rounded-sm text-sm flex items-start gap-2 ${emailStatus === 'success' ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'}`}>
-                                {emailStatus === 'success' ? <CheckCircle2 size={16} className="mt-0.5" /> : <AlertCircle size={16} className="mt-0.5" />}
-                                <span>{emailMsg}</span>
-                            </div>
-                        )}
-
                         <button
                             type="submit"
-                            disabled={emailStatus === 'loading' || newEmail === user?.email}
+                            disabled={isLoading || newEmail === user?.email}
                             className="bg-slate-900 text-white px-6 py-3 font-bold text-xs uppercase tracking-widest rounded hover:bg-slate-800 transition-all disabled:opacity-50 flex items-center gap-2"
                         >
-                            {emailStatus === 'loading' ? 'Updating...' : 'Update Email'}
+                            {isLoading ? 'Updating...' : 'Update Email'}
                         </button>
                     </form>
                 </div>
@@ -238,23 +217,24 @@ export default function AdminSettings() {
                             />
                         </div>
 
-                        {passMsg && (
-                            <div className={`p-4 rounded-sm text-sm flex items-start gap-2 ${passStatus === 'success' ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'}`}>
-                                {passStatus === 'success' ? <CheckCircle2 size={16} className="mt-0.5" /> : <AlertCircle size={16} className="mt-0.5" />}
-                                <span>{passMsg}</span>
-                            </div>
-                        )}
-
                         <button
                             type="submit"
-                            disabled={passStatus === 'loading' || !newPassword}
+                            disabled={isLoading || !newPassword}
                             className="bg-slate-900 text-white px-6 py-3 font-bold text-xs uppercase tracking-widest rounded hover:bg-slate-800 transition-all disabled:opacity-50 flex items-center gap-2"
                         >
-                            {passStatus === 'loading' ? 'Updating...' : 'Change Password'}
+                            {isLoading ? 'Updating...' : 'Change Password'}
                         </button>
                     </form>
                 </div>
             </div>
+
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
         </div>
     );
 }

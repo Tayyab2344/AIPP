@@ -12,7 +12,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
     return (
         <>
             {!isAdminPage && <Navbar />}
-            <main className={`flex-grow overflow-x-hidden ${!isAdminPage ? 'pt-20' : ''}`}>
+            <main className={`flex-grow ${!isAdminPage ? 'pt-20' : ''}`}>
                 {children}
             </main>
             {!isAdminPage && <Footer />}

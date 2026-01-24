@@ -17,6 +17,7 @@ import { blogService } from '@/lib/services/blogService';
 import { subscriberService } from '@/lib/services/subscriberService';
 import { BlogPost } from '@/types';
 import DeleteConfirmationModal from '@/components/admin/DeleteConfirmationModal';
+import Toast, { ToastType } from '@/components/ui/Toast';
 
 const statusOptions = ['All', 'Published', 'Draft', 'Archived'];
 
@@ -27,10 +28,11 @@ export default function InsightsAdmin() {
     const [statusFilter, setStatusFilter] = useState('All');
     const [searchQuery, setSearchQuery] = useState('');
 
-    // Delete Modal State
+    // UI States
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [itemToDelete, setItemToDelete] = useState<string | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
+    const [toast, setToast] = useState<{ message: string; type: ToastType } | null>(null);
 
     useEffect(() => {
         fetchBlogs();
@@ -59,11 +61,12 @@ export default function InsightsAdmin() {
         try {
             await blogService.delete(itemToDelete);
             await fetchBlogs();
+            setToast({ message: "Article deleted successfully", type: "success" });
             setShowDeleteModal(false);
             setItemToDelete(null);
         } catch (error) {
             console.error("Error deleting blog:", error);
-            alert("Failed to delete article.");
+            setToast({ message: "Failed to delete article", type: "error" });
         } finally {
             setIsDeleting(false);
         }
@@ -73,7 +76,7 @@ export default function InsightsAdmin() {
         try {
             const subscribers = await subscriberService.getSubscribers();
             if (subscribers.length === 0) {
-                alert("No subscribers found to export.");
+                setToast({ message: "No subscribers found to export", type: "error" });
                 return;
             }
 
@@ -92,9 +95,10 @@ export default function InsightsAdmin() {
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            setToast({ message: "Subscribers exported successfully", type: "success" });
         } catch (error) {
             console.error("Error exporting subscribers:", error);
-            alert("Failed to export subscribers.");
+            setToast({ message: "Failed to export subscribers", type: "error" });
         }
     };
 
@@ -302,6 +306,14 @@ export default function InsightsAdmin() {
                 message="Are you sure you want to delete this article? This action cannot be undone."
                 isDeleting={isDeleting}
             />
+
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
         </div>
     );
 }
