@@ -74,16 +74,24 @@ export default function AdminLogin() {
                 <div className="w-full max-w-md">
                     {/* Mobile Logo */}
                     <div className="lg:hidden text-center mb-10">
-                        <div className="inline-flex items-center justify-center w-16 h-16 bg-slate-900 text-white rounded-xl mb-4">
-                            <Building2 size={32} />
+                        <div className="inline-flex items-center justify-center mb-4">
+                            <img
+                                src="/aipp-logo.png"
+                                alt="AIPP Logo"
+                                className="w-20 h-20 object-contain"
+                            />
                         </div>
                         <h1 className="text-xl font-serif text-slate-900">Athena Institute for Political Praxis</h1>
                     </div>
 
                     {/* Desktop Title */}
                     <div className="hidden lg:block mb-10">
-                        <div className="inline-flex items-center justify-center w-14 h-14 bg-slate-900 text-white rounded-xl mb-6">
-                            <Building2 size={28} />
+                        <div className="inline-flex items-center justify-center mb-6">
+                            <img
+                                src="/aipp-logo.png"
+                                alt="AIPP Logo"
+                                className="w-16 h-16 object-contain"
+                            />
                         </div>
                         <h1 className="text-2xl font-serif text-slate-900">Athena Institute for Political Praxis</h1>
                     </div>
