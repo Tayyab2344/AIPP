@@ -6,7 +6,6 @@ import {
     Mail,
     Download as DownloadIcon,
     FileText,
-    MessageSquare,
     UserPlus,
     FlaskConical,
     Upload,
@@ -163,14 +162,6 @@ export default function Dashboard() {
             subtitle: 'Mission Interests',
             icon: Sparkles,
             href: '/admin/collaborations'
-        },
-        {
-            label: 'RECENT INQUIRIES',
-            value: stats.inquiries.value,
-            loading: stats.inquiries.loading,
-            subtitle: 'Institutional Inbox',
-            icon: Mail,
-            href: '/admin/messages'
         },
     ];
 
