@@ -1,8 +1,12 @@
-'use client';
-
 import React from 'react';
 import { CheckCircle2 } from 'lucide-react';
 import { Reveal, RevealList } from '@/components/ui/Reveal';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'About the Athena Institute for Political Praxis',
+    description: 'Learn about AIPP\'s mission to address the systemic exclusion of women\'s strategic intellect from governance and political thought.',
+};
 
 const AboutPage = () => {
     const principles = [

@@ -8,14 +8,22 @@ import { blogService } from '@/lib/services/blogService';
 import { BlogPost } from '@/types';
 import { Reveal, RevealList } from '@/components/ui/Reveal';
 
-const InsightsClient = () => {
-    const [insights, setInsights] = useState<BlogPost[]>([]);
-    const [loading, setLoading] = useState(true);
+const InsightsClient = ({ initialInsights = [] }: { initialInsights?: BlogPost[] }) => {
+    const [insights, setInsights] = useState<BlogPost[]>(initialInsights);
+    const [loading, setLoading] = useState(initialInsights.length === 0);
     const [activeCategory, setActiveCategory] = useState('All Insights');
     const [categories, setCategories] = useState(['All Insights']);
 
     useEffect(() => {
+        // Derive categories even if data is provided (or if it's empty)
+        if (insights.length > 0) {
+            const uniqueCats = Array.from(new Set(insights.map(i => i.category))).filter(Boolean);
+            setCategories(['All Insights', ...uniqueCats]);
+        }
+
         const fetchInsights = async () => {
+            if (initialInsights.length > 0) return; // Skip if server provided data
+
             try {
                 const data = await blogService.getAll();
                 // Public page only shows PUBLISHED posts
@@ -32,7 +40,7 @@ const InsightsClient = () => {
             }
         };
         fetchInsights();
-    }, []);
+    }, [initialInsights, insights.length]);
 
     const filteredInsights = activeCategory === 'All Insights'
         ? insights

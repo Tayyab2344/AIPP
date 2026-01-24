@@ -123,19 +123,19 @@ export default function AdminSettings() {
                 <form onSubmit={handleUpdateProfile} className="space-y-6">
                     <div className="space-y-2">
                         <label className="text-xs font-bold text-slate-900 uppercase tracking-wider">Display Name</label>
-                        <div className="flex gap-4">
+                        <div className="flex flex-col sm:flex-row gap-4">
                             <input
                                 type="text"
                                 required
                                 value={displayName}
                                 onChange={(e) => setDisplayName(e.target.value)}
-                                className="flex-1 px-4 py-3 bg-white border border-slate-200 focus:border-slate-400 outline-none transition-all text-slate-900"
+                                className="flex-1 px-4 py-3 bg-white border border-slate-200 focus:border-slate-400 outline-none transition-all text-slate-900 font-medium"
                                 placeholder="e.g. Tayyaba Atiq"
                             />
                             <button
                                 type="submit"
                                 disabled={isLoading}
-                                className="bg-slate-900 text-white px-6 py-3 font-bold text-xs uppercase tracking-widest rounded hover:bg-slate-800 transition-all disabled:opacity-50"
+                                className="bg-slate-900 text-white px-8 py-3 font-bold text-xs uppercase tracking-widest rounded hover:bg-slate-800 transition-all disabled:opacity-50 w-full sm:w-auto"
                             >
                                 {isLoading ? 'Saving...' : 'Save Changes'}
                             </button>

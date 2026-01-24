@@ -8,7 +8,7 @@ export async function POST(req: Request) {
 
         await sendEmail({
             from: `"AIPP System" <${process.env.SMTP_USER}>`,
-            to: 'Connect.aipp@gmail.com',
+            to: process.env.CONTACT_RECEIVER_EMAIL || 'Connect.aipp@gmail.com',
             subject: `New Institutional Inquiry: ${fullName}`,
             replyTo: email,
             html: `

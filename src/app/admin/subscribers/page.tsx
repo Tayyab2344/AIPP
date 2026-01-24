@@ -68,28 +68,28 @@ export default function SubscribersAdmin() {
         return d.toLocaleDateString();
     };
     return (
-        <div className="space-y-8">
-            <div className="flex justify-between items-center">
+        <div className="space-y-6 sm:space-y-8">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Email Subscribers</h1>
-                    <p className="text-slate-500 mt-1">View and manage your community mailing list.</p>
+                    <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight leading-tight">Email Subscribers</h1>
+                    <p className="text-slate-500 mt-1 text-sm italic">View and manage your community mailing list.</p>
                 </div>
-                <Button className="space-x-2 bg-emerald-600 hover:bg-emerald-700 shadow-emerald-500/20">
-                    <Download suppressHydrationWarning size={18} />
+                <Button className="space-x-2 bg-emerald-600 hover:bg-emerald-700 shadow-emerald-500/20 w-full sm:w-auto font-bold uppercase tracking-widest text-[10px] py-4">
+                    <Download suppressHydrationWarning size={16} />
                     <span>Export CSV</span>
                 </Button>
             </div>
 
-            <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
+            <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
                 <div className="p-6 border-b border-slate-50">
-                    <div className="relative max-w-md">
+                    <div className="relative w-full max-w-md">
                         <Search suppressHydrationWarning className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                         <input
                             type="text"
                             placeholder="Search by email..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-12 pr-4 py-3 rounded-2xl bg-slate-50 border border-slate-100 focus:outline-none focus:ring-2 focus:ring-violet-500/20 text-sm"
+                            className="w-full pl-12 pr-4 py-3 rounded-2xl bg-slate-50 border border-slate-100 focus:outline-none focus:ring-2 focus:ring-[#2F4F4F]/20 text-sm font-medium"
                         />
                     </div>
                 </div>
@@ -101,7 +101,7 @@ export default function SubscribersAdmin() {
                             <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Synchronizing Network...</p>
                         </div>
                     ) : filteredSubscribers.length > 0 ? (
-                        <table className="w-full text-left">
+                        <table className="w-full text-left min-w-[700px]">
                             <thead>
                                 <tr className="bg-slate-50/50 text-[10px] uppercase tracking-[0.2em] text-slate-400 font-extrabold">
                                     <th className="px-8 py-5">Subscriber</th>

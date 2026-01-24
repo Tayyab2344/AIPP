@@ -1,31 +1,18 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Mic, Eye, Brain, Shield, Target, ArrowRight, FileText, Newspaper, Radio, Loader2 } from 'lucide-react';
-import { publicationService } from '@/lib/services/publicationService';
+import { Mic, Eye, Brain, Shield, ArrowRight, FileText, Newspaper, Radio } from 'lucide-react';
 import { Publication } from '@/types';
 import { Reveal, RevealList } from '@/components/ui/Reveal';
 
-export default function CPAClient() {
-    const [outputs, setOutputs] = useState<Publication[]>([]);
-    const [loading, setLoading] = useState(true);
+interface CPAClientProps {
+    initialOutputs: Publication[];
+}
 
-    useEffect(() => {
-        const fetchOutputs = async () => {
-            try {
-                const data = await publicationService.getPublished();
-                // Take latest 3
-                setOutputs(data.slice(0, 3));
-            } catch (error) {
-                console.error("Error fetching CPA outputs:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchOutputs();
-    }, []);
+export default function CPAClient({ initialOutputs }: CPAClientProps) {
+    const [outputs] = useState<Publication[]>(initialOutputs);
 
     const getIcon = (category: string) => {
         switch (category) {
@@ -75,14 +62,12 @@ export default function CPAClient() {
             <section id="approach" className="py-20 px-4">
                 <div className="max-w-7xl mx-auto">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-                        {/* Left Side */}
                         <div className="lg:col-span-4">
                             <h2 className="text-3xl md:text-4xl font-serif text-slate-900 leading-tight">
                                 Research-Informed<br />Advocacy
                             </h2>
                         </div>
 
-                        {/* Right Side - Grid of Cards */}
                         <RevealList className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-10">
                             <div>
                                 <div className="flex items-center gap-3 mb-4">
@@ -166,42 +151,36 @@ export default function CPAClient() {
                         </Link>
                     </div>
 
-                    {loading ? (
-                        <div className="flex justify-center py-20">
-                            <Loader2 suppressHydrationWarning size={40} className="animate-spin text-slate-200" />
-                        </div>
-                    ) : (
-                        <RevealList className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            {outputs.length > 0 ? outputs.map((out) => (
-                                <div key={out.id} className="group">
-                                    <div className="bg-slate-50 aspect-[4/3] mb-6 flex items-center justify-center overflow-hidden border border-slate-100 relative">
-                                        {out.imageUrl ? (
-                                            <Image
-                                                src={out.imageUrl}
-                                                alt={out.title}
-                                                fill
-                                                className="object-cover group-hover:scale-105 transition-transform duration-500"
-                                            />
-                                        ) : (
-                                            getIcon(out.category)
-                                        )}
-                                    </div>
-                                    <p className="text-xs uppercase tracking-widest text-[var(--primary)] mb-2 font-bold">{out.category}</p>
-                                    <h3 className="font-serif text-lg text-slate-900 mb-2 group-hover:text-[var(--primary)] transition-colors line-clamp-2 min-h-[3.5rem]">
-                                        {out.title}
-                                    </h3>
-                                    <p className="text-sm text-slate-500 mb-4 line-clamp-3 italic">
-                                        {out.summary}
-                                    </p>
-                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{out.year}</p>
+                    <RevealList className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {outputs.length > 0 ? outputs.map((out) => (
+                            <div key={out.id} className="group">
+                                <div className="bg-slate-50 aspect-[4/3] mb-6 flex items-center justify-center overflow-hidden border border-slate-100 relative">
+                                    {out.imageUrl ? (
+                                        <Image
+                                            src={out.imageUrl}
+                                            alt={out.title}
+                                            fill
+                                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                        />
+                                    ) : (
+                                        getIcon(out.category)
+                                    )}
                                 </div>
-                            )) : (
-                                <div className="col-span-full py-12 text-center text-slate-400 italic font-serif">
-                                    No strategic outputs registered in the repository.
-                                </div>
-                            )}
-                        </RevealList>
-                    )}
+                                <p className="text-xs uppercase tracking-widest text-[var(--primary)] mb-2 font-bold">{out.category}</p>
+                                <h3 className="font-serif text-lg text-slate-900 mb-2 group-hover:text-[var(--primary)] transition-colors line-clamp-2 min-h-[3.5rem]">
+                                    {out.title}
+                                </h3>
+                                <p className="text-sm text-slate-500 mb-4 line-clamp-3 italic">
+                                    {out.summary}
+                                </p>
+                                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{out.year}</p>
+                            </div>
+                        )) : (
+                            <div className="col-span-full py-12 text-center text-slate-400 italic font-serif">
+                                No strategic outputs registered in the repository.
+                            </div>
+                        )}
+                    </RevealList>
                 </div>
             </section>
 

@@ -13,6 +13,8 @@ export const metadata: Metadata = {
   description: 'AIPP is a think tank focused on women\'s strategic intellect and political transformation, addressing the gaps in political thought caused by excluding women\'s strategic wisdom.',
 };
 
+export const revalidate = 3600; // Revalidate every hour
+
 export default function Home() {
   return (
     <div className="flex flex-col">

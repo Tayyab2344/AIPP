@@ -99,82 +99,84 @@ export default function ProgramsPage() {
     return (
         <div className="flex h-[calc(100vh-73px)]">
             {/* Main Content */}
-            <div className="flex-grow overflow-auto p-8">
+            <div className="flex-grow overflow-auto p-4 sm:p-8">
                 {/* Header */}
                 <div className="mb-6">
-                    <div className="text-xs text-slate-400 uppercase tracking-widest mb-2">
+                    <div className="text-[10px] text-slate-400 uppercase tracking-widest mb-2">
                         ADMIN / PROGRAMS & SUB-PROGRAMS
                     </div>
-                    <div className="flex items-start justify-between">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                         <div>
-                            <h1 className="text-3xl font-bold text-slate-900 font-serif">Programs Management</h1>
+                            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 font-serif leading-tight">Programs Management</h1>
                             <p className="text-slate-500 mt-1 text-sm max-w-xl">
-                                Structure institutional offerings for the Athena Institute. Ensure alignment with praxis guidelines.
+                                Structure institutional offerings for the Athena Institute.
                             </p>
                         </div>
                         <Link
                             href="/admin/programs/create"
-                            className="flex items-center space-x-2 bg-[#2F4F4F] text-white px-5 py-3 rounded-lg hover:bg-[#1F3F3F] transition-colors font-medium"
+                            className="flex items-center justify-center space-x-2 bg-[#2F4F4F] text-white px-5 py-3 rounded-lg hover:bg-[#1F3F3F] transition-colors font-bold uppercase tracking-widest text-[10px] w-full sm:w-auto"
                         >
-                            <Plus suppressHydrationWarning size={18} />
+                            <Plus suppressHydrationWarning size={16} />
                             <span>Create Program</span>
                         </Link>
                     </div>
                 </div>
 
                 {/* Filters */}
-                <div className="flex items-center space-x-4 mb-6">
-                    <div className="relative">
-                        <select
-                            value={coreOfferingFilter}
-                            onChange={(e) => setCoreOfferingFilter(e.target.value as any)}
-                            className="appearance-none bg-white border border-slate-200 rounded-lg px-4 py-2.5 pr-10 text-sm focus:outline-none focus:border-[#2F4F4F] cursor-pointer"
-                        >
-                            {coreOfferings.map((offering) => (
-                                <option key={offering} value={offering}>
-                                    Core Offering: {offering}
-                                </option>
-                            ))}
-                        </select>
-                        <ChevronDown suppressHydrationWarning size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                <div className="flex flex-col md:flex-row items-stretch md:items-center gap-4 mb-6">
+                    <div className="flex flex-col sm:flex-row gap-4 flex-grow">
+                        <div className="relative flex-1">
+                            <select
+                                value={coreOfferingFilter}
+                                onChange={(e) => setCoreOfferingFilter(e.target.value as any)}
+                                className="w-full appearance-none bg-white border border-slate-200 rounded-lg px-4 py-2.5 pr-10 text-sm focus:outline-none focus:border-[#2F4F4F] cursor-pointer font-medium"
+                            >
+                                {coreOfferings.map((offering) => (
+                                    <option key={offering} value={offering}>
+                                        Offering: {offering}
+                                    </option>
+                                ))}
+                            </select>
+                            <ChevronDown suppressHydrationWarning size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                        </div>
+
+                        <div className="relative flex-1">
+                            <select
+                                value={statusFilter}
+                                onChange={(e) => setStatusFilter(e.target.value)}
+                                className="w-full appearance-none bg-white border border-slate-200 rounded-lg px-4 py-2.5 pr-10 text-sm focus:outline-none focus:border-[#2F4F4F] cursor-pointer font-medium"
+                            >
+                                {statusOptions.map((status) => (
+                                    <option key={status} value={status}>
+                                        Status: {status}
+                                    </option>
+                                ))}
+                            </select>
+                            <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                        </div>
                     </div>
 
-                    <div className="relative">
-                        <select
-                            value={statusFilter}
-                            onChange={(e) => setStatusFilter(e.target.value)}
-                            className="appearance-none bg-white border border-slate-200 rounded-lg px-4 py-2.5 pr-10 text-sm focus:outline-none focus:border-[#2F4F4F] cursor-pointer"
-                        >
-                            {statusOptions.map((status) => (
-                                <option key={status} value={status}>
-                                    Status: {status}
-                                </option>
-                            ))}
-                        </select>
-                        <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
-                    </div>
-
-                    <div className="relative flex-grow max-w-xs">
+                    <div className="relative flex-grow md:max-w-xs">
                         <Search suppressHydrationWarning size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                         <input
                             type="text"
                             placeholder="Search ID or title..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-[#2F4F4F]"
+                            className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-[#2F4F4F] font-medium"
                         />
                     </div>
                 </div>
 
-                {/* Programs Table */}
-                <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+                {/* Programs Table Container */}
+                <div className="bg-white rounded-xl border border-slate-200 overflow-x-auto shadow-sm">
                     {loading ? (
                         <div className="p-12 flex flex-col items-center justify-center space-y-4">
                             <Loader2 suppressHydrationWarning className="animate-spin text-slate-300" size={32} />
                             <p className="text-slate-400 text-sm font-serif italic uppercase tracking-widest">Accessing Offerings...</p>
                         </div>
                     ) : (
-                        <table className="w-full">
+                        <table className="w-full min-w-[800px]">
                             <thead>
                                 <tr className="border-b border-slate-100 bg-slate-50/50">
                                     <th className="text-left px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Program Title</th>

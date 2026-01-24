@@ -29,7 +29,7 @@ export async function POST(req: Request) {
         // 2. Notify Admin
         await sendEmail({
             from: `"AIPP System" <${process.env.SMTP_USER}>`,
-            to: 'Connect.aipp@gmail.com',
+            to: process.env.CONTACT_RECEIVER_EMAIL || 'Connect.aipp@gmail.com',
             subject: `NEW COLLABORATION: ${type} - ${fullName}`,
             html: `
                 <div style="font-family: sans-serif; padding: 20px;">

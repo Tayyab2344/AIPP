@@ -14,7 +14,7 @@ export async function POST(req: Request) {
       from: `"AIPP" <${process.env.SMTP_USER}>`,
       to: email,
       subject: 'Welcome to the Athena Institute for Political Praxis',
-      replyTo: 'Connect.aipp@gmail.com',
+      replyTo: process.env.CONTACT_RECEIVER_EMAIL || 'Connect.aipp@gmail.com',
       html: `
         <div style="font-family: 'serif', 'Georgia', serif; color: #0F172A; max-width: 600px; margin: 0 auto; padding: 40px; border: 1px solid #F1F5F9;">
             <h1 style="color: #B19B4C; font-size: 24px; margin-bottom: 24px; text-transform: uppercase; letter-spacing: 0.1em;">Intellectual Network Joined</h1>
@@ -44,7 +44,7 @@ export async function POST(req: Request) {
     // 2. Send Notification to Admin
     await sendEmail({
       from: `"AIPP System" <${process.env.SMTP_USER}>`,
-      to: 'Connect.aipp@gmail.com',
+      to: process.env.CONTACT_RECEIVER_EMAIL || 'Connect.aipp@gmail.com',
       subject: 'New Newsletter Subscriber: ' + email,
       html: `
         <div style="font-family: sans-serif; padding: 20px;">

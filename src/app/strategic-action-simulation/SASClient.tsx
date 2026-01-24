@@ -1,30 +1,18 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { BookOpen, Users, Lightbulb, Target, Brain, Zap, CheckCircle, ArrowRight, Loader2 } from 'lucide-react';
-import { programService } from '@/lib/services/programService';
+import { BookOpen, Target, Brain, Zap, CheckCircle, ArrowRight } from 'lucide-react';
 import { Program } from '@/types';
 import { Reveal, RevealList } from '@/components/ui/Reveal';
 
-export default function SASClient() {
-    const [programs, setPrograms] = useState<Program[]>([]);
-    const [loading, setLoading] = useState(true);
+interface SASClientProps {
+    initialPrograms: Program[];
+}
 
-    useEffect(() => {
-        const fetchPrograms = async () => {
-            try {
-                const data = await programService.getPublished();
-                setPrograms(data.filter(p => p.coreOffering === 'SAS'));
-            } catch (error) {
-                console.error("Error fetching SAS programs:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchPrograms();
-    }, []);
+export default function SASClient({ initialPrograms }: SASClientProps) {
+    const [programs] = useState<Program[]>(initialPrograms);
 
     return (
         <div className="min-h-screen">
@@ -185,11 +173,7 @@ export default function SASClient() {
 
                         {/* Right - Lab Cards */}
                         <RevealList className="space-y-4">
-                            {loading ? (
-                                <div className="flex justify-center py-10">
-                                    <Loader2 suppressHydrationWarning size={32} className="animate-spin text-slate-400" />
-                                </div>
-                            ) : programs.length > 0 ? programs.map((program) => (
+                            {programs.length > 0 ? programs.map((program) => (
                                 <div key={program.id} className="bg-white hover:shadow-md transition-all group border border-slate-200 flex flex-col rounded-lg overflow-hidden">
                                     {program.imageUrl && (
                                         <div className="relative w-full h-48 bg-slate-100">

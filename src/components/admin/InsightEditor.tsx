@@ -186,54 +186,54 @@ export default function InsightEditor({ initialData, isNew = false }: InsightEdi
     }
 
     return (
-        <div className="max-w-6xl mx-auto pb-24 px-4">
+        <div className="max-w-6xl mx-auto pb-24 px-2 sm:px-4">
             {/* Top Navigation */}
-            <div className="flex items-center justify-between mb-8 sticky top-0 bg-[#F8F9FA]/80 backdrop-blur-md py-4 z-30">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between mb-8 sticky top-0 bg-[#F8F9FA]/80 backdrop-blur-md py-4 z-30 gap-4">
                 <div className="flex items-center gap-4">
                     <button
                         onClick={() => router.back()}
-                        className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-all"
+                        className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-all shrink-0"
                     >
                         <ArrowLeft suppressHydrationWarning size={20} />
                     </button>
-                    <div>
-                        <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                    <div className="min-w-0">
+                        <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest truncate">
                             {isNew ? 'New Publication' : 'Manuscript Edit'}
                         </div>
-                        <h1 className="text-xl font-bold text-slate-900 font-serif">
+                        <h1 className="text-lg sm:text-xl font-bold text-slate-900 font-serif truncate">
                             {blog.title || 'Untitled Insight'}
                         </h1>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 sm:gap-3">
                     <button
                         onClick={() => setIsPreview(true)}
-                        className="flex items-center gap-2 px-4 py-2 text-slate-500 font-bold text-xs uppercase tracking-widest hover:text-slate-700 hover:bg-white rounded transition-all"
+                        className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 text-slate-500 font-bold text-[10px] uppercase tracking-widest hover:text-slate-700 hover:bg-white rounded transition-all border border-transparent hover:border-slate-100"
                     >
-                        <Eye suppressHydrationWarning size={16} />
+                        <Eye suppressHydrationWarning size={14} />
                         Preview
                     </button>
                     <button
                         onClick={handleSave}
                         disabled={isSaving || isUploading}
-                        className="bg-[#2F4F4F] text-white px-6 py-2.5 rounded-lg font-bold text-xs uppercase tracking-widest hover:bg-[#1F3F3F] transition-all flex items-center gap-2 disabled:opacity-50 shadow-lg shadow-[#2F4F4F]/20"
+                        className="flex-2 sm:flex-none flex items-center justify-center gap-2 bg-[#2F4F4F] text-white px-6 py-2.5 rounded-lg font-bold text-[10px] uppercase tracking-widest hover:bg-[#1F3F3F] transition-all disabled:opacity-50 shadow-lg shadow-[#2F4F4F]/20"
                     >
                         {isSaving ? <Loader2 suppressHydrationWarning size={14} className="animate-spin" /> : <Save suppressHydrationWarning size={14} />}
-                        <span>{blog.status === 'published' ? 'Push to Domain' : 'Save Manuscript'}</span>
+                        <span>{blog.status === 'published' ? 'Publish' : 'Save'}</span>
                     </button>
                 </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-10">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10">
                 {/* Left Column: Content */}
-                <div className="col-span-2 space-y-8">
+                <div className="lg:col-span-2 space-y-8">
                     {/* Featured Image Upload */}
                     <div className="space-y-3">
                         <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Featured Visual</label>
                         <div
                             onClick={() => fileInputRef.current?.click()}
-                            className={`relative aspect-[21/9] rounded-2xl border-2 border-dashed transition-all flex flex-col items-center justify-center cursor-pointer overflow-hidden
+                            className={`relative aspect-video sm:aspect-[21/9] rounded-2xl border-2 border-dashed transition-all flex flex-col items-center justify-center cursor-pointer overflow-hidden
                                 ${blog.featuredImage ? 'border-transparent' : 'border-slate-200 hover:border-[#B19B4C] hover:bg-white'}`}
                         >
                             {blog.featuredImage ? (
@@ -252,7 +252,7 @@ export default function InsightEditor({ initialData, isNew = false }: InsightEdi
                                     </button>
                                 </>
                             ) : (
-                                <div className="flex flex-col items-center gap-3 text-slate-400">
+                                <div className="flex flex-col items-center gap-3 text-slate-400 p-4">
                                     <div className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center border border-slate-100">
                                         {isUploading ? <Loader2 suppressHydrationWarning size={24} className="animate-spin text-[#B19B4C]" /> : <Upload suppressHydrationWarning size={24} />}
                                     </div>
@@ -280,7 +280,7 @@ export default function InsightEditor({ initialData, isNew = false }: InsightEdi
                             onChange={(e) => setBlog({ ...blog, title: e.target.value })}
                             rows={2}
                             placeholder="Enter the institutional thesis title..."
-                            className="w-full text-4xl font-serif font-bold text-slate-900 border-none bg-transparent focus:ring-0 placeholder:text-slate-200 resize-none p-0 leading-tight"
+                            className="w-full text-2xl sm:text-4xl font-serif font-bold text-slate-900 border-none bg-transparent focus:ring-0 placeholder:text-slate-200 resize-none p-0 leading-tight"
                         />
                     </div>
 
@@ -292,12 +292,12 @@ export default function InsightEditor({ initialData, isNew = false }: InsightEdi
                             onChange={(e) => setBlog({ ...blog, excerpt: e.target.value })}
                             rows={3}
                             placeholder="A concise overview of the analytical pivot..."
-                            className="w-full text-xl font-serif italic text-slate-600 border-none bg-transparent focus:ring-0 placeholder:text-slate-200 resize-none p-0 leading-relaxed"
+                            className="w-full text-lg sm:text-xl font-serif italic text-slate-600 border-none bg-transparent focus:ring-0 placeholder:text-slate-200 resize-none p-0 leading-relaxed"
                         />
                     </div>
 
                     {/* Editor */}
-                    <div className="space-y-3 h-[600px] flex flex-col">
+                    <div className="space-y-3 h-[500px] sm:h-[600px] flex flex-col">
                         <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Manuscript Discourse</label>
                         <RichTextEditor
                             value={blog.content || ''}
@@ -407,20 +407,20 @@ export default function InsightEditor({ initialData, isNew = false }: InsightEdi
                         <div className="space-y-4">
                             <div className="flex justify-between items-center text-xs">
                                 <span className="text-[#A8C5C5]">Platform</span>
-                                <span className="font-serif italic">AIPP</span>
+                                <span className="font-serif italic font-bold">AIPP</span>
                             </div>
                             <div className="flex justify-between items-center text-xs">
                                 <span className="text-[#A8C5C5]">Author</span>
-                                <span className="font-serif italic truncate max-w-[150px]">{blog.author}</span>
+                                <span className="font-serif italic truncate max-w-[150px] font-bold">{blog.author}</span>
                             </div>
                             <div className="flex justify-between items-center text-xs">
                                 <span className="text-[#A8C5C5]">Lexicon Depth</span>
-                                <span className="font-mono text-[10px]">{blog.content?.split(/\s+/).filter(w => w.length > 0).length || 0} words</span>
+                                <span className="font-mono text-[10px] font-bold">{blog.content?.split(/\s+/).filter(w => w.length > 0).length || 0} words</span>
                             </div>
                             {blog.publishDate && (
                                 <div className="flex justify-between items-center text-xs">
                                     <span className="text-[#A8C5C5]">Logged Date</span>
-                                    <span className="font-mono text-[10px] italic">
+                                    <span className="font-mono text-[10px] italic font-bold">
                                         {new Date(blog.publishDate).toLocaleDateString()}
                                     </span>
                                 </div>
