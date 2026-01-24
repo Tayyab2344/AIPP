@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 :root {
   --background: #ffffff;
@@ -43,6 +44,32 @@ h6 {
 .hero-gradient {
   background: radial-gradient(circle at top right, rgba(109, 40, 217, 0.15), transparent),
     radial-gradient(circle at bottom left, rgba(236, 72, 153, 0.15), transparent);
+}
+
+
+/* Editor Fallback Styles */
+.custom-editor-styles .ProseMirror h1 {
+  font-size: 2.25rem !important;
+  line-height: 2.5rem !important;
+  margin-top: 2rem !important;
+  margin-bottom: 1rem !important;
+  font-weight: 600 !important;
+}
+
+.custom-editor-styles .ProseMirror h2 {
+  font-size: 1.875rem !important;
+  line-height: 2.25rem !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 0.75rem !important;
+  font-weight: 600 !important;
+}
+
+.custom-editor-styles .ProseMirror h3 {
+  font-size: 1.5rem !important;
+  line-height: 2rem !important;
+  margin-top: 1.25rem !important;
+  margin-bottom: 0.5rem !important;
+  font-weight: 600 !important;
 }
 
 @layer components {

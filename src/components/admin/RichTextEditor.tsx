@@ -37,7 +37,11 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
     const editor = useEditor({
         immediatelyRender: false,
         extensions: [
-            StarterKit,
+            StarterKit.configure({
+                heading: {
+                    levels: [1, 2, 3],
+                },
+            }),
             Underline,
             Link.configure({
                 openOnClick: false,
@@ -59,7 +63,7 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
         },
         editorProps: {
             attributes: {
-                class: 'prose prose-slate prose-lg max-w-none focus:outline-none min-h-[500px] p-8 prose-headings:font-serif prose-headings:font-normal prose-headings:text-[#2F4F4F] prose-p:text-slate-600 prose-p:leading-relaxed prose-strong:text-slate-900 prose-li:text-slate-600 prose-ol:list-decimal prose-ul:list-disc',
+                class: 'prose prose-slate prose-lg max-w-none focus:outline-none min-h-[500px] p-8 prose-headings:font-serif prose-headings:font-normal prose-headings:text-[#2F4F4F] prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-p:text-slate-600 prose-p:leading-relaxed prose-strong:text-slate-900 prose-li:text-slate-600 prose-ol:list-decimal prose-ul:list-disc',
             },
         },
     });
@@ -253,7 +257,7 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
             </div>
 
             {/* Editable Area */}
-            <div className="flex-grow relative overflow-auto">
+            <div className="flex-grow relative overflow-auto custom-editor-styles">
                 <EditorContent editor={editor} />
             </div>
         </div>

@@ -25,6 +25,7 @@ import { subscriberService } from '@/lib/services/subscriberService';
 import { BlogPost } from '@/types';
 import DeleteConfirmationModal from '@/components/admin/DeleteConfirmationModal';
 import Toast, { ToastType } from '@/components/ui/Toast';
+import RichTextEditor from '@/components/admin/RichTextEditor';
 
 const statusOptions = ['All', 'Published', 'Draft', 'Archived'];
 const categoryOptions = ['All', 'Political Thought', 'Governance', 'Women & Leadership', 'Praxis & Strategy'];
@@ -424,33 +425,16 @@ export default function BlogsAdmin() {
                             />
                         </div>
 
-                        {/* Editor Mockup */}
-                        <div>
-                            <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+                        {/* Editor Section */}
+                        <div className="space-y-3">
+                            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 block">
                                 Analytical Content
                             </label>
-                            <div className="border border-slate-200 rounded-lg overflow-hidden">
-                                <div className="flex items-center space-x-1 px-3 py-2 border-b border-slate-100 bg-slate-50">
-                                    <button className="p-1.5 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded">
-                                        <Bold size={14} />
-                                    </button>
-                                    <button className="p-1.5 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded">
-                                        <Italic size={14} />
-                                    </button>
-                                    <button className="p-1.5 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded">
-                                        <List size={14} />
-                                    </button>
-                                    <div className="flex-grow" />
-                                    <button className="p-1.5 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded">
-                                        <LinkIcon size={14} />
-                                    </button>
-                                </div>
-                                <textarea
-                                    value={selectedBlog.content}
-                                    onChange={(e) => setSelectedBlog({ ...selectedBlog, content: e.target.value })}
-                                    rows={12}
-                                    placeholder="Begin analytical discourse..."
-                                    className="w-full px-4 py-3 text-sm focus:outline-none resize-none leading-relaxed font-sans"
+                            <div className="h-[400px]">
+                                <RichTextEditor
+                                    value={selectedBlog.content || ''}
+                                    onChange={(content) => setSelectedBlog({ ...selectedBlog, content })}
+                                    placeholder="Begin the intellectual discourse..."
                                 />
                             </div>
                         </div>

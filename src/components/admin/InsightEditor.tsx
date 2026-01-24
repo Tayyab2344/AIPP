@@ -367,6 +367,18 @@ export default function InsightEditor({ initialData, isNew = false }: InsightEdi
                                 </div>
                             </div>
 
+                            {/* Author */}
+                            <div>
+                                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Principal Author</label>
+                                <input
+                                    type="text"
+                                    value={blog.author}
+                                    onChange={(e) => setBlog({ ...blog, author: e.target.value })}
+                                    placeholder="e.g. Athena Institute"
+                                    className="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:border-[#2F4F4F]"
+                                />
+                            </div>
+
                             {/* Status */}
                             <div>
                                 <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Release Protocol</label>
@@ -394,8 +406,12 @@ export default function InsightEditor({ initialData, isNew = false }: InsightEdi
                         </div>
                         <div className="space-y-4">
                             <div className="flex justify-between items-center text-xs">
+                                <span className="text-[#A8C5C5]">Platform</span>
+                                <span className="font-serif italic">AIPP</span>
+                            </div>
+                            <div className="flex justify-between items-center text-xs">
                                 <span className="text-[#A8C5C5]">Author</span>
-                                <span className="font-serif italic">{blog.author}</span>
+                                <span className="font-serif italic truncate max-w-[150px]">{blog.author}</span>
                             </div>
                             <div className="flex justify-between items-center text-xs">
                                 <span className="text-[#A8C5C5]">Lexicon Depth</span>
