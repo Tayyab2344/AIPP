@@ -24,11 +24,6 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  icons: {
-    icon: '/icon.png',
-    shortcut: '/icon.png',
-    apple: '/icon.png',
-  },
   openGraph: {
     title: SITE_CONFIG.name,
     description: SITE_CONFIG.description,
