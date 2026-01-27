@@ -9,16 +9,31 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://aipp-institute.org'), // Replace with actual production URL
+  metadataBase: new URL('https://www.aipp.org.pk'),
   title: {
     default: `${SITE_CONFIG.name} | ${SITE_CONFIG.tagline}`,
     template: `%s | ${SITE_CONFIG.name}`
   },
   description: SITE_CONFIG.description,
-  keywords: ["Political Praxis", "Women Leadership", "Research", "Advocacy", "Political Strategy", "Gender Responsive Governance", "Think Tank"],
-  authors: [{ name: 'Athena Institute' }],
+  keywords: [
+    "Political Praxis",
+    "Women's Political Leadership",
+    "Strategic Intellect",
+    "Gender-Responsive Governance",
+    "Athena Institute for Political Praxis",
+    "Political Transformation",
+    "Think Tank Pakistan",
+    "AIPP Pakistan",
+    "Women in Politics",
+    "Policy Innovation",
+    "Political Strategy"
+  ],
+  authors: [{ name: 'Athena Institute for Political Praxis' }],
   creator: 'Athena Institute',
   publisher: 'Athena Institute',
+  alternates: {
+    canonical: '/',
+  },
   formatDetection: {
     email: false,
     address: false,
@@ -27,14 +42,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: SITE_CONFIG.name,
     description: SITE_CONFIG.description,
-    url: 'https://aipp-institute.org',
+    url: 'https://www.aipp.org.pk',
     siteName: SITE_CONFIG.name,
     images: [
       {
         url: '/images/hero_hijab_niqab.png',
         width: 1200,
         height: 630,
-        alt: 'AIPP Strategic Leadership',
+        alt: 'AIPP Strategic Leadership - Advancing Women\'s Strategic Intellect',
       },
     ],
     locale: 'en_US',
@@ -65,9 +80,38 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.aipp.org.pk"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Insights",
+        "item": "https://www.aipp.org.pk/insights"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Publications",
+        "item": "https://www.aipp.org.pk/publications"
+      }
+    ]
+  };
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning className={`${inter.variable} ${playfair.variable} font-sans min-h-screen flex flex-col overflow-x-hidden`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+        />
         <LayoutWrapper>
           {children}
         </LayoutWrapper>

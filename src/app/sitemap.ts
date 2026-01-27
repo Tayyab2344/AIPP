@@ -1,10 +1,11 @@
 import { MetadataRoute } from 'next';
-import { SITE_CONFIG } from '@/lib/constants';
+import { blogService } from '@/lib/services/blogService';
 
-export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = 'https://aipp-institute.org'; // Replace with actual production URL
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+    const baseUrl = 'https://www.aipp.org.pk';
 
-    const routes = [
+    // Static routes
+    const staticRoutes = [
         '',
         '/about',
         '/research-policy-innovation',
@@ -21,5 +22,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: route === '' ? 1 : 0.8,
     }));
 
-    return routes;
+    // Dynamic insight routes
+    let insightRoutes: MetadataRoute.Sitemap = [];
+    try {
+        const insights = await blogService.getAll();
+        insightRoutes = insights
+            .filter(insight => insight.status === 'published')
+            .map((insight) => ({
+                url: `${baseUrl}/insights/${insight.slug}`,
+                lastModified: insight.publishDate,
+                changeFrequency: 'weekly' as const,
+                priority: 0.7,
+            }));
+    } catch (error) {
+        console.error('Error fetching insights for sitemap:', error);
+    }
+
+    return [...staticRoutes, ...insightRoutes];
 }

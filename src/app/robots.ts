@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
             allow: '/',
             disallow: '/admin/',
         },
-        sitemap: 'https://aipp-institute.org/sitemap.xml',
+        sitemap: 'https://www.aipp.org.pk/sitemap.xml',
     };
 }

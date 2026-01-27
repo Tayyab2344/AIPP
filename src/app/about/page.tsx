@@ -36,8 +36,23 @@ const AboutPage = () => {
         }
     ];
 
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "AboutPage",
+        "description": "Learn about AIPP's mission to address the systemic exclusion of women's strategic intellect from governance and political thought.",
+        "mainEntity": {
+            "@type": "NGO",
+            "name": "Athena Institute for Political Praxis",
+            "description": "A non-partisan institution dedicated to addressing the systemic exclusion of women's strategic intellect from political thought."
+        }
+    };
+
     return (
         <div className="bg-white min-h-screen">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             {/* Main Content */}
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 space-y-16 sm:space-y-20">
 

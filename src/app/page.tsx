@@ -16,8 +16,33 @@ export const metadata: Metadata = {
 export const revalidate = 3600; // Revalidate every hour
 
 export default function Home() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "NGO",
+    "name": "Athena Institute for Political Praxis (AIPP)",
+    "alternateName": "AIPP",
+    "url": "https://www.aipp.org.pk",
+    "logo": "https://www.aipp.org.pk/aipp-logo.png",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "Connect.aipp@gmail.com",
+      "contactType": "Connect",
+    },
+    "sameAs": [
+      "https://x.com/aipp_institute",
+      "https://www.instagram.com/aipp_org",
+      "https://www.linkedin.com/company/athena-institute-for-political-praxis-aipp/",
+      "https://substack.com/@aippdiscourse"
+    ],
+    "description": "A think tank focused on women's strategic intellect and political transformation."
+  };
+
   return (
     <div className="flex flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Hero />
 
       <Reveal width="100%" yOffset={30}>
