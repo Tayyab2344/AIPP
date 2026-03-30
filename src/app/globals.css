@@ -9,7 +9,7 @@
   --secondary: #0F172A;
   --accent: #F8FAFC;
 
-  --font-inter: var(--font-inter), sans-serif;
+  --font-poppins: var(--font-poppins), sans-serif;
   --font-playfair: var(--font-playfair), serif;
 }
 
@@ -17,7 +17,7 @@ html,
 body {
   color: var(--secondary);
   background: var(--background);
-  font-family: var(--font-inter);
+  font-family: var(--font-poppins);
   margin: 0;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
